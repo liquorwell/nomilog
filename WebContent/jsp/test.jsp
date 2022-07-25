@@ -8,15 +8,6 @@
 <title>DBテスト</title>
 </head>
 <body>
-	<table>
-		<c:forEach var="user" items="${userList}">
-			<tr>
-				<td>${user.userId}</td>
-				<td>${user.userName}</td>
-				<td>${user.age}</td>
-				<td>${user.address}</td>
-			</tr>
-		</c:forEach>
-	</table>
+	<h2>${message}</h2>
 </body>
 </html>

@@ -9,12 +9,12 @@ public class DBManager {
 
 	public static Connection getConnection() {			
 		try {
-			Class.forName("com.mysql.jdbc.Driver");
+			Class.forName("oracle.jdbc.driver.OracleDriver");
 			Connection con;
 			con = DriverManager.getConnection(
-			  "jdbc:mysql://localhost/testdb",
-			  "root",
-			  "oosaka"
+			  "jdbc:oracle:thin:@localhost:1521:XE",
+			  "sssuser",
+			  "systemsss"
 			);
 			return con;
 		} catch (Exception e) {

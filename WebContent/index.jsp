@@ -4,9 +4,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>タイトルページ</title>
+<title>のみログ</title>
 </head>
 <body>
-	<p>Hello! World!</p>
+	<p>のみログのトップページ</p>
 </body>
 </html>

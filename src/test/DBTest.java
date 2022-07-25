@@ -1,7 +1,11 @@
+/**
+ * データベースに接続していることを確認するサーブレット
+ */
+
 package test;
 
 import java.io.IOException;
-import java.util.List;
+import java.sql.Connection;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,8 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import bean.User;
-import dao.TestDao;
+import dao.DBManager;
 
 /**
  * Servlet implementation class DBTest
@@ -31,9 +34,13 @@ public class DBTest extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		List<User> userList = TestDao.findAll();
-		request.setAttribute("userList", userList);
-		request.getRequestDispatcher("jsp/test.jsp").forward(request, response);
+		Connection con = null;
+		con = DBManager.getConnection();
+		if (con != null) {
+			request.setAttribute("message", "接続に成功しました");
+		}
+		DBManager.close(con);
+		request.getRequestDispatcher("/jsp/test.jsp").forward(request, response);
 	}
 
 	/**
