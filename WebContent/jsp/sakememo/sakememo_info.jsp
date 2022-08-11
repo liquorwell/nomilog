@@ -12,7 +12,7 @@
 	<p>酒メモ画面</p>
 	<p>検索、絞り込み、並べ替えが可能</p>
 	<p>各ユーザーの酒メモが表示　それぞれのメモから編集と削除と酒ログへの移動を行える</p>
-	<a href="<%=request.getContextPath()%>/drinkmemo_create">新規登録</a>
+	<a href="<%=request.getContextPath()%>/sakememo_create">新規登録</a>
 
 </body>
 </html>

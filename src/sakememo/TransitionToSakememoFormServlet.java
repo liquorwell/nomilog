@@ -1,4 +1,4 @@
-package memo;
+package sakememo;
 
 import java.io.IOException;
 
@@ -9,16 +9,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class TransitionToMemoFormServlet
+ * Servlet implementation class TransitionToSakememoFormServlet
  */
-@WebServlet("/drinkmemo_create")
-public class TransitionToMemoFormServlet extends HttpServlet {
+@WebServlet("/sakememo_create")
+public class TransitionToSakememoFormServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public TransitionToMemoFormServlet() {
+    public TransitionToSakememoFormServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -28,7 +28,7 @@ public class TransitionToMemoFormServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		request.getRequestDispatcher("jsp/memo/memo_form.jsp").forward(request, response);
+		request.getRequestDispatcher("jsp/sakememo/sakememo_form.jsp").forward(request, response);
 	}
 
 	/**

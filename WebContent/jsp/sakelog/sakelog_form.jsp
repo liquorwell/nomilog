@@ -11,7 +11,7 @@
 	<%@include file="/jsp/common/header.jsp" %>
 	
 	<p>酒ログの登録フォーム</p>
-	<a href="<%=request.getContextPath()%>/drinklog_insert">登録ボタンで登録処理を行って酒ログ一覧画面に戻る</a><br>
-	<a href="<%=request.getContextPath()%>/drinklog">キャンセルボタンで酒ログ一覧画面に戻る</a>
+	<a href="<%=request.getContextPath()%>/sakelog_insert">登録ボタンで登録処理を行って酒ログ一覧画面に戻る</a><br>
+	<a href="<%=request.getContextPath()%>/sakelog">キャンセルボタンで酒ログ一覧画面に戻る</a>
 </body>
 </html>

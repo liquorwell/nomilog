@@ -1,4 +1,4 @@
-package memo;
+package sakememo;
 
 import java.io.IOException;
 
@@ -9,16 +9,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class TransitionToMemoInfoServlet
+ * Servlet implementation class InsertSakememoServlet
  */
-@WebServlet("/drinkmemo")
-public class TransitionToMemoInfoServlet extends HttpServlet {
+@WebServlet("/sakememo_insert")
+public class InsertSakememoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public TransitionToMemoInfoServlet() {
+    public InsertSakememoServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -28,7 +28,7 @@ public class TransitionToMemoInfoServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		request.getRequestDispatcher("jsp/memo/memo_info.jsp").forward(request, response);
+		response.sendRedirect(request.getContextPath() + "/sakememo");
 	}
 
 	/**
