@@ -28,11 +28,16 @@
 				<td>${sakelog.sakelogComment}</td>
 				<td>
 					<form method="get" action="<%=request.getContextPath()%>/sakelog_edit">
-						<input type="hidden" name="sakelogId" value="${sakelog.sakelogId}">
+						<input type="hidden" name="sakelog_id" value="${sakelog.sakelogId}">
 						<button type="submit">編集</button>
 					</form>
 				</td>
-				<td><a href="#">削除</a></td>
+				<td>
+					<form method="get" action="<%=request.getContextPath()%>/sakelog_delete">
+						<input type="hidden" name="sakelog_id" value="${sakelog.sakelogId}">
+						<button type="submit">削除</button>
+					</form>
+				</td>
 			</tr>
 		</c:forEach>
 	</table>

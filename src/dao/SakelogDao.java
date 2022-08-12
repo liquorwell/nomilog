@@ -29,6 +29,10 @@ public class SakelogDao {
 			+ "SET category_id = ?, sakelog_name = ?, rating = ?, sakelog_comment = ?, upd_date = sysdate "
 			+ "WHERE sakelog_id = ?";
 	
+	private static final String DELETE = "UPDATE t_sakelog "
+			+ "SET is_deleted = '1' "
+			+ "WHERE sakelog_id = ?";
+	
 	
 	public static Sakelog findById(String sakelogId) {
 		Sakelog sakelog = null;
@@ -111,5 +115,16 @@ public class SakelogDao {
 			e.printStackTrace();
 		}
 	}
-
+	
+	public static void delete(String sakelogId) {
+		try(
+			Connection con = DBManager.getConnection();
+			PreparedStatement ps = con.prepareStatement(DELETE)
+		){
+			ps.setString(1, sakelogId);
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 }
