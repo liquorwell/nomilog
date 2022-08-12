@@ -26,6 +26,13 @@
 				<td>${sakelog.category.categoryName}</td>
 				<td>${sakelog.rating}</td>
 				<td>${sakelog.sakelogComment}</td>
+				<td>
+					<form method="get" action="<%=request.getContextPath()%>/sakelog_edit">
+						<input type="hidden" name="sakelogId" value="${sakelog.sakelogId}">
+						<button type="submit">編集</button>
+					</form>
+				</td>
+				<td><a href="#">削除</a></td>
 			</tr>
 		</c:forEach>
 	</table>

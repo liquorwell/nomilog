@@ -1,4 +1,4 @@
-package login;
+package sakelog;
 
 import java.io.IOException;
 import java.util.List;
@@ -15,19 +15,18 @@ import bean.Sakelog;
 import bean.User;
 import dao.CategoryDao;
 import dao.SakelogDao;
-import dao.UserDao;
 
 /**
- * Servlet implementation class LoginServlet
+ * Servlet implementation class UpdateSakelogServlet
  */
-@WebServlet("/LoginServlet")
-public class LoginServlet extends HttpServlet {
+@WebServlet("/sakelog_update")
+public class UpdateSakelogServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public LoginServlet() {
+    public UpdateSakelogServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -45,24 +44,25 @@ public class LoginServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-
-		HttpSession session = request.getSession(false);
-		session.removeAttribute("user");
+		String sakelogId = request.getParameter("sakelog_id");
+		String sakelogName = request.getParameter("sakelog_name");
+		String categoryId = request.getParameter("category_id");
+		Category category = CategoryDao.findById(categoryId);
+		String rating = request.getParameter("rating");
+		String sakelogComment = request.getParameter("sakelog_comment");
+		Sakelog sakelog = new Sakelog();
+		sakelog.setSakelogId(sakelogId);
+		sakelog.setSakelogName(sakelogName);
+		sakelog.setCategory(category);
+		sakelog.setRating(rating);
+		sakelog.setSakelogComment(sakelogComment);
+		SakelogDao.update(sakelog);
 		
-		String userName = request.getParameter("user_name");
-		String userPass = request.getParameter("user_pass");
-		User user = UserDao.findByNamePass(userName, userPass);
-		session.setAttribute("user", user);
-		
+		HttpSession session = request.getSession();
+		User user = (User)session.getAttribute("user");
 		List<Sakelog> sakelogList = SakelogDao.findByUserId(user.getUserId());
 		request.setAttribute("sakelogList", sakelogList);
-		
-		List<Category> categoryList = CategoryDao.findByUserId(user.getUserId());
-		session.setAttribute("categoryList", categoryList);
-		
-		request.getRequestDispatcher("/jsp/sakelog/sakelog_info.jsp").forward(request, response);
-		
-		
+		request.getRequestDispatcher("jsp/sakelog/sakelog_info.jsp").forward(request, response);
 	}
 
 }

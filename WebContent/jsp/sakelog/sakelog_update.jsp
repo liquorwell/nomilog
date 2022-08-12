@@ -5,27 +5,28 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>酒ログ登録 - のみログ</title>
+<title>酒ログ編集 - のみログ</title>
 </head>
 <body>
 	<%@include file="/jsp/common/header.jsp" %>
 	
 	<main>
 		<div class="contents">
-			<p>酒ログの登録フォーム</p>
+			<p>酒ログの編集フォーム</p>
 			
-			<form id="sakelog_form" method="post" action="<%=request.getContextPath()%>/sakelog_insert">
+			<form id="sakelog_update" method="post" action="<%=request.getContextPath()%>/sakelog_update">
 				<ul>
 					<li>
 						<label for="name">酒ログ名：</label>
-						<input type="text" id="name" name="sakelog_name">
+						<input type="text" id="name" name="sakelog_name" value="${sakelog.sakelogName}">
 					</li>
 					<li>
 						<label for="category">カテゴリ：</label>
 						<select id="category" name="category_id">
-						  <option value="" disabled selected hidden>選択してください</option>
 						  <c:forEach var="category" items="${categoryList}">
-						  	<option value="${category.categoryId}">${category.categoryName}</option>
+						  	<option value="${category.categoryId}" ${category.categoryId == sakelog.category.categoryId? "selected":""}>
+						  		${category.categoryName}
+						  	</option>
 						  </c:forEach>
 						</select>
 					</li>
@@ -33,15 +34,18 @@
 						<p>評価：</p>
 						<c:forEach var="i" begin="1" end="5" step="1">
 							<label for="r${i}">${i}</label>
-							<input type="radio" id="r${i}" name="rating" value="${i}">
+							<input type="radio" id="r${i}" name="rating" value="${i}" <c:if test="${i == sakelog.rating}">checked</c:if>>
 						</c:forEach>
 					</li>
 					<li>
 						<label for="coment">コメント：</label>
-						<textarea id="comment" name="sakelog_comment"></textarea>
+						<textarea id="comment" name="sakelog_comment">${sakelog.sakelogComment}</textarea>
 					</li>
 					<li>
-						<button type="submit">登録</button>
+						<input type="hidden" name="sakelog_id" value="${sakelog.sakelogId}">
+					</li>
+					<li>
+						<button type="submit">更新</button>
 						<a href="<%=request.getContextPath()%>/sakelog">キャンセル</a>
 					</li>
 				</ul>

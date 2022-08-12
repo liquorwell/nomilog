@@ -21,6 +21,9 @@ public class Sakelog {
 	public void setSakelogId(int sakelogId) {
 		this.sakelogId = sakelogId;
 	}
+	public void setSakelogId(String sakelogId) {
+		this.sakelogId = Integer.parseInt(sakelogId);
+	}
 	public String getSakelogName() {
 		return sakelogName;
 	}
