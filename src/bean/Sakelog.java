@@ -8,9 +8,9 @@ public class Sakelog {
 	private String sakelogName;
 	private int rating;
 	private String sakelogComment;
-	private boolean is_deleted;
-	private Date ins_date;
-	private Date upd_date;
+	private boolean isDeleted;
+	private Date insDate;
+	private Date updDate;
 	private Category category;
 	private User user;
 	
@@ -33,29 +33,32 @@ public class Sakelog {
 	public void setRating(int rating) {
 		this.rating = rating;
 	}
+	public void setRating(String rating) {
+		this.rating = Integer.parseInt(rating);
+	}
 	public String getSakelogComment() {
 		return sakelogComment;
 	}
 	public void setSakelogComment(String sakelogComment) {
 		this.sakelogComment = sakelogComment;
 	}
-	public boolean isIs_deleted() {
-		return is_deleted;
+	public boolean isIsDeleted() {
+		return isDeleted;
 	}
-	public void setIs_deleted(boolean is_deleted) {
-		this.is_deleted = is_deleted;
+	public void setIsDeleted(boolean isDeleted) {
+		this.isDeleted = isDeleted;
 	}
-	public Date getIns_date() {
-		return ins_date;
+	public Date getInsDate() {
+		return insDate;
 	}
-	public void setIns_date(Date ins_date) {
-		this.ins_date = ins_date;
+	public void setInsDate(Date insDate) {
+		this.insDate = insDate;
 	}
-	public Date getUpd_date() {
-		return upd_date;
+	public Date getUpdDate() {
+		return updDate;
 	}
-	public void setUpd_date(Date upd_date) {
-		this.upd_date = upd_date;
+	public void setUpdDate(Date updDate) {
+		this.updDate = updDate;
 	}
 	public Category getCategory() {
 		return category;

@@ -9,7 +9,8 @@ import bean.User;
 
 public class UserDao {
 	
-	private static final String USER_FIND_BY_NAME_PASS = "SELECT user_id, user_name, user_pass, is_admin, display_order, revision FROM m_user "
+	private static final String USER_FIND_BY_NAME_PASS = "SELECT user_id, user_name, user_pass, is_admin, display_order, revision "
+			+ "FROM m_user "
 			+ "WHERE user_name = ? AND user_pass = ? AND is_deleted = '0'";
 
 	

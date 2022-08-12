@@ -1,3 +1,6 @@
+DROP TABLE t_sakelog;
+DROP SEQUENCE seq_sakelog;
+
 CREATE TABLE t_sakelog (
     category_id         NUMBER(5)       REFERENCES m_category(category_id),
     user_id             NUMBER(5)       REFERENCES m_user(user_id),

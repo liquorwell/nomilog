@@ -1,3 +1,6 @@
+DROP TABLE t_sakememo;
+DROP SEQUENCE seq_sakememo;
+
 CREATE TABLE t_sakememo (
     category_id         NUMBER(5)       REFERENCES m_category(category_id),
     user_id             NUMBER(5)       REFERENCES m_user(user_id),

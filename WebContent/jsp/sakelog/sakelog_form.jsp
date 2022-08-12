@@ -10,8 +10,45 @@
 <body>
 	<%@include file="/jsp/common/header.jsp" %>
 	
-	<p>酒ログの登録フォーム</p>
-	<a href="<%=request.getContextPath()%>/sakelog_insert">登録ボタンで登録処理を行って酒ログ一覧画面に戻る</a><br>
-	<a href="<%=request.getContextPath()%>/sakelog">キャンセルボタンで酒ログ一覧画面に戻る</a>
+	<main>
+		<div class="contents">
+			<p>酒ログの登録フォーム</p>
+			
+			<form id="sakelog_form" method="post" action="<%=request.getContextPath()%>/sakelog_insert">
+				<ul>
+					<li>
+						<label for="name">酒ログ名：</label>
+						<input type="text" id="name" name="sakelog_name">
+					</li>
+					<li>
+						<label for="category">カテゴリ：</label>
+						<select id="category" name="category_id">
+						  <option value="" disabled selected hidden>選択してください</option>
+						  <c:forEach var="category" items="${categoryList}">
+						  	<option value="${category.categoryId}">${category.categoryName}</option>
+						  </c:forEach>
+						</select>
+					</li>
+					<li>
+						<p>評価：</p>
+						<c:forEach var="i" begin="1" end="5" step="1">
+							<label for="r${i}">${i}</label>
+							<input type="radio" id="r${i}" name="rating" value="${i}">
+						</c:forEach>
+					</li>
+					<li>
+						<label for="coment">コメント：</label>
+						<textarea id="comment" name="sakelog_comment"></textarea>
+					</li>
+					<li>
+						<button type="submit">登録</button>
+						<a href="<%=request.getContextPath()%>/sakelog">キャンセル</a>
+					</li>
+				</ul>
+			</form>
+		</div>
+	</main>
+	
+	<%@include file="/jsp/common/footer.jsp" %>	
 </body>
 </html>

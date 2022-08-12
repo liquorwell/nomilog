@@ -16,16 +16,16 @@
 	<table>
 		<tr>
 			<th>酒ログ名</th>
+			<th>カテゴリ</th>
 			<th>評価</th>
 			<th>コメント</th>
-			<th>カテゴリ</th>
 		</tr>
 		<c:forEach var="sakelog" items="${sakelogList}">
 			<tr>
 				<td>${sakelog.sakelogName}</td>
+				<td>${sakelog.category.categoryName}</td>
 				<td>${sakelog.rating}</td>
 				<td>${sakelog.sakelogComment}</td>
-				<td>${sakelog.category.categoryName}</td>
 			</tr>
 		</c:forEach>
 	</table>

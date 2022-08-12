@@ -10,8 +10,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import bean.Category;
 import bean.Sakelog;
 import bean.User;
+import dao.CategoryDao;
 import dao.SakelogDao;
 import dao.UserDao;
 
@@ -55,6 +57,9 @@ public class LoginServlet extends HttpServlet {
 		
 		List<Sakelog> sakelogList = SakelogDao.findByUserId(user.getUserId());
 		request.setAttribute("sakelogList", sakelogList);
+		
+		List<Category> categoryList = CategoryDao.findByUserId(user.getUserId());
+		session.setAttribute("categoryList", categoryList);
 		
 		request.getRequestDispatcher("/jsp/sakelog/sakelog_info.jsp").forward(request, response);
 		

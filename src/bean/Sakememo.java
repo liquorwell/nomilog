@@ -8,9 +8,9 @@ public class Sakememo {
 	private String sakememoName;
 	private String sakememoComment;
 	private int sakelogId;
-	private boolean is_deleted;
-	private Date ins_date;
-	private Date upd_date;
+	private boolean isDeleted;
+	private Date insDate;
+	private Date updDate;
 	private Category category;
 	private User user;
 	
@@ -39,23 +39,23 @@ public class Sakememo {
 	public void setSakelogId(int sakelogId) {
 		this.sakelogId = sakelogId;
 	}
-	public boolean isIs_deleted() {
-		return is_deleted;
+	public boolean isDeleted() {
+		return isDeleted;
 	}
-	public void setIs_deleted(boolean is_deleted) {
-		this.is_deleted = is_deleted;
+	public void setDeleted(boolean isDeleted) {
+		this.isDeleted = isDeleted;
 	}
-	public Date getIns_date() {
-		return ins_date;
+	public Date getInsDate() {
+		return insDate;
 	}
-	public void setIns_date(Date ins_date) {
-		this.ins_date = ins_date;
+	public void setInsDate(Date insDate) {
+		this.insDate = insDate;
 	}
-	public Date getUpd_date() {
-		return upd_date;
+	public Date getUpdDate() {
+		return updDate;
 	}
-	public void setUpd_date(Date upd_date) {
-		this.upd_date = upd_date;
+	public void setUpdDate(Date updDate) {
+		this.updDate = updDate;
 	}
 	public Category getCategory() {
 		return category;
@@ -69,6 +69,7 @@ public class Sakememo {
 	public void setUser(User user) {
 		this.user = user;
 	}
-
+	
+	
 
 }

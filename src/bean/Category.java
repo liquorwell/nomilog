@@ -1,12 +1,15 @@
 package bean;
 
+import java.util.Date;
+
 public class Category {
 
 	private int categoryId;
 	private String categoryName;
 	private boolean isDeleted;
-	private int revision;
-	
+	private Date insDate;
+	private Date updDate;
+	private User user;
 	
 	public int getCategoryId() {
 		return categoryId;
@@ -20,17 +23,30 @@ public class Category {
 	public void setCategoryName(String categoryName) {
 		this.categoryName = categoryName;
 	}
-	public boolean getIsDeleted() {
+	public boolean isDeleted() {
 		return isDeleted;
 	}
 	public void setIsDeleted(boolean isDeleted) {
 		this.isDeleted = isDeleted;
 	}
-	public int getRevision() {
-		return revision;
+	public Date getInsDate() {
+		return insDate;
 	}
-	public void setRevision(int revision) {
-		this.revision = revision;
+	public void setInsDate(Date insDate) {
+		this.insDate = insDate;
 	}
+	public Date getUpdDate() {
+		return updDate;
+	}
+	public void setUpdDate(Date updDate) {
+		this.updDate = updDate;
+	}
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
+	}
+	
 	
 }
