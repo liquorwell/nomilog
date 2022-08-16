@@ -51,6 +51,7 @@ public class InsertSakelogServlet extends HttpServlet {
 		String sakelogComment = request.getParameter("sakelog_comment");
 		HttpSession session = request.getSession();
 		User user = (User)session.getAttribute("user");
+		
 		Sakelog sakelog = new Sakelog();
 		sakelog.setSakelogName(sakelogName);
 		sakelog.setCategory(category);

@@ -50,6 +50,7 @@ public class UpdateSakelogServlet extends HttpServlet {
 		Category category = CategoryDao.findById(categoryId);
 		String rating = request.getParameter("rating");
 		String sakelogComment = request.getParameter("sakelog_comment");
+		
 		Sakelog sakelog = new Sakelog();
 		sakelog.setSakelogId(sakelogId);
 		sakelog.setSakelogName(sakelogName);
