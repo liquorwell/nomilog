@@ -70,9 +70,8 @@ public class CategoryDao {
 		return categoryList;
 	}
 	public static List<Category> findByUserId(int userId){
-		List<Category> categoryList = new ArrayList<Category>();
 		String strUserId = String.valueOf(userId);
-		categoryList = findByUserId(strUserId);
+		List<Category> categoryList = findByUserId(strUserId);
 		return categoryList;
 	}
 	

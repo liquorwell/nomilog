@@ -58,14 +58,13 @@ public class SakelogDao {
 		return sakelog;
 	}
 	
-	public static List<Sakelog> findByUserId(int userId){
+	public static List<Sakelog> findByUserId(String userId){
 		List<Sakelog> sakelogList = new ArrayList<Sakelog>();
 		try (
 			Connection con = DBManager.getConnection();
 			PreparedStatement ps = con.prepareStatement(FIND_BY_USER_ID)
 		){
-			String strUserId = String.valueOf(userId);
-			ps.setString(1, strUserId);
+			ps.setString(1, userId);
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				Sakelog sakelog = new Sakelog();
@@ -81,6 +80,11 @@ public class SakelogDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		return sakelogList;
+	}
+	public static List<Sakelog> findByUserId(int intUserId){
+		String userId = String.valueOf(intUserId);
+		List<Sakelog> sakelogList = findByUserId(userId);
 		return sakelogList;
 	}
 	

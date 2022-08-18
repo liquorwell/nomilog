@@ -10,21 +10,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import bean.Category;
 import bean.Sakememo;
 import bean.User;
+import dao.CategoryDao;
 import dao.SakememoDao;
 
 /**
- * Servlet implementation class TransitionToSakememoInfoServlet
+ * Servlet implementation class TransitionToSakememoUpdateServlet
  */
-@WebServlet("/sakememo")
-public class TransitionToSakememoInfoServlet extends HttpServlet {
+@WebServlet("/sakememo_edit")
+public class TransitionToSakememoUpdateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public TransitionToSakememoInfoServlet() {
+    public TransitionToSakememoUpdateServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -36,11 +38,12 @@ public class TransitionToSakememoInfoServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession();
 		User user = (User)session.getAttribute("user");
-		
-		List<Sakememo> sakememoList = SakememoDao.findByUserId(user.getUserId());
-		request.setAttribute("sakememoList", sakememoList);
-		
-		request.getRequestDispatcher("/jsp/sakememo/sakememo_info.jsp").forward(request, response);
+		List<Category> categoryList = CategoryDao.findByUserId(user.getUserId());
+		session.setAttribute("categoryList", categoryList);
+		String sakememoId = request.getParameter("sakememo_id");
+		Sakememo sakememo = SakememoDao.findById(sakememoId);
+		request.setAttribute("sakememo", sakememo);
+		request.getRequestDispatcher("jsp/sakememo/sakememo_update.jsp").forward(request, response);
 	}
 
 	/**

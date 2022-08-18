@@ -1,4 +1,4 @@
-package sakememo;
+package category;
 
 import java.io.IOException;
 
@@ -8,17 +8,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import bean.Category;
+import dao.CategoryDao;
+
 /**
- * Servlet implementation class TransitionToSakememoFormServlet
+ * Servlet implementation class TransitionToCategoryUpdateServlet
  */
-@WebServlet("/sakememo_create")
-public class TransitionToSakememoFormServlet extends HttpServlet {
+@WebServlet("/category_edit")
+public class TransitionToCategoryUpdateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public TransitionToSakememoFormServlet() {
+    public TransitionToCategoryUpdateServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -28,7 +31,10 @@ public class TransitionToSakememoFormServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		request.getRequestDispatcher("jsp/sakememo/sakememo_form.jsp").forward(request, response);
+		String categoryId = request.getParameter("category_id");
+		Category category = CategoryDao.findById(categoryId);
+		request.setAttribute("category", category);
+		request.getRequestDispatcher("jsp/category/category_update.jsp").forward(request, response);
 	}
 
 	/**

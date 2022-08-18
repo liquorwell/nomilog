@@ -17,16 +17,16 @@ import dao.CategoryDao;
 import dao.SakememoDao;
 
 /**
- * Servlet implementation class InsertSakememoServlet
+ * Servlet implementation class UpdateSakememoServlet
  */
-@WebServlet("/sakememo_insert")
-public class InsertSakememoServlet extends HttpServlet {
+@WebServlet("/sakememo_update")
+public class UpdateSakememoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public InsertSakememoServlet() {
+    public UpdateSakememoServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -36,7 +36,7 @@ public class InsertSakememoServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.sendRedirect(request.getContextPath() + "/sakememo");
+		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**
@@ -44,20 +44,21 @@ public class InsertSakememoServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		String sakememoId = request.getParameter("sakememo_id");
 		String sakememoName = request.getParameter("sakememo_name");
 		String categoryId = request.getParameter("category_id");
 		Category category = CategoryDao.findById(categoryId);
 		String sakememoComment = request.getParameter("sakememo_comment");
-		HttpSession session = request.getSession();
-		User user = (User)session.getAttribute("user");
 		
 		Sakememo sakememo = new Sakememo();
+		sakememo.setSakememoId(sakememoId);
 		sakememo.setSakememoName(sakememoName);
 		sakememo.setCategory(category);
 		sakememo.setSakememoComment(sakememoComment);
-		sakememo.setUser(user);
-		SakememoDao.insert(sakememo);
+		SakememoDao.update(sakememo);
 		
+		HttpSession session = request.getSession();
+		User user = (User)session.getAttribute("user");
 		List<Sakememo> sakememoList = SakememoDao.findByUserId(user.getUserId());
 		request.setAttribute("sakememoList", sakememoList);
 		request.getRequestDispatcher("jsp/sakememo/sakememo_info.jsp").forward(request, response);

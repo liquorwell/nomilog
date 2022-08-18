@@ -15,16 +15,16 @@ import bean.User;
 import dao.SakememoDao;
 
 /**
- * Servlet implementation class TransitionToSakememoInfoServlet
+ * Servlet implementation class DeleteSakememoServlet
  */
-@WebServlet("/sakememo")
-public class TransitionToSakememoInfoServlet extends HttpServlet {
+@WebServlet("/sakememo_delete")
+public class DeleteSakememoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public TransitionToSakememoInfoServlet() {
+    public DeleteSakememoServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,13 +34,14 @@ public class TransitionToSakememoInfoServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		String sakememoId = request.getParameter("sakememo_id");
+		SakememoDao.delete(sakememoId);
+		
 		HttpSession session = request.getSession();
 		User user = (User)session.getAttribute("user");
-		
 		List<Sakememo> sakememoList = SakememoDao.findByUserId(user.getUserId());
 		request.setAttribute("sakememoList", sakememoList);
-		
-		request.getRequestDispatcher("/jsp/sakememo/sakememo_info.jsp").forward(request, response);
+		request.getRequestDispatcher("jsp/sakememo/sakememo_info.jsp").forward(request, response);
 	}
 
 	/**
