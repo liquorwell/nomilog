@@ -21,6 +21,11 @@ public class SakelogDao {
 			+ "INNER JOIN m_category ctgr ON sklg.category_id = ctgr.category_id "
 			+ "WHERE sklg.user_id = ? AND sklg.is_deleted = '0'";
 	
+	private static final String FIND_RATEST_ID = "SELECT sakelog_id "
+			+ "FROM (SELECT sakelog_id FROM t_sakelog ORDER BY ins_date DESC) "
+			+ "WHERE rownum = 1";
+	
+	
 	private static final String INSERT = "INSERT INTO t_sakelog "
 			+ "(category_id, user_id, sakelog_id, sakelog_name, rating, sakelog_comment, is_deleted, ins_date, upd_date) "
 			+ "VALUES (?, ?, seq_sakelog.NEXTVAL, ?, ?, ?, '0', sysdate, sysdate)";
@@ -30,17 +35,18 @@ public class SakelogDao {
 			+ "WHERE sakelog_id = ?";
 	
 	private static final String DELETE = "UPDATE t_sakelog "
-			+ "SET is_deleted = '1' "
+			+ "SET is_deleted = '1' , upd_date = sysdate "
 			+ "WHERE sakelog_id = ?";
 	
 	
-	public static Sakelog findById(String sakelogId) {
+	
+	public static Sakelog findById(int sakelogId) {
 		Sakelog sakelog = null;
 		try (
 			Connection con = DBManager.getConnection();
 			PreparedStatement ps = con.prepareStatement(FIND_BY_ID)
 		){
-			ps.setString(1, sakelogId);
+			ps.setInt(1, sakelogId);
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				sakelog = new Sakelog();
@@ -57,14 +63,19 @@ public class SakelogDao {
 		}
 		return sakelog;
 	}
+	public static Sakelog findById(String strSakelogId) {
+		int sakelogId = Integer.parseInt(strSakelogId);
+		Sakelog sakelog = findById(sakelogId);
+		return sakelog;
+	}
 	
-	public static List<Sakelog> findByUserId(String userId){
+	public static List<Sakelog> findByUserId(int userId){
 		List<Sakelog> sakelogList = new ArrayList<Sakelog>();
 		try (
 			Connection con = DBManager.getConnection();
 			PreparedStatement ps = con.prepareStatement(FIND_BY_USER_ID)
 		){
-			ps.setString(1, userId);
+			ps.setInt(1, userId);
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				Sakelog sakelog = new Sakelog();
@@ -82,11 +93,28 @@ public class SakelogDao {
 		}
 		return sakelogList;
 	}
-	public static List<Sakelog> findByUserId(int intUserId){
-		String userId = String.valueOf(intUserId);
+	public static List<Sakelog> findByUserId(String strUserId){
+		int userId = Integer.parseInt(strUserId);
 		List<Sakelog> sakelogList = findByUserId(userId);
 		return sakelogList;
 	}
+	
+	public static int findRatestId() {
+		int sakelogId = 0;
+		try (
+			Connection con = DBManager.getConnection();
+			PreparedStatement ps = con.prepareStatement(FIND_RATEST_ID)
+		){
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				sakelogId = rs.getInt("sakelog_id");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return sakelogId;
+	}
+	
 	
 	public static void insert(Sakelog sakelog) {
 		try (
@@ -120,15 +148,19 @@ public class SakelogDao {
 		}
 	}
 	
-	public static void delete(String sakelogId) {
+	public static void delete(int sakelogId) {
 		try(
 			Connection con = DBManager.getConnection();
 			PreparedStatement ps = con.prepareStatement(DELETE)
 		){
-			ps.setString(1, sakelogId);
+			ps.setInt(1, sakelogId);
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+	public static void delete(String strSakelogId) {
+		int sakelogId = Integer.parseInt(strSakelogId);
+		delete(sakelogId);
 	}
 }

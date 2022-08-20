@@ -22,8 +22,7 @@ public class Sakememo {
 		this.sakememoId = sakememoId;
 	}
 	public void setSakememoId(String strSakememoId) {
-		Integer sakememoId = Integer.parseInt(strSakememoId);
-		setSakememoId(sakememoId);
+		this.sakememoId = Integer.parseInt(strSakememoId);
 	}
 	public String getSakememoName() {
 		return sakememoName;

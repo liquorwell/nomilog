@@ -18,8 +18,7 @@ public class Category {
 		this.categoryId = categoryId;
 	}
 	public void setCategoryId(String strCategoryId) {
-		int categoryId = Integer.parseInt(strCategoryId); 
-		this.categoryId = categoryId;
+		this.categoryId = Integer.parseInt(strCategoryId); 
 	}
 	public String getCategoryName() {
 		return categoryName;

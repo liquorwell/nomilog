@@ -25,6 +25,12 @@
 				<td>${sakememo.category.categoryName}</td>
 				<td>${sakememo.sakememoComment}</td>
 				<td>
+					<form method="get" action="<%=request.getContextPath()%>/sakememo_tranmove">
+						<input type="hidden" name="sakememo_id" value="${sakememo.sakememoId}">
+						<button type="submit">酒ログに移動</button>
+					</form>
+				</td>
+				<td>
 					<form method="get" action="<%=request.getContextPath()%>/sakememo_edit">
 						<input type="hidden" name="sakememo_id" value="${sakememo.sakememoId}">
 						<button type="submit">編集</button>
