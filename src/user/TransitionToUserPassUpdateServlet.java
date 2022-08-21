@@ -9,16 +9,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class TransitionToUserInfoServlet
+ * Servlet implementation class TransitionToUserPassUpdateServlet
  */
-@WebServlet("/user")
-public class TransitionToUserInfoServlet extends HttpServlet {
+@WebServlet("/user_pass_edit")
+public class TransitionToUserPassUpdateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public TransitionToUserInfoServlet() {
+    public TransitionToUserPassUpdateServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -28,7 +28,7 @@ public class TransitionToUserInfoServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		request.getRequestDispatcher("/jsp/user/user_info.jsp").forward(request, response);
+		request.getRequestDispatcher("jsp/user/user_pass_update.jsp").forward(request, response);
 	}
 
 	/**

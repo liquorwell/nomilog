@@ -7,18 +7,22 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import bean.User;
+import dao.UserDao;
 
 /**
- * Servlet implementation class TransitionToUserInfoServlet
+ * Servlet implementation class UpdateUserNameServlet
  */
-@WebServlet("/user")
-public class TransitionToUserInfoServlet extends HttpServlet {
+@WebServlet("/user_name_update")
+public class UpdateUserNameServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public TransitionToUserInfoServlet() {
+    public UpdateUserNameServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -28,7 +32,7 @@ public class TransitionToUserInfoServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		request.getRequestDispatcher("/jsp/user/user_info.jsp").forward(request, response);
+		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**
@@ -36,7 +40,15 @@ public class TransitionToUserInfoServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+		HttpSession session = request.getSession();
+		User user = (User)session.getAttribute("user");
+		int userId = user.getUserId();
+		String userName = request.getParameter("user_name");
+		UserDao.updateUserName(userId, userName);
+		
+		user = UserDao.findById(userId);
+		session.setAttribute("user", user);
+		request.getRequestDispatcher("/jsp/user/user_info.jsp").forward(request, response);
 	}
 
 }
