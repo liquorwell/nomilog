@@ -14,7 +14,7 @@
 		<div class="contents">
 			<p>ログイン画面とログインフォーム</p>
 			
-			<form id="loginform" method="post" action="<%=request.getContextPath()%>/LoginServlet">
+			<form id="loginform" method="post" action="<%=request.getContextPath()%>/login">
 				<ul>
 					<li>
 						<label for="name">ユーザー名：</label>

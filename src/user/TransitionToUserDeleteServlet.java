@@ -1,4 +1,4 @@
-package login;
+package user;
 
 import java.io.IOException;
 
@@ -9,16 +9,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class TransitionToLoginServlet
+ * Servlet implementation class TransitionToUserDeleteServlet
  */
-@WebServlet("/tranlogin")
-public class TransitionToLoginServlet extends HttpServlet {
+@WebServlet("/user_delete_check")
+public class TransitionToUserDeleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public TransitionToLoginServlet() {
+    public TransitionToUserDeleteServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -28,7 +28,7 @@ public class TransitionToLoginServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		request.getRequestDispatcher("jsp/login.jsp").forward(request, response);
+		request.getRequestDispatcher("jsp/user/user_delete_check.jsp").forward(request, response);
 	}
 
 	/**

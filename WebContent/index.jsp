@@ -9,7 +9,7 @@
 </head>
 <body>
 	<p>のみログのトップページ</p>
-	<a href="<%=request.getContextPath()%>/login">ログイン画面に遷移</a>
+	<a href="<%=request.getContextPath()%>/tranlogin">ログイン画面に遷移</a>
 	<p>アカウントがない場合はサインアップ</p>
 	<p>機能説明とかコンタクトにもこの時点からヘッダー通して飛べる</p>
 </body>

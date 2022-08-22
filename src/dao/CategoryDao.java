@@ -32,7 +32,9 @@ public class CategoryDao {
 			+ "SET is_deleted = '1' , upd_date = sysdate "
 			+ "WHERE category_id = ?";
 	
-	
+	private static final String DELETE_USER = "UPDATE m_category "
+			+ "SET is_deleted = '1', upd_date = sysdate "
+			+ "WHERE user_id = ?";
 	
 	public static Category findById(int categoryId) {
 		Category category = null;
@@ -125,4 +127,17 @@ public class CategoryDao {
 		int categoryId = Integer.parseInt(strCategoryId);
 		delete(categoryId);
 	}
+	
+	public static void deleteUser(int userId) {
+		try(
+			Connection con = DBManager.getConnection();
+			PreparedStatement ps = con.prepareStatement(DELETE_USER)
+		){
+			ps.setInt(1, userId);
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}		
+	}
+	
 }

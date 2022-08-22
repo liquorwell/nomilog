@@ -11,7 +11,7 @@ public class UserDao {
 	
 	private static final String FIND_BY_ID = "SELECT user_id, user_name "
 			+ "FROM m_user "
-			+ "WHERE user_id = ?";
+			+ "WHERE user_id = ? AND is_deleted = '0'";
 	
 	private static final String FIND_BY_NAME_PASS = "SELECT user_id, user_name, user_pass, is_admin, display_order, revision "
 			+ "FROM m_user "
@@ -24,6 +24,10 @@ public class UserDao {
 	
 	private static final String UPDATE_USER_PASS = "UPDATE m_user "
 			+ "SET user_pass = ? "
+			+ "WHERE user_id = ?";
+	
+	private static final String DELETE = "UPDATE m_user "
+			+ "SET is_deleted = '1', revision = revision + 1 "
 			+ "WHERE user_id = ?";
 
 
@@ -101,5 +105,20 @@ public class UserDao {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
+	}
+	
+	public static void delete(int userId) {
+		try(
+			Connection con = DBManager.getConnection();
+			PreparedStatement ps = con.prepareStatement(DELETE)
+		){
+			ps.setInt(1, userId);
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		SakelogDao.deleteUser(userId);
+		SakememoDao.deleteUser(userId);
+		CategoryDao.deleteUser(userId);
 	}
 }

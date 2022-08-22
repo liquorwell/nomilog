@@ -33,6 +33,10 @@ public class SakememoDao {
 			+ "SET is_deleted = '1', upd_date = sysdate "
 			+ "WHERE sakememo_id = ?";
 	
+	private static final String DELETE_USER = "UPDATE t_sakememo "
+			+ "SET is_deleted = '1', upd_date = sysdate "
+			+ "WHERE user_id = ?";
+	
 	
 	private static final String MOVE = "UPDATE t_sakememo "
 			+ "SET sakelog_id = ?, is_deleted = '1', upd_date = sysdate "
@@ -142,6 +146,18 @@ public class SakememoDao {
 	public static void delete(String strSakememoId) {
 		int sakememoId = Integer.parseInt(strSakememoId);
 		delete(sakememoId);
+	}
+	
+	public static void deleteUser(int userId) {
+		try(
+			Connection con = DBManager.getConnection();
+			PreparedStatement ps = con.prepareStatement(DELETE_USER)
+		){
+			ps.setInt(1, userId);
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}		
 	}
 	
 	

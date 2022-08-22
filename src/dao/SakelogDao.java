@@ -38,6 +38,9 @@ public class SakelogDao {
 			+ "SET is_deleted = '1' , upd_date = sysdate "
 			+ "WHERE sakelog_id = ?";
 	
+	private static final String DELETE_USER = "UPDATE t_sakelog "
+			+ "SET is_deleted = '1', upd_date = sysdate "
+			+ "WHERE user_id = ?";
 	
 	
 	public static Sakelog findById(int sakelogId) {
@@ -162,5 +165,17 @@ public class SakelogDao {
 	public static void delete(String strSakelogId) {
 		int sakelogId = Integer.parseInt(strSakelogId);
 		delete(sakelogId);
+	}
+	
+	public static void deleteUser(int userId) {
+		try(
+			Connection con = DBManager.getConnection();
+			PreparedStatement ps = con.prepareStatement(DELETE_USER)
+		){
+			ps.setInt(1, userId);
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}		
 	}
 }
