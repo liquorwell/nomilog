@@ -18,6 +18,10 @@ public class UserDao {
 			+ "WHERE user_name = ? AND user_pass = ? AND is_deleted = '0'";
 
 
+	private static final String INSERT = "INSERT INTO m_user "
+			+ "(user_id, user_name, user_pass, is_admin, display_order, is_deleted, revision) "
+			+ "VALUES (seq_user.NEXTVAL, ?, ?, '0', 0, '0', 1)";
+	
 	private static final String UPDATE_USER_NAME = "UPDATE m_user "
 			+ "SET user_name = ? "
 			+ "WHERE user_id = ?";
@@ -80,6 +84,19 @@ public class UserDao {
 		return user;
 	}
 	
+	
+	public static void insert(User user) {
+		try (
+			Connection con = DBManager.getConnection();
+			PreparedStatement ps = con.prepareStatement(INSERT)
+		){
+			ps.setString(1, user.getUserName());
+			ps.setString(2, user.getUserPass());
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	public static void updateUserName(int userId, String userName) {
 		try(

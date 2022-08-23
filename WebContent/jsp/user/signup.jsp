@@ -5,16 +5,17 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>ログイン - のみログ</title>
+<title>新規ユーザー登録 - のみログ</title>
 </head>
 <body>
-
+	<%@include file="/jsp/common/header.jsp"%>
 	
 	<main>
 		<div class="contents">
-			<p>ログイン画面とログインフォーム</p>
+			<p>ユーザー登録フォーム</p>
+			<p>${errorMessage}</p>
 			
-			<form id="loginform" method="post" action="<%=request.getContextPath()%>/login">
+			<form id="signup_form" method="post" action="<%=request.getContextPath()%>/signup">
 				<ul>
 					<li>
 						<label for="name">ユーザー名：</label>
@@ -25,7 +26,11 @@
 						<input type="password" id="pass" name="user_pass">
 					</li>
 					<li>
-						<button type="submit">ログイン</button>
+						<label for="checkpass">パスワード（確認用）：</label>
+						<input type="password" id="checkpass" name="check_pass">
+					</li>
+					<li>
+						<button type="submit">ユーザー登録</button>
 					</li>
 				</ul>
 			</form>
