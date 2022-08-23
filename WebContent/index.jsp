@@ -12,5 +12,7 @@
 	<a href="<%=request.getContextPath()%>/tranlogin">ログイン</a>
 	<a href="<%=request.getContextPath()%>/transignup">サインアップ</a>
 	<p>機能説明とかコンタクトにもこの時点からヘッダー通して飛べる</p>
+	
+	<%@include file="/jsp/common/footer.jsp"%>
 </body>
 </html>

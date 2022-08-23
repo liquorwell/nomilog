@@ -7,4 +7,6 @@
 	<a href="<%=request.getContextPath()%>/sakememo">酒メモ</a>
 	<a href="<%=request.getContextPath()%>/category">カテゴリ編集</a>
 	<a href="<%=request.getContextPath()%>/user">アカウント</a>
+	${user.userName}
+	<a href="<%=request.getContextPath()%>/logout">ログアウト</a>
 </header>

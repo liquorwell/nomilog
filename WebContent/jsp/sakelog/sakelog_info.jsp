@@ -41,5 +41,7 @@
 		</c:forEach>
 	</table>
 	<a href="<%=request.getContextPath()%>/sakelog_create">新規登録</a>
+	
+	<%@include file="/jsp/common/footer.jsp"%>
 </body>
 </html>
