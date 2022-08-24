@@ -12,6 +12,32 @@
 
 	<p>酒ログ画面</p>
 	<p>検索、絞り込み、並べ替え、表示形式の変更が可能</p>
+	
+	<form method="post" action="<%=request.getContextPath()%>/sakelog_filter">
+		<input type="radio" id="name" name="filter_type" value="name" checked>
+			<label for="name">酒ログ名：</label>
+			<input type="text" name="sakelog_name">
+		<input type="radio" id="category" name="filter_type" value="category">
+			<label for="category">カテゴリ：</label>
+			<select id="category_select" name="category_id">
+			<option value="" disabled selected hidden>選択</option>
+			  <c:forEach var="category" items="${categoryList}">
+			  	<option value="${category.categoryId}">${category.categoryName}</option>
+			  </c:forEach>
+			</select>
+		<input type="radio" id="rating" name="filter_type" value="rating">
+			<label for="rating">評価：</label>
+			<select id="rating_select" name="rating">
+				<option value="" disabled selected hidden>選択</option>
+				<c:forEach var="i" begin="1" end="5" step="1">
+					<option value="${i}">${i}</option>
+				</c:forEach>
+			</select>
+		<button type="submit">絞り込み</button>
+		<a href="<%=request.getContextPath()%>/sakelog">絞り込み解除</a>
+	</form>
+	
+	
 	<table>
 		<tr>
 			<th>酒ログ名</th>

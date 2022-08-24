@@ -32,8 +32,8 @@
 					<li>
 						<p>評価：</p>
 						<c:forEach var="i" begin="1" end="5" step="1">
-							<label for="r${i}">${i}</label>
 							<input type="radio" id="r${i}" name="rating" value="${i}">
+							<label for="r${i}">${i}</label>
 						</c:forEach>
 					</li>
 					<li>

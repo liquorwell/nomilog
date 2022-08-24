@@ -21,6 +21,21 @@ public class SakelogDao {
 			+ "INNER JOIN m_category ctgr ON sklg.category_id = ctgr.category_id "
 			+ "WHERE sklg.user_id = ? AND sklg.is_deleted = '0'";
 	
+	private static final String FIND_BY_SAKELOG_NAME = "SELECT sklg.sakelog_id, sklg.sakelog_name, sklg.rating, sklg.sakelog_comment, ctgr.category_name "
+			+ "FROM t_sakelog sklg "
+			+ "INNER JOIN m_category ctgr ON sklg.category_id = ctgr.category_id "
+			+ "WHERE sklg.sakelog_name LIKE ? AND sklg.is_deleted = '0'";
+	
+	private static final String FIND_BY_CATEGORY_ID = "SELECT sklg.sakelog_id, sklg.sakelog_name, sklg.rating, sklg.sakelog_comment, ctgr.category_name "
+			+ "FROM t_sakelog sklg "
+			+ "INNER JOIN m_category ctgr ON sklg.category_id = ctgr.category_id "
+			+ "WHERE sklg.category_id = ? AND sklg.is_deleted = '0'";
+	
+	private static final String FIND_BY_RATING = "SELECT sklg.sakelog_id, sklg.sakelog_name, sklg.rating, sklg.sakelog_comment, ctgr.category_name "
+			+ "FROM t_sakelog sklg "
+			+ "INNER JOIN m_category ctgr ON sklg.category_id = ctgr.category_id "
+			+ "WHERE sklg.rating = ? AND sklg.is_deleted = '0'";
+	
 	private static final String FIND_RATEST_ID = "SELECT sakelog_id "
 			+ "FROM (SELECT sakelog_id FROM t_sakelog ORDER BY ins_date DESC) "
 			+ "WHERE rownum = 1";
@@ -101,6 +116,92 @@ public class SakelogDao {
 		List<Sakelog> sakelogList = findByUserId(userId);
 		return sakelogList;
 	}
+	
+	public static List<Sakelog> findBySakelogName(String sakelogName) {
+		List<Sakelog> sakelogList = new ArrayList<Sakelog>();
+		try (
+			Connection con = DBManager.getConnection();
+			PreparedStatement ps = con.prepareStatement(FIND_BY_SAKELOG_NAME)
+		){
+			ps.setString(1, "%"+sakelogName+"%");
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				Sakelog sakelog = new Sakelog();
+				sakelog.setSakelogId(rs.getInt("sakelog_id"));
+				sakelog.setSakelogName(rs.getString("sakelog_name"));
+				sakelog.setRating(rs.getInt("rating"));
+				sakelog.setSakelogComment(rs.getString("sakelog_comment"));
+				Category category = new Category();
+				category.setCategoryName(rs.getString("category_name"));
+				sakelog.setCategory(category);
+				sakelogList.add(sakelog);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return sakelogList;
+	}
+	
+	public static List<Sakelog> findByCategoryId(int categoryId) {
+		List<Sakelog> sakelogList = new ArrayList<Sakelog>();
+		try (
+			Connection con = DBManager.getConnection();
+			PreparedStatement ps = con.prepareStatement(FIND_BY_CATEGORY_ID)
+		){
+			ps.setInt(1, categoryId);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				Sakelog sakelog = new Sakelog();
+				sakelog.setSakelogId(rs.getInt("sakelog_id"));
+				sakelog.setSakelogName(rs.getString("sakelog_name"));
+				sakelog.setRating(rs.getInt("rating"));
+				sakelog.setSakelogComment(rs.getString("sakelog_comment"));
+				Category category = new Category();
+				category.setCategoryName(rs.getString("category_name"));
+				sakelog.setCategory(category);
+				sakelogList.add(sakelog);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return sakelogList;
+	}
+	public static List<Sakelog> findByCategoryId(String strCategoryId) {
+		int categoryId = Integer.parseInt(strCategoryId);
+		List<Sakelog> sakelogList = findByCategoryId(categoryId);
+		return sakelogList;
+	}
+	
+	public static List<Sakelog> findByRating(int rating) {
+		List<Sakelog> sakelogList = new ArrayList<Sakelog>();
+		try (
+			Connection con = DBManager.getConnection();
+			PreparedStatement ps = con.prepareStatement(FIND_BY_RATING)
+		){
+			ps.setInt(1, rating);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				Sakelog sakelog = new Sakelog();
+				sakelog.setSakelogId(rs.getInt("sakelog_id"));
+				sakelog.setSakelogName(rs.getString("sakelog_name"));
+				sakelog.setRating(rs.getInt("rating"));
+				sakelog.setSakelogComment(rs.getString("sakelog_comment"));
+				Category category = new Category();
+				category.setCategoryName(rs.getString("category_name"));
+				sakelog.setCategory(category);
+				sakelogList.add(sakelog);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return sakelogList;
+	}
+	public static List<Sakelog> findByRating(String strRating) {
+		int rating = Integer.parseInt(strRating);
+		List<Sakelog> sakelogList = findByRating(rating);
+		return sakelogList;
+	}
+	
 	
 	public static int findRatestId() {
 		int sakelogId = 0;
