@@ -20,6 +20,16 @@ public class SakememoDao {
 			+ "INNER JOIN m_category ctgr ON skmm.category_id = ctgr.category_id "
 			+ "WHERE skmm.user_id = ? AND skmm.is_deleted = '0'";
 	
+	private static final String FIND_BY_SAKEMEMO_NAME = "SELECT skmm.sakememo_id, skmm.sakememo_name, skmm.sakememo_comment, ctgr.category_name "
+			+ "FROM t_sakememo skmm "
+			+ "INNER JOIN m_category ctgr ON skmm.category_id = ctgr.category_id "
+			+ "WHERE skmm.sakememo_name LIKE ? AND skmm.is_deleted = '0'";
+	
+	private static final String FIND_BY_CATEGORY_ID = "SELECT skmm.sakememo_id, skmm.sakememo_name, skmm.sakememo_comment, ctgr.category_name "
+			+ "FROM t_sakememo skmm "
+			+ "INNER JOIN m_category ctgr ON skmm.category_id = ctgr.category_id "
+			+ "WHERE skmm.category_id = ? AND skmm.is_deleted = '0'";
+	
 	
 	private static final String INSERT = "INSERT INTO t_sakememo "
 			+ "(category_id, user_id, sakememo_id, sakememo_name, sakememo_comment, sakelog_id, is_deleted, ins_date, upd_date) "
@@ -95,12 +105,64 @@ public class SakememoDao {
 		}
 		return sakememoList;
 	}
-	public static List<Sakememo> findByUserId(String strUserId){
+	public static List<Sakememo> findByUserId(String strUserId) {
 		int userId = Integer.parseInt(strUserId);
 		List<Sakememo> sakememoList = findByUserId(userId);
 		return sakememoList;
 	}
 	
+	public static List<Sakememo> findBySakememoName(String sakememoName) {
+		List<Sakememo> sakememoList = new ArrayList<Sakememo>();
+		try (
+			Connection con = DBManager.getConnection();
+			PreparedStatement ps = con.prepareStatement(FIND_BY_SAKEMEMO_NAME)
+		){
+			ps.setString(1, "%"+sakememoName+"%");
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				Sakememo sakememo = new Sakememo();
+				sakememo.setSakememoId(rs.getInt("sakememo_id"));
+				sakememo.setSakememoName(rs.getString("sakememo_name"));
+				sakememo.setSakememoComment(rs.getString("sakememo_comment"));
+				Category category = new Category();
+				category.setCategoryName(rs.getString("category_name"));
+				sakememo.setCategory(category);
+				sakememoList.add(sakememo);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return sakememoList;
+	}
+	
+	public static List<Sakememo> findByCategoryId(int categoryId){
+		List<Sakememo> sakememoList = new ArrayList<Sakememo>();
+		try (
+			Connection con = DBManager.getConnection();
+			PreparedStatement ps = con.prepareStatement(FIND_BY_CATEGORY_ID)
+		){
+			ps.setInt(1, categoryId);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				Sakememo sakememo = new Sakememo();
+				sakememo.setSakememoId(rs.getInt("sakememo_id"));
+				sakememo.setSakememoName(rs.getString("sakememo_name"));
+				sakememo.setSakememoComment(rs.getString("sakememo_comment"));
+				Category category = new Category();
+				category.setCategoryName(rs.getString("category_name"));
+				sakememo.setCategory(category);
+				sakememoList.add(sakememo);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return sakememoList;
+	}
+	public static List<Sakememo> findByCategoryId(String strCategoryId) {
+		int categoryId = Integer.parseInt(strCategoryId);
+		List<Sakememo> sakememoList = findByCategoryId(categoryId);
+		return sakememoList;
+	}	
 	
 	public static void insert(Sakememo sakememo) {
 		try (

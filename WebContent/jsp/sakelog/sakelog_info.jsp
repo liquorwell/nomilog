@@ -11,7 +11,7 @@
 	<%@include file="/jsp/common/header.jsp" %>
 
 	<p>酒ログ画面</p>
-	<p>検索、絞り込み、並べ替え、表示形式の変更が可能</p>
+	<p>日付での絞り込み、並べ替え、表示形式の変更</p>
 	
 	<form method="post" action="<%=request.getContextPath()%>/sakelog_filter">
 		<input type="radio" id="name" name="filter_type" value="name" checked>

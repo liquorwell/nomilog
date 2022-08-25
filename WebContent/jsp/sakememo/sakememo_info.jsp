@@ -11,8 +11,24 @@
 	<%@include file="/jsp/common/header.jsp" %>
 
 	<p>酒メモ画面</p>
-	<p>検索、絞り込み、並べ替えが可能</p>
-	<p>酒ログへの移動を行える</p>
+	<p>日付絞り込み、並べ替えが可能</p>
+	
+		<form method="post" action="<%=request.getContextPath()%>/sakememo_filter">
+		<input type="radio" id="name" name="filter_type" value="name" checked>
+			<label for="name">酒メモ名：</label>
+			<input type="text" name="sakememo_name">
+		<input type="radio" id="category" name="filter_type" value="category">
+			<label for="category">カテゴリ：</label>
+			<select id="category_select" name="category_id">
+			<option value="" disabled selected hidden>選択</option>
+			  <c:forEach var="category" items="${categoryList}">
+			  	<option value="${category.categoryId}">${category.categoryName}</option>
+			  </c:forEach>
+			</select>
+		<button type="submit">絞り込み</button>
+		<a href="<%=request.getContextPath()%>/sakememo">絞り込み解除</a>
+	</form>
+	
 	<table>
 		<tr>
 			<th>酒メモ名</th>
