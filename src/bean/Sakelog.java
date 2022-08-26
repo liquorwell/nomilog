@@ -1,15 +1,11 @@
 package bean;
 
-import java.util.Date;
-
 public class Sakelog {
 	
 	private int sakelogId;
 	private String sakelogName;
 	private int rating;
 	private String sakelogComment;
-	private Date insDate;
-	private Date updDate;
 	private Category category;
 	private User user;
 	
@@ -43,18 +39,6 @@ public class Sakelog {
 	}
 	public void setSakelogComment(String sakelogComment) {
 		this.sakelogComment = sakelogComment;
-	}
-	public Date getInsDate() {
-		return insDate;
-	}
-	public void setInsDate(Date insDate) {
-		this.insDate = insDate;
-	}
-	public Date getUpdDate() {
-		return updDate;
-	}
-	public void setUpdDate(Date updDate) {
-		this.updDate = updDate;
 	}
 	public Category getCategory() {
 		return category;

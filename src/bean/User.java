@@ -6,8 +6,6 @@ public class User {
 	private String userName;
 	private String userPass;
 	private boolean isAdmin;
-	private int displayOrder;
-	private boolean isDeleted;
 	private int revision;
 	
 	
@@ -34,18 +32,6 @@ public class User {
 	}
 	public void setIsAdmin(boolean isAdmin) {
 		this.isAdmin = isAdmin;
-	}
-	public int getDisplayOrder() {
-		return displayOrder;
-	}
-	public void setDisplayOrder(int displayOrder) {
-		this.displayOrder = displayOrder;
-	}
-	public boolean isDeleted() {
-		return isDeleted;
-	}
-	public void setDeleted(boolean isDeleted) {
-		this.isDeleted = isDeleted;
 	}
 	public int getRevision() {
 		return revision;

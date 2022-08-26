@@ -1,16 +1,11 @@
 package bean;
 
-import java.util.Date;
-
 public class Sakememo {
 	
 	private int sakememoId;
 	private String sakememoName;
 	private String sakememoComment;
 	private int sakelogId;
-	private boolean isDeleted;
-	private Date insDate;
-	private Date updDate;
 	private Category category;
 	private User user;
 	
@@ -41,24 +36,6 @@ public class Sakememo {
 	}
 	public void setSakelogId(int sakelogId) {
 		this.sakelogId = sakelogId;
-	}
-	public boolean isDeleted() {
-		return isDeleted;
-	}
-	public void setDeleted(boolean isDeleted) {
-		this.isDeleted = isDeleted;
-	}
-	public Date getInsDate() {
-		return insDate;
-	}
-	public void setInsDate(Date insDate) {
-		this.insDate = insDate;
-	}
-	public Date getUpdDate() {
-		return updDate;
-	}
-	public void setUpdDate(Date updDate) {
-		this.updDate = updDate;
 	}
 	public Category getCategory() {
 		return category;

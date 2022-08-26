@@ -75,7 +75,6 @@ public class UserDao {
 				user.setUserName(rs.getString("user_name"));
 				user.setUserPass(rs.getString("user_pass"));
 				user.setIsAdmin(rs.getBoolean("is_admin"));
-				user.setDisplayOrder(rs.getInt("display_order"));
 				user.setRevision(rs.getInt("revision"));
 			}
 		} catch (SQLException e) {
