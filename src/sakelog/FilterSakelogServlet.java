@@ -61,6 +61,10 @@ public class FilterSakelogServlet extends HttpServlet {
 				String rating = request.getParameter("rating");
 				sakelogList = SakelogDao.findByRating(rating);
 				break;
+			case "ins_date":
+				String insDateOld = request.getParameter("ins_date_old");
+				String insDateNew = request.getParameter("ins_date_new");
+				sakelogList = SakelogDao.findByInsDate(insDateOld, insDateNew);
 		}
 		request.setAttribute("sakelogList", sakelogList);
 		

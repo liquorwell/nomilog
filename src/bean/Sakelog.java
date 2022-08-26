@@ -8,7 +8,6 @@ public class Sakelog {
 	private String sakelogName;
 	private int rating;
 	private String sakelogComment;
-	private boolean isDeleted;
 	private Date insDate;
 	private Date updDate;
 	private Category category;
@@ -44,12 +43,6 @@ public class Sakelog {
 	}
 	public void setSakelogComment(String sakelogComment) {
 		this.sakelogComment = sakelogComment;
-	}
-	public boolean isIsDeleted() {
-		return isDeleted;
-	}
-	public void setIsDeleted(boolean isDeleted) {
-		this.isDeleted = isDeleted;
 	}
 	public Date getInsDate() {
 		return insDate;

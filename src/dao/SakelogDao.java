@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,17 +51,26 @@ public class SakelogDao {
 	private static final String FIND_BY_SAKELOG_NAME = "SELECT sklg.sakelog_id, sklg.sakelog_name, sklg.rating, sklg.sakelog_comment, ctgr.category_name "
 			+ "FROM t_sakelog sklg "
 			+ "INNER JOIN m_category ctgr ON sklg.category_id = ctgr.category_id "
-			+ "WHERE sklg.sakelog_name LIKE ? AND sklg.is_deleted = '0'";
+			+ "WHERE sklg.sakelog_name LIKE ? AND sklg.is_deleted = '0' "
+			+ "ORDER BY sklg.ins_date DESC";
 	
 	private static final String FIND_BY_CATEGORY_ID = "SELECT sklg.sakelog_id, sklg.sakelog_name, sklg.rating, sklg.sakelog_comment, ctgr.category_name "
 			+ "FROM t_sakelog sklg "
 			+ "INNER JOIN m_category ctgr ON sklg.category_id = ctgr.category_id "
-			+ "WHERE sklg.category_id = ? AND sklg.is_deleted = '0'";
+			+ "WHERE sklg.category_id = ? AND sklg.is_deleted = '0' "
+			+ "ORDER BY sklg.ins_date DESC";
 	
 	private static final String FIND_BY_RATING = "SELECT sklg.sakelog_id, sklg.sakelog_name, sklg.rating, sklg.sakelog_comment, ctgr.category_name "
 			+ "FROM t_sakelog sklg "
 			+ "INNER JOIN m_category ctgr ON sklg.category_id = ctgr.category_id "
-			+ "WHERE sklg.rating = ? AND sklg.is_deleted = '0'";
+			+ "WHERE sklg.rating = ? AND sklg.is_deleted = '0' "
+			+ "ORDER BY sklg.ins_date DESC";
+	
+	private static final String FIND_BY_INS_DATE = "SELECT sklg.sakelog_id, sklg.sakelog_name, sklg.rating, sklg.sakelog_comment, ctgr.category_name "
+			+ "FROM t_sakelog sklg "
+			+ "INNER JOIN m_category ctgr ON sklg.category_id = ctgr.category_id "
+			+ "WHERE sklg.ins_date BETWEEN ? AND ?  AND sklg.is_deleted = '0' "
+			+ "ORDER BY sklg.ins_date DESC";
 	
 	private static final String FIND_RATEST_ID = "SELECT sakelog_id "
 			+ "FROM (SELECT sakelog_id FROM t_sakelog ORDER BY ins_date DESC) "
@@ -327,6 +338,35 @@ public class SakelogDao {
 		return sakelogList;
 	}
 	
+	public static List<Sakelog> findByInsDate(String strInsDateOld, String strInsDateNew) {
+		List<Sakelog> sakelogList = new ArrayList<Sakelog>();
+		try (
+			Connection con = DBManager.getConnection();
+			PreparedStatement ps = con.prepareStatement(FIND_BY_INS_DATE)
+		){
+			LocalDate insDateOld = LocalDate.parse(strInsDateOld, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+			LocalDate insDateNew = LocalDate.parse(strInsDateNew, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+			java.sql.Date sqlInsDateOld = java.sql.Date.valueOf(insDateOld);
+			java.sql.Date sqlInsDateNew = java.sql.Date.valueOf(insDateNew.plusDays(1));
+			ps.setDate(1, sqlInsDateOld);
+			ps.setDate(2, sqlInsDateNew);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				Sakelog sakelog = new Sakelog();
+				sakelog.setSakelogId(rs.getInt("sakelog_id"));
+				sakelog.setSakelogName(rs.getString("sakelog_name"));
+				sakelog.setRating(rs.getInt("rating"));
+				sakelog.setSakelogComment(rs.getString("sakelog_comment"));
+				Category category = new Category();
+				category.setCategoryName(rs.getString("category_name"));
+				sakelog.setCategory(category);
+				sakelogList.add(sakelog);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return sakelogList;
+	}
 	
 	public static int findRatestId() {
 		int sakelogId = 0;

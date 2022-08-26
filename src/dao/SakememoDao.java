@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,12 +38,20 @@ public class SakememoDao {
 	private static final String FIND_BY_SAKEMEMO_NAME = "SELECT skmm.sakememo_id, skmm.sakememo_name, skmm.sakememo_comment, ctgr.category_name "
 			+ "FROM t_sakememo skmm "
 			+ "INNER JOIN m_category ctgr ON skmm.category_id = ctgr.category_id "
-			+ "WHERE skmm.sakememo_name LIKE ? AND skmm.is_deleted = '0'";
+			+ "WHERE skmm.sakememo_name LIKE ? AND skmm.is_deleted = '0' "
+			+ "ORDER BY skmm.ins_date DESC";
 	
 	private static final String FIND_BY_CATEGORY_ID = "SELECT skmm.sakememo_id, skmm.sakememo_name, skmm.sakememo_comment, ctgr.category_name "
 			+ "FROM t_sakememo skmm "
 			+ "INNER JOIN m_category ctgr ON skmm.category_id = ctgr.category_id "
-			+ "WHERE skmm.category_id = ? AND skmm.is_deleted = '0'";
+			+ "WHERE skmm.category_id = ? AND skmm.is_deleted = '0' "
+			+ "ORDER BY skmm.ins_date DESC";
+	
+	private static final String FIND_BY_INS_DATE = "SELECT skmm.sakememo_id, skmm.sakememo_name, skmm.sakememo_comment, ctgr.category_name "
+			+ "FROM t_sakememo skmm "
+			+ "INNER JOIN m_category ctgr ON skmm.category_id = ctgr.category_id "
+			+ "WHERE skmm.ins_date BETWEEN ? AND ?  AND skmm.is_deleted = '0' "
+			+ "ORDER BY skmm.ins_date DESC";
 	
 	
 	private static final String INSERT = "INSERT INTO t_sakememo "
@@ -223,7 +233,37 @@ public class SakememoDao {
 		int categoryId = Integer.parseInt(strCategoryId);
 		List<Sakememo> sakememoList = findByCategoryId(categoryId);
 		return sakememoList;
-	}	
+	}
+	
+	public static List<Sakememo> findByInsDate(String strInsDateOld, String strInsDateNew){
+		List<Sakememo> sakememoList = new ArrayList<Sakememo>();
+		try (
+			Connection con = DBManager.getConnection();
+			PreparedStatement ps = con.prepareStatement(FIND_BY_INS_DATE)
+		){
+			LocalDate insDateOld = LocalDate.parse(strInsDateOld, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+			LocalDate insDateNew = LocalDate.parse(strInsDateNew, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+			java.sql.Date sqlInsDateOld = java.sql.Date.valueOf(insDateOld);
+			java.sql.Date sqlInsDateNew = java.sql.Date.valueOf(insDateNew.plusDays(1));
+			ps.setDate(1, sqlInsDateOld);
+			ps.setDate(2, sqlInsDateNew);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				Sakememo sakememo = new Sakememo();
+				sakememo.setSakememoId(rs.getInt("sakememo_id"));
+				sakememo.setSakememoName(rs.getString("sakememo_name"));
+				sakememo.setSakememoComment(rs.getString("sakememo_comment"));
+				Category category = new Category();
+				category.setCategoryName(rs.getString("category_name"));
+				sakememo.setCategory(category);
+				sakememoList.add(sakememo);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return sakememoList;
+	}
+	
 	
 	public static void insert(Sakememo sakememo) {
 		try (

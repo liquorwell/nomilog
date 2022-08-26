@@ -57,6 +57,10 @@ public class FilterSakememoServlet extends HttpServlet {
 				String categoryId = request.getParameter("category_id");
 				sakememoList = SakememoDao.findByCategoryId(categoryId);
 				break;
+			case "ins_date":
+				String insDateOld = request.getParameter("ins_date_old");
+				String insDateNew = request.getParameter("ins_date_new");
+				sakememoList = SakememoDao.findByInsDate(insDateOld, insDateNew);
 		}
 		request.setAttribute("sakememoList", sakememoList);
 		

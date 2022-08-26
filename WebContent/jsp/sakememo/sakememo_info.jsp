@@ -11,7 +11,7 @@
 	<%@include file="/jsp/common/header.jsp" %>
 
 	<p>酒メモ画面</p>
-	<p>日付絞り込み、並べ替えが可能</p>
+	<p>日付絞り込み</p>
 	
 		<form method="post" action="<%=request.getContextPath()%>/sakememo_filter">
 		<input type="radio" id="name" name="filter_type" value="name" checked>
@@ -25,6 +25,9 @@
 			  	<option value="${category.categoryId}">${category.categoryName}</option>
 			  </c:forEach>
 			</select>
+		<input type="radio" id="ins_date" name="filter_type" value="ins_date">
+			<label for="ins_date">登録日：</label>
+			<input type="date" name="ins_date_old"> ～ <input type="date" name="ins_date_new"> 
 		<button type="submit">絞り込み</button>
 		<a href="<%=request.getContextPath()%>/sakememo">絞り込み解除</a>
 	</form>
