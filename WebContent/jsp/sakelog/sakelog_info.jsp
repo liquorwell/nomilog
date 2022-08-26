@@ -37,6 +37,16 @@
 		<a href="<%=request.getContextPath()%>/sakelog">絞り込み解除</a>
 	</form>
 	
+	<form method="post" action="<%=request.getContextPath()%>/sakelog_sort">
+		<select id="sort" name="sort_type">
+			<option value="ins_date_desc" selected>登録日の新しい順</option>
+			<option value="ins_date_asc">登録日の古い順</option>
+			<option value="rating_desc">評価の高い順</option>
+			<option value="rating_asc">評価の低い順</option>
+			<option value="category">カテゴリ順</option>
+		</select>
+		<button type="submit">並び替え</button>
+	</form>
 	
 	<table>
 		<tr>

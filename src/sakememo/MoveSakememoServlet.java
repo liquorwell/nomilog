@@ -65,7 +65,7 @@ public class MoveSakememoServlet extends HttpServlet {
 		
 		SakememoDao.move(sakememoId);
 		
-		List<Sakelog> sakelogList = SakelogDao.findByUserId(user.getUserId());
+		List<Sakelog> sakelogList = SakelogDao.findByUserIdInsDateDesc(user.getUserId());
 		request.setAttribute("sakelogList", sakelogList);
 		request.getRequestDispatcher("jsp/sakelog/sakelog_info.jsp").forward(request, response);
 	}

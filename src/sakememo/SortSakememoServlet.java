@@ -1,6 +1,7 @@
 package sakememo;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -17,16 +18,16 @@ import dao.CategoryDao;
 import dao.SakememoDao;
 
 /**
- * Servlet implementation class UpdateSakememoServlet
+ * Servlet implementation class SortSakememoServlet
  */
-@WebServlet("/sakememo_update")
-public class UpdateSakememoServlet extends HttpServlet {
+@WebServlet("/sakememo_sort")
+public class SortSakememoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public UpdateSakememoServlet() {
+    public SortSakememoServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -44,24 +45,29 @@ public class UpdateSakememoServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String sakememoId = request.getParameter("sakememo_id");
-		String sakememoName = request.getParameter("sakememo_name");
-		String categoryId = request.getParameter("category_id");
-		Category category = CategoryDao.findById(categoryId);
-		String sakememoComment = request.getParameter("sakememo_comment");
-		
-		Sakememo sakememo = new Sakememo();
-		sakememo.setSakememoId(sakememoId);
-		sakememo.setSakememoName(sakememoName);
-		sakememo.setCategory(category);
-		sakememo.setSakememoComment(sakememoComment);
-		SakememoDao.update(sakememo);
+		String sortType = request.getParameter("sort_type");
 		
 		HttpSession session = request.getSession();
 		User user = (User)session.getAttribute("user");
-		List<Sakememo> sakememoList = SakememoDao.findByUserIdInsDateDesc(user.getUserId());
+		int userId = user.getUserId();
+		
+		List<Sakememo> sakememoList =  new ArrayList<Sakememo>();
+		switch (sortType) {
+			case "ins_date_desc":
+				sakememoList = SakememoDao.findByUserIdInsDateDesc(userId);
+				break;
+			case "ins_date_asc":
+				sakememoList = SakememoDao.findByUserIdInsDateAsc(userId);
+				break;
+			case "category":
+				sakememoList = SakememoDao.findByUserIdCategoryIdAsc(userId);
+				break;
+		}
 		request.setAttribute("sakememoList", sakememoList);
-		request.getRequestDispatcher("jsp/sakememo/sakememo_info.jsp").forward(request, response);
+		
+		List<Category> categoryList = CategoryDao.findByUserId(userId);
+		session.setAttribute("categoryList", categoryList);
+		
+		request.getRequestDispatcher("/jsp/sakememo/sakememo_info.jsp").forward(request, response);
 	}
-
 }

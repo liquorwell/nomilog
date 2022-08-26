@@ -54,7 +54,7 @@ public class LoginServlet extends HttpServlet {
 		User user = UserDao.findByNamePass(userName, userPass);
 		session.setAttribute("user", user);
 		
-		List<Sakelog> sakelogList = SakelogDao.findByUserId(user.getUserId());
+		List<Sakelog> sakelogList = SakelogDao.findByUserIdInsDateDesc(user.getUserId());
 		request.setAttribute("sakelogList", sakelogList);
 		
 		List<Category> categoryList = CategoryDao.findByUserId(user.getUserId());

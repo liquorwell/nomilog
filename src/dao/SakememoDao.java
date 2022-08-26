@@ -15,10 +15,23 @@ public class SakememoDao {
 			+ "FROM t_sakememo "
 			+ "WHERE sakememo_id = ? AND is_deleted = '0'";
 	
-	private static final String FIND_BY_USER_ID = "SELECT skmm.sakememo_id, skmm.sakememo_name, skmm.sakememo_comment, ctgr.category_name "
+	private static final String FIND_BY_USER_ID_INS_DATE_DESC = "SELECT skmm.sakememo_id, skmm.sakememo_name, skmm.sakememo_comment, ctgr.category_name "
 			+ "FROM t_sakememo skmm "
 			+ "INNER JOIN m_category ctgr ON skmm.category_id = ctgr.category_id "
-			+ "WHERE skmm.user_id = ? AND skmm.is_deleted = '0'";
+			+ "WHERE skmm.user_id = ? AND skmm.is_deleted = '0' "
+			+ "ORDER BY skmm.ins_date DESC";
+	
+	private static final String FIND_BY_USER_ID_INS_DATE_ASC = "SELECT skmm.sakememo_id, skmm.sakememo_name, skmm.sakememo_comment, ctgr.category_name "
+			+ "FROM t_sakememo skmm "
+			+ "INNER JOIN m_category ctgr ON skmm.category_id = ctgr.category_id "
+			+ "WHERE skmm.user_id = ? AND skmm.is_deleted = '0' "
+			+ "ORDER BY skmm.ins_date ASC";
+	
+	private static final String FIND_BY_USER_ID_CATEGORY_ID_ASC = "SELECT skmm.sakememo_id, skmm.sakememo_name, skmm.sakememo_comment, ctgr.category_name "
+			+ "FROM t_sakememo skmm "
+			+ "INNER JOIN m_category ctgr ON skmm.category_id = ctgr.category_id "
+			+ "WHERE skmm.user_id = ? AND skmm.is_deleted = '0' "
+			+ "ORDER BY skmm.category_id ASC";
 	
 	private static final String FIND_BY_SAKEMEMO_NAME = "SELECT skmm.sakememo_id, skmm.sakememo_name, skmm.sakememo_comment, ctgr.category_name "
 			+ "FROM t_sakememo skmm "
@@ -82,11 +95,11 @@ public class SakememoDao {
 		return sakememo;
 	}
 	
-	public static List<Sakememo> findByUserId(int userId){
+	public static List<Sakememo> findByUserIdInsDateDesc(int userId){
 		List<Sakememo> sakememoList = new ArrayList<Sakememo>();
 		try (
 			Connection con = DBManager.getConnection();
-			PreparedStatement ps = con.prepareStatement(FIND_BY_USER_ID)
+			PreparedStatement ps = con.prepareStatement(FIND_BY_USER_ID_INS_DATE_DESC)
 		){
 			ps.setInt(1, userId);
 			ResultSet rs = ps.executeQuery();
@@ -105,9 +118,57 @@ public class SakememoDao {
 		}
 		return sakememoList;
 	}
-	public static List<Sakememo> findByUserId(String strUserId) {
+	
+	public static List<Sakememo> findByUserIdInsDateAsc(int userId){
+		List<Sakememo> sakememoList = new ArrayList<Sakememo>();
+		try (
+			Connection con = DBManager.getConnection();
+			PreparedStatement ps = con.prepareStatement(FIND_BY_USER_ID_INS_DATE_ASC)
+		){
+			ps.setInt(1, userId);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				Sakememo sakememo = new Sakememo();
+				sakememo.setSakememoId(rs.getInt("sakememo_id"));
+				sakememo.setSakememoName(rs.getString("sakememo_name"));
+				sakememo.setSakememoComment(rs.getString("sakememo_comment"));
+				Category category = new Category();
+				category.setCategoryName(rs.getString("category_name"));
+				sakememo.setCategory(category);
+				sakememoList.add(sakememo);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return sakememoList;
+	}
+	
+	public static List<Sakememo> findByUserIdCategoryIdAsc(int userId){
+		List<Sakememo> sakememoList = new ArrayList<Sakememo>();
+		try (
+			Connection con = DBManager.getConnection();
+			PreparedStatement ps = con.prepareStatement(FIND_BY_USER_ID_CATEGORY_ID_ASC)
+		){
+			ps.setInt(1, userId);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				Sakememo sakememo = new Sakememo();
+				sakememo.setSakememoId(rs.getInt("sakememo_id"));
+				sakememo.setSakememoName(rs.getString("sakememo_name"));
+				sakememo.setSakememoComment(rs.getString("sakememo_comment"));
+				Category category = new Category();
+				category.setCategoryName(rs.getString("category_name"));
+				sakememo.setCategory(category);
+				sakememoList.add(sakememo);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return sakememoList;
+	}
+	public static List<Sakememo> findByUserIdInsDateDesc(String strUserId) {
 		int userId = Integer.parseInt(strUserId);
-		List<Sakememo> sakememoList = findByUserId(userId);
+		List<Sakememo> sakememoList = findByUserIdInsDateDesc(userId);
 		return sakememoList;
 	}
 	

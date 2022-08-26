@@ -38,7 +38,7 @@ public class TransitionToSakelogInfoServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		User user = (User)session.getAttribute("user");
 		
-		List<Sakelog> sakelogList = SakelogDao.findByUserId(user.getUserId());
+		List<Sakelog> sakelogList = SakelogDao.findByUserIdInsDateDesc(user.getUserId());
 		request.setAttribute("sakelogList", sakelogList);
 		
 		request.getRequestDispatcher("/jsp/sakelog/sakelog_info.jsp").forward(request, response);

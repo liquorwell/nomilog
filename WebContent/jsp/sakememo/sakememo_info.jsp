@@ -29,6 +29,15 @@
 		<a href="<%=request.getContextPath()%>/sakememo">絞り込み解除</a>
 	</form>
 	
+	<form method="post" action="<%=request.getContextPath()%>/sakememo_sort">
+		<select id="sort" name="sort_type">
+			<option value="ins_date_desc" selected>登録日の新しい順</option>
+			<option value="ins_date_asc">登録日の古い順</option>
+			<option value="category">カテゴリ順</option>
+		</select>
+		<button type="submit">並び替え</button>
+	</form>
+	
 	<table>
 		<tr>
 			<th>酒メモ名</th>
