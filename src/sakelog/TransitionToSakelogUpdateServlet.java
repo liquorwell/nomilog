@@ -41,7 +41,7 @@ public class TransitionToSakelogUpdateServlet extends HttpServlet {
 		List<Category> categoryList = CategoryDao.findByUserId(user.getUserId());
 		session.setAttribute("categoryList", categoryList);
 		String sakelogId = request.getParameter("sakelog_id");
-		Sakelog sakelog = SakelogDao.findById(sakelogId);
+		Sakelog sakelog = SakelogDao.findBySakelogId(sakelogId);
 		request.setAttribute("sakelog", sakelog);
 		request.getRequestDispatcher("jsp/sakelog/sakelog_update.jsp").forward(request, response);
 	}

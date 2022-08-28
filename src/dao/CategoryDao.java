@@ -11,7 +11,7 @@ import bean.Category;
 
 public class CategoryDao {
 	
-	private static final String FIND_BY_ID = "SELECT category_id, category_name "
+	private static final String FIND_BY_CATEGORY_ID = "SELECT category_id, category_name "
 			+ "FROM m_category "
 			+ "WHERE category_id = ? AND is_deleted = '0'";
 	
@@ -36,11 +36,11 @@ public class CategoryDao {
 			+ "SET is_deleted = '1', upd_date = sysdate "
 			+ "WHERE user_id = ?";
 	
-	public static Category findById(int categoryId) {
+	public static Category findByCategoryId(int categoryId) {
 		Category category = null;
 		try (
 			Connection con = DBManager.getConnection();
-			PreparedStatement ps = con.prepareStatement(FIND_BY_ID)
+			PreparedStatement ps = con.prepareStatement(FIND_BY_CATEGORY_ID)
 		){
 			ps.setInt(1, categoryId);
 			ResultSet rs = ps.executeQuery();
@@ -54,9 +54,9 @@ public class CategoryDao {
 		}
 		return category;
 	}
-	public static Category findById(String strCategoryId) {
+	public static Category findByCategoryId(String strCategoryId) {
 		int categoryId = Integer.parseInt(strCategoryId);
-		Category category = findById(categoryId);
+		Category category = findByCategoryId(categoryId);
 		return category;
 	}
 	

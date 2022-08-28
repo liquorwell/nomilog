@@ -41,7 +41,7 @@ public class TransitionToSakememoMoveServlet extends HttpServlet {
 		List<Category> categoryList = CategoryDao.findByUserId(user.getUserId());
 		session.setAttribute("categoryList", categoryList);
 		String sakememoId = request.getParameter("sakememo_id");
-		Sakememo sakememo = SakememoDao.findById(sakememoId);
+		Sakememo sakememo = SakememoDao.findBySakememoId(sakememoId);
 		request.setAttribute("sakememo", sakememo);
 		request.getRequestDispatcher("jsp/sakememo/sakememo_move.jsp").forward(request, response);
 	}

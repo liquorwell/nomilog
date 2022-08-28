@@ -47,7 +47,7 @@ public class UpdateSakememoServlet extends HttpServlet {
 		String sakememoId = request.getParameter("sakememo_id");
 		String sakememoName = request.getParameter("sakememo_name");
 		String categoryId = request.getParameter("category_id");
-		Category category = CategoryDao.findById(categoryId);
+		Category category = CategoryDao.findByCategoryId(categoryId);
 		String sakememoComment = request.getParameter("sakememo_comment");
 		
 		Sakememo sakememo = new Sakememo();

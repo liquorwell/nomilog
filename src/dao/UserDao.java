@@ -9,11 +9,11 @@ import bean.User;
 
 public class UserDao {
 	
-	private static final String FIND_BY_ID = "SELECT user_id, user_name "
+	private static final String FIND_BY_USER_ID = "SELECT user_id, user_name "
 			+ "FROM m_user "
 			+ "WHERE user_id = ? AND is_deleted = '0'";
 	
-	private static final String FIND_BY_NAME_PASS = "SELECT user_id, user_name, user_pass, is_admin, display_order, revision "
+	private static final String FIND_BY_NAME_PASS = "SELECT user_id, user_name, user_pass, is_admin, revision "
 			+ "FROM m_user "
 			+ "WHERE user_name = ? AND user_pass = ? AND is_deleted = '0'";
 
@@ -36,11 +36,11 @@ public class UserDao {
 
 
 
-	public static User findById(int userId) {
+	public static User findByUserId(int userId) {
 		User user = null;
 		try (
 			Connection con = DBManager.getConnection();
-			PreparedStatement ps = con.prepareStatement(FIND_BY_ID)
+			PreparedStatement ps = con.prepareStatement(FIND_BY_USER_ID)
 		){
 			ps.setInt(1, userId);
 			ResultSet rs = ps.executeQuery();
@@ -56,7 +56,7 @@ public class UserDao {
 	}
 	public static User findById(String strUserId) {
 		int userId = Integer.parseInt(strUserId);
-		User user = findById(userId);
+		User user = findByUserId(userId);
 		return user;
 	}
 	

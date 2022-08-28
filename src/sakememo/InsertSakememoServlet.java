@@ -46,7 +46,7 @@ public class InsertSakememoServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		String sakememoName = request.getParameter("sakememo_name");
 		String categoryId = request.getParameter("category_id");
-		Category category = CategoryDao.findById(categoryId);
+		Category category = CategoryDao.findByCategoryId(categoryId);
 		String sakememoComment = request.getParameter("sakememo_comment");
 		HttpSession session = request.getSession();
 		User user = (User)session.getAttribute("user");
