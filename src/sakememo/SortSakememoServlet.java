@@ -63,6 +63,8 @@ public class SortSakememoServlet extends HttpServlet {
 		}
 		request.setAttribute("sakememoList", sakememoList);
 		
+		request.setAttribute("sortType", sortType);
+		
 		request.getRequestDispatcher("/jsp/sakememo/sakememo_info.jsp").forward(request, response);
 	}
 }
