@@ -19,11 +19,11 @@ public class SakelogDao {
 	
 	private static final String IS_NOT_DELETED = "AND is_deleted = '0' ";
 	private static final String BY_SAKELOG_ID = "WHERE sakelog_id = ? " + IS_NOT_DELETED;
-	private static final String BY_SAKELOG_NAME = "WHERE sakelog_name LIKE ? " + IS_NOT_DELETED;
-	private static final String BY_RATING = "WHERE rating = ? " + IS_NOT_DELETED;
-	private static final String BY_CATEGORY_ID = "WHERE category_id = ? " + IS_NOT_DELETED;
+	private static final String BY_SAKELOG_NAME = "WHERE user_id = ? AND sakelog_name LIKE ? " + IS_NOT_DELETED;
+	private static final String BY_RATING = "WHERE user_id = ? AND rating = ? " + IS_NOT_DELETED;
+	private static final String BY_CATEGORY_ID = "WHERE user_id = ? AND category_id = ? " + IS_NOT_DELETED;
 	private static final String BY_USER_ID = "WHERE user_id = ? " + IS_NOT_DELETED;
-	private static final String BY_INS_DATE = "WHERE ins_date BETWEEN ? AND ? " + IS_NOT_DELETED;
+	private static final String BY_INS_DATE = "WHERE user_id = ? AND ins_date BETWEEN ? AND ? " + IS_NOT_DELETED;
 	
 	private static final String ORDER_RATING = "ORDER BY rating ";
 	private static final String ORDER_CATEGORY_ID = "ORDER BY category_id ";
@@ -77,13 +77,14 @@ public class SakelogDao {
 		return sakelog;
 	}
 	
-	public static List<Sakelog> findBySakelogName(String sakelogName) {
+	public static List<Sakelog> findBySakelogName(int userId, String sakelogName) {
 		List<Sakelog> sakelogList = new ArrayList<Sakelog>();
 		try (
 			Connection con = DBManager.getConnection();
 			PreparedStatement ps = con.prepareStatement(FIND + BY_SAKELOG_NAME + ORDER_INS_DATE + DESC)
 		){
-			ps.setString(1, "%"+sakelogName+"%");
+			ps.setInt(1, userId);
+			ps.setString(2, "%"+sakelogName+"%");
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				Sakelog sakelog = resultSakelog(rs);
@@ -95,13 +96,14 @@ public class SakelogDao {
 		return sakelogList;
 	}
 	
-	public static List<Sakelog> findByRating(int rating) {
+	public static List<Sakelog> findByRating(int userId, int rating) {
 		List<Sakelog> sakelogList = new ArrayList<Sakelog>();
 		try (
 			Connection con = DBManager.getConnection();
 			PreparedStatement ps = con.prepareStatement(FIND + BY_RATING + ORDER_INS_DATE + DESC)
 		){
-			ps.setInt(1, rating);
+			ps.setInt(1, userId);
+			ps.setInt(2, rating);
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				Sakelog sakelog = resultSakelog(rs);
@@ -112,19 +114,20 @@ public class SakelogDao {
 		}
 		return sakelogList;
 	}
-	public static List<Sakelog> findByRating(String strRating) {
+	public static List<Sakelog> findByRating(int userId, String strRating) {
 		int rating = Integer.parseInt(strRating);
-		List<Sakelog> sakelogList = findByRating(rating);
+		List<Sakelog> sakelogList = findByRating(userId, rating);
 		return sakelogList;
 	}
 	
-	public static List<Sakelog> findByCategoryId(int categoryId) {
+	public static List<Sakelog> findByCategoryId(int userId, int categoryId) {
 		List<Sakelog> sakelogList = new ArrayList<Sakelog>();
 		try (
 			Connection con = DBManager.getConnection();
 			PreparedStatement ps = con.prepareStatement(FIND + BY_CATEGORY_ID + ORDER_INS_DATE + DESC)
 		){
-			ps.setInt(1, categoryId);
+			ps.setInt(1, userId);
+			ps.setInt(2, categoryId);
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				Sakelog sakelog = resultSakelog(rs);
@@ -135,9 +138,9 @@ public class SakelogDao {
 		}
 		return sakelogList;
 	}
-	public static List<Sakelog> findByCategoryId(String strCategoryId) {
+	public static List<Sakelog> findByCategoryId(int userId, String strCategoryId) {
 		int categoryId = Integer.parseInt(strCategoryId);
-		List<Sakelog> sakelogList = findByCategoryId(categoryId);
+		List<Sakelog> sakelogList = findByCategoryId(userId, categoryId);
 		return sakelogList;
 	}
 	
@@ -189,7 +192,7 @@ public class SakelogDao {
 			return sakelogList;
 		}
 	
-	public static List<Sakelog> findByInsDate(String strInsDateOld, String strInsDateNew) {
+	public static List<Sakelog> findByInsDate(int userId, String strInsDateOld, String strInsDateNew) {
 		List<Sakelog> sakelogList = new ArrayList<Sakelog>();
 		try (
 			Connection con = DBManager.getConnection();
@@ -199,8 +202,9 @@ public class SakelogDao {
 			LocalDate insDateNew = LocalDate.parse(strInsDateNew, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 			java.sql.Date sqlInsDateOld = java.sql.Date.valueOf(insDateOld);
 			java.sql.Date sqlInsDateNew = java.sql.Date.valueOf(insDateNew.plusDays(1));
-			ps.setDate(1, sqlInsDateOld);
-			ps.setDate(2, sqlInsDateNew);
+			ps.setInt(1, userId);
+			ps.setDate(2, sqlInsDateOld);
+			ps.setDate(3, sqlInsDateNew);
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				Sakelog sakelog = resultSakelog(rs);

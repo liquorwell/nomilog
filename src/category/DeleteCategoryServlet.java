@@ -40,7 +40,8 @@ public class DeleteCategoryServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		User user = (User)session.getAttribute("user");
 		List<Category> categoryList = CategoryDao.findByUserId(user.getUserId());
-		request.setAttribute("categoryList", categoryList);
+		session.setAttribute("categoryList", categoryList);
+		
 		request.getRequestDispatcher("jsp/category/category_info.jsp").forward(request, response);
 	}
 

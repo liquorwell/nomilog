@@ -45,7 +45,6 @@ public class LoginServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-
 		HttpSession session = request.getSession(false);
 		session.removeAttribute("user");
 		
@@ -54,14 +53,13 @@ public class LoginServlet extends HttpServlet {
 		User user = UserDao.findByNamePass(userName, userPass);
 		session.setAttribute("user", user);
 		
-		List<Sakelog> sakelogList = SakelogDao.findByUserIdInsDateDesc(user.getUserId());
-		request.setAttribute("sakelogList", sakelogList);
-		
 		List<Category> categoryList = CategoryDao.findByUserId(user.getUserId());
 		session.setAttribute("categoryList", categoryList);
 		
+		List<Sakelog> sakelogList = SakelogDao.findByUserIdInsDateDesc(user.getUserId());
+		request.setAttribute("sakelogList", sakelogList);
+		
 		request.getRequestDispatcher("/jsp/sakelog/sakelog_info.jsp").forward(request, response);
-
 	}
 
 }

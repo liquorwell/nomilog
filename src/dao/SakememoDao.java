@@ -19,10 +19,10 @@ public class SakememoDao {
 	
 	private static final String IS_NOT_DELETED = "AND is_deleted = '0' ";
 	private static final String BY_SAKEMEMO_ID = "WHERE sakememo_id = ? " + IS_NOT_DELETED;
-	private static final String BY_SAKEMEMO_NAME = "WHERE sakememo_name LIKE ? " + IS_NOT_DELETED;
-	private static final String BY_CATEGORY_ID = "WHERE category_id = ? " + IS_NOT_DELETED;
+	private static final String BY_SAKEMEMO_NAME = "WHERE user_id = ? AND sakememo_name LIKE ? " + IS_NOT_DELETED;
+	private static final String BY_CATEGORY_ID = "WHERE user_id = ? AND category_id = ? " + IS_NOT_DELETED;
 	private static final String BY_USER_ID = "WHERE user_id = ? " + IS_NOT_DELETED;
-	private static final String BY_INS_DATE = "WHERE ins_date BETWEEN ? AND ? " + IS_NOT_DELETED;
+	private static final String BY_INS_DATE = "WHERE user_id = ? AND ins_date BETWEEN ? AND ? " + IS_NOT_DELETED;
 	
 	private static final String ORDER_CATEGORY_ID = "ORDER BY category_id ";
 	private static final String ORDER_INS_DATE = "ORDER BY ins_date ";
@@ -76,13 +76,14 @@ public class SakememoDao {
 		return sakememo;
 	}
 	
-	public static List<Sakememo> findBySakememoName(String sakememoName) {
+	public static List<Sakememo> findBySakememoName(int userId, String sakememoName) {
 		List<Sakememo> sakememoList = new ArrayList<Sakememo>();
 		try (
 			Connection con = DBManager.getConnection();
 			PreparedStatement ps = con.prepareStatement(FIND + BY_SAKEMEMO_NAME + ORDER_INS_DATE + DESC)
 		){
-			ps.setString(1, "%"+sakememoName+"%");
+			ps.setInt(1, userId);
+			ps.setString(2, "%"+sakememoName+"%");
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				Sakememo sakememo = resultSakememo(rs);
@@ -94,13 +95,14 @@ public class SakememoDao {
 		return sakememoList;
 	}
 	
-	public static List<Sakememo> findByCategoryId(int categoryId){
+	public static List<Sakememo> findByCategoryId(int userId, int categoryId){
 		List<Sakememo> sakememoList = new ArrayList<Sakememo>();
 		try (
 			Connection con = DBManager.getConnection();
 			PreparedStatement ps = con.prepareStatement(FIND + BY_CATEGORY_ID + ORDER_INS_DATE + DESC)
 		){
-			ps.setInt(1, categoryId);
+			ps.setInt(1, userId);
+			ps.setInt(2, categoryId);
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				Sakememo sakememo = resultSakememo(rs);
@@ -111,9 +113,9 @@ public class SakememoDao {
 		}
 		return sakememoList;
 	}
-	public static List<Sakememo> findByCategoryId(String strCategoryId) {
+	public static List<Sakememo> findByCategoryId(int userId, String strCategoryId) {
 		int categoryId = Integer.parseInt(strCategoryId);
-		List<Sakememo> sakememoList = findByCategoryId(categoryId);
+		List<Sakememo> sakememoList = findByCategoryId(userId, categoryId);
 		return sakememoList;
 	}
 	
@@ -155,7 +157,7 @@ public class SakememoDao {
 			return sakememoList;
 		}
 	
-	public static List<Sakememo> findByInsDate(String strInsDateOld, String strInsDateNew){
+	public static List<Sakememo> findByInsDate(int userId, String strInsDateOld, String strInsDateNew){
 		List<Sakememo> sakememoList = new ArrayList<Sakememo>();
 		try (
 			Connection con = DBManager.getConnection();
@@ -165,8 +167,9 @@ public class SakememoDao {
 			LocalDate insDateNew = LocalDate.parse(strInsDateNew, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 			java.sql.Date sqlInsDateOld = java.sql.Date.valueOf(insDateOld);
 			java.sql.Date sqlInsDateNew = java.sql.Date.valueOf(insDateNew.plusDays(1));
-			ps.setDate(1, sqlInsDateOld);
-			ps.setDate(2, sqlInsDateNew);
+			ps.setInt(1, userId);
+			ps.setDate(2, sqlInsDateOld);
+			ps.setDate(3, sqlInsDateNew);
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				Sakememo sakememo = resultSakememo(rs);

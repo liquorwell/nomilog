@@ -34,6 +34,7 @@ public class TransitionToCategoryUpdateServlet extends HttpServlet {
 		String categoryId = request.getParameter("category_id");
 		Category category = CategoryDao.findByCategoryId(categoryId);
 		request.setAttribute("category", category);
+		
 		request.getRequestDispatcher("jsp/category/category_update.jsp").forward(request, response);
 	}
 

@@ -63,6 +63,7 @@ public class UpdateSakelogServlet extends HttpServlet {
 		User user = (User)session.getAttribute("user");
 		List<Sakelog> sakelogList = SakelogDao.findByUserIdInsDateDesc(user.getUserId());
 		request.setAttribute("sakelogList", sakelogList);
+		
 		request.getRequestDispatcher("jsp/sakelog/sakelog_info.jsp").forward(request, response);
 	}
 

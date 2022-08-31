@@ -52,7 +52,8 @@ public class InsertCategoryServlet extends HttpServlet {
 		CategoryDao.insert(category);
 		
 		List<Category> categoryList = CategoryDao.findByUserId(user.getUserId());
-		request.setAttribute("categoryList", categoryList);
+		session.setAttribute("categoryList", categoryList);
+		
 		request.getRequestDispatcher("jsp/category/category_info.jsp").forward(request, response);
 	}
 

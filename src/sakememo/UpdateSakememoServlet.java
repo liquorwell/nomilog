@@ -61,6 +61,7 @@ public class UpdateSakememoServlet extends HttpServlet {
 		User user = (User)session.getAttribute("user");
 		List<Sakememo> sakememoList = SakememoDao.findByUserIdInsDateDesc(user.getUserId());
 		request.setAttribute("sakememoList", sakememoList);
+		
 		request.getRequestDispatcher("jsp/sakememo/sakememo_info.jsp").forward(request, response);
 	}
 

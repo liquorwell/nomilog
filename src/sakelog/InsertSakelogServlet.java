@@ -1,7 +1,6 @@
 package sakelog;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -60,8 +59,6 @@ public class InsertSakelogServlet extends HttpServlet {
 		sakelog.setUser(user);
 		SakelogDao.insert(sakelog);
 		
-		List<Sakelog> sakelogList = SakelogDao.findByUserIdInsDateDesc(user.getUserId());
-		request.setAttribute("sakelogList", sakelogList);
 		request.getRequestDispatcher("jsp/sakelog/sakelog_info.jsp").forward(request, response);
 	}
 

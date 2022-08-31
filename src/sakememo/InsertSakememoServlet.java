@@ -60,6 +60,7 @@ public class InsertSakememoServlet extends HttpServlet {
 		
 		List<Sakememo> sakememoList = SakememoDao.findByUserIdInsDateDesc(user.getUserId());
 		request.setAttribute("sakememoList", sakememoList);
+		
 		request.getRequestDispatcher("jsp/sakememo/sakememo_info.jsp").forward(request, response);
 	}
 

@@ -48,6 +48,7 @@ public class UpdateUserNameServlet extends HttpServlet {
 		
 		user = UserDao.findByUserId(userId);
 		session.setAttribute("user", user);
+		
 		request.getRequestDispatcher("/jsp/user/user_info.jsp").forward(request, response);
 	}
 

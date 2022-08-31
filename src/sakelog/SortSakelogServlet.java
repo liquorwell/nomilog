@@ -11,10 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import bean.Category;
 import bean.Sakelog;
 import bean.User;
-import dao.CategoryDao;
 import dao.SakelogDao;
 
 /**
@@ -71,8 +69,7 @@ public class SortSakelogServlet extends HttpServlet {
 		}
 		request.setAttribute("sakelogList", sakelogList);
 		
-		List<Category> categoryList = CategoryDao.findByUserId(userId);
-		session.setAttribute("categoryList", categoryList);
+		request.setAttribute("sortType", sortType);
 		
 		request.getRequestDispatcher("/jsp/sakelog/sakelog_info.jsp").forward(request, response);
 	}

@@ -11,10 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import bean.Category;
 import bean.Sakememo;
 import bean.User;
-import dao.CategoryDao;
 import dao.SakememoDao;
 
 /**
@@ -64,9 +62,6 @@ public class SortSakememoServlet extends HttpServlet {
 				break;
 		}
 		request.setAttribute("sakememoList", sakememoList);
-		
-		List<Category> categoryList = CategoryDao.findByUserId(userId);
-		session.setAttribute("categoryList", categoryList);
 		
 		request.getRequestDispatcher("/jsp/sakememo/sakememo_info.jsp").forward(request, response);
 	}

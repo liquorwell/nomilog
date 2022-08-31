@@ -59,7 +59,10 @@ public class UpdateUserPassServlet extends HttpServlet {
 		
 		if (errorMessage == null) {
 			UserDao.updateUserPass(userId, newPass);
+			user = UserDao.findByUserId(userId);
+			session.setAttribute("user", user);
 			request.getRequestDispatcher("/jsp/user/user_info.jsp").forward(request, response);
+			
 		} else {
 			request.setAttribute("errorMessage", errorMessage);
 			request.getRequestDispatcher("/jsp/user/user_pass_update.jsp").forward(request, response);

@@ -11,10 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import bean.Category;
 import bean.Sakememo;
 import bean.User;
-import dao.CategoryDao;
 import dao.SakememoDao;
 
 /**
@@ -47,27 +45,26 @@ public class FilterSakememoServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		String filterType = request.getParameter("filter_type");
 		
+		HttpSession session = request.getSession();
+		User user = (User)session.getAttribute("user");
+		int userId = user.getUserId();
+		
 		List<Sakememo> sakememoList =  new ArrayList<Sakememo>();
 		switch (filterType) {
 			case "name":
 				String sakememoName = request.getParameter("sakememo_name");
-				sakememoList = SakememoDao.findBySakememoName(sakememoName);
+				sakememoList = SakememoDao.findBySakememoName(userId, sakememoName);
 				break;
 			case "category":
 				String categoryId = request.getParameter("category_id");
-				sakememoList = SakememoDao.findByCategoryId(categoryId);
+				sakememoList = SakememoDao.findByCategoryId(userId, categoryId);
 				break;
 			case "ins_date":
 				String insDateOld = request.getParameter("ins_date_old");
 				String insDateNew = request.getParameter("ins_date_new");
-				sakememoList = SakememoDao.findByInsDate(insDateOld, insDateNew);
+				sakememoList = SakememoDao.findByInsDate(userId, insDateOld, insDateNew);
 		}
 		request.setAttribute("sakememoList", sakememoList);
-		
-		HttpSession session = request.getSession();
-		User user = (User)session.getAttribute("user");
-		List<Category> categoryList = CategoryDao.findByUserId(user.getUserId());
-		session.setAttribute("categoryList", categoryList);
 		
 		request.getRequestDispatcher("/jsp/sakememo/sakememo_info.jsp").forward(request, response);
 	}

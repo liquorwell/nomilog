@@ -11,10 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import bean.Category;
 import bean.Sakelog;
 import bean.User;
-import dao.CategoryDao;
 import dao.SakelogDao;
 
 /**
@@ -47,31 +45,37 @@ public class FilterSakelogServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		String filterType = request.getParameter("filter_type");
 		
+		HttpSession session = request.getSession();
+		User user = (User)session.getAttribute("user");
+		int userId = user.getUserId();
+		
 		List<Sakelog> sakelogList =  new ArrayList<Sakelog>();
 		switch (filterType) {
 			case "name":
 				String sakelogName = request.getParameter("sakelog_name");
-				sakelogList = SakelogDao.findBySakelogName(sakelogName);
+				sakelogList = SakelogDao.findBySakelogName(userId, sakelogName);
+				request.setAttribute("nameFilterValue", sakelogName);
 				break;
 			case "category":
 				String categoryId = request.getParameter("category_id");
-				sakelogList = SakelogDao.findByCategoryId(categoryId);
+				sakelogList = SakelogDao.findByCategoryId(userId, categoryId);
+				request.setAttribute("categoryFilterValue", categoryId);
 				break;
 			case "rating":
 				String rating = request.getParameter("rating");
-				sakelogList = SakelogDao.findByRating(rating);
+				sakelogList = SakelogDao.findByRating(userId, rating);
+				request.setAttribute("ratingFilterValue", rating);
 				break;
 			case "ins_date":
 				String insDateOld = request.getParameter("ins_date_old");
 				String insDateNew = request.getParameter("ins_date_new");
-				sakelogList = SakelogDao.findByInsDate(insDateOld, insDateNew);
+				sakelogList = SakelogDao.findByInsDate(userId, insDateOld, insDateNew);
+				request.setAttribute("insDateOldFilterValue", insDateOld);
+				request.setAttribute("insDateNewFilterValue", insDateNew);
 		}
 		request.setAttribute("sakelogList", sakelogList);
 		
-		HttpSession session = request.getSession();
-		User user = (User)session.getAttribute("user");
-		List<Category> categoryList = CategoryDao.findByUserId(user.getUserId());
-		session.setAttribute("categoryList", categoryList);
+		request.setAttribute("filterType", filterType);
 		
 		request.getRequestDispatcher("/jsp/sakelog/sakelog_info.jsp").forward(request, response);
 	}
