@@ -15,13 +15,12 @@
 			<p>本当にユーザーを削除しますか？</p>
 			<p>ユーザーを削除すると、酒ログ・酒メモなどの情報もすべて削除されます。</p>
 			
-			<p>${errorMessage}</p>
-			
 			<form id="user_delete" method="post" action="<%=request.getContextPath()%>/user_delete">
 				<ul>
 					<li>
 						<label for="pass">パスワードを入力：</label>
 						<input type="password" id="pass" name="user_pass">
+						<p>${userError.userPassErrorMessage}</p>
 					</li>
 					<li>
 						<button type="submit">削除</button>

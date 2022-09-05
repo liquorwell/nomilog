@@ -18,6 +18,7 @@
 					<li>
 						<label for="name">ユーザー名：</label>
 						<input type="text" id="name" name="user_name" value="${user.userName}">
+						${userError.userNameErrorMessage}
 					</li>
 					<li>
 						<button type="submit">更新</button>

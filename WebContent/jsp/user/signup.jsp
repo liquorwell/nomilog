@@ -13,17 +13,19 @@
 	<main>
 		<div class="contents">
 			<p>ユーザー登録フォーム</p>
-			<p>${errorMessage}</p>
+			<p>${userError.userExistErrorMessage}</p>
 			
 			<form id="signup_form" method="post" action="<%=request.getContextPath()%>/signup">
 				<ul>
 					<li>
 						<label for="name">ユーザー名：</label>
 						<input type="text" id="name" name="user_name">
+						${userError.userNameErrorMessage}
 					</li>
 					<li>
 						<label for="pass">パスワード：</label>
 						<input type="password" id="pass" name="user_pass">
+						${userError.userPassErrorMessage}
 					</li>
 					<li>
 						<label for="checkpass">パスワード（確認用）：</label>

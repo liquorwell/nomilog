@@ -9,9 +9,13 @@ import bean.User;
 
 public class UserDao {
 	
-	private static final String FIND_BY_USER_ID = "SELECT user_id, user_name "
+	private static final String FIND_BY_USER_ID = "SELECT user_id, user_name, user_pass "
 			+ "FROM m_user "
 			+ "WHERE user_id = ? AND is_deleted = '0'";
+	
+	private static final String FIND_BY_USER_NAME = "SELECT user_id, user_name "
+			+ "FROM m_user "
+			+ "WHERE user_name = ? AND is_deleted = '0'";
 	
 	private static final String FIND_BY_NAME_PASS = "SELECT user_id, user_name, user_pass, is_admin, revision "
 			+ "FROM m_user "
@@ -48,6 +52,7 @@ public class UserDao {
 				user = new User();
 				user.setUserId(rs.getInt("user_id"));
 				user.setUserName(rs.getString("user_name"));
+				user.setUserPass(rs.getString("user_pass"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -57,6 +62,25 @@ public class UserDao {
 	public static User findById(String strUserId) {
 		int userId = Integer.parseInt(strUserId);
 		User user = findByUserId(userId);
+		return user;
+	}
+	
+	public static User findByUserName(String userName) {
+		User user = null;
+		try (
+			Connection con = DBManager.getConnection();
+			PreparedStatement ps = con.prepareStatement(FIND_BY_USER_NAME)
+		){
+			ps.setString(1, userName);
+			ResultSet rs = ps.executeQuery();
+			if(rs.next()) {
+				user = new User();
+				user.setUserId(rs.getInt("user_id"));
+				user.setUserName(rs.getString("user_name"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return user;
 	}
 	

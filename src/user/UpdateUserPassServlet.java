@@ -11,6 +11,8 @@ import javax.servlet.http.HttpSession;
 
 import bean.User;
 import dao.UserDao;
+import validation.UserError;
+import validation.UserValidation;
 
 /**
  * Servlet implementation class UpdateUserPassServlet
@@ -43,30 +45,22 @@ public class UpdateUserPassServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		User user = (User)session.getAttribute("user");
 		int userId = user.getUserId();
-		String userPass = user.getUserPass();
 		
 		String currPass = request.getParameter("curr_pass");
 		String newPass = request.getParameter("new_pass");
 		String checkPass = request.getParameter("check_pass");
 		
-		String errorMessage = null;
-		if (!currPass.equals(userPass)) {
-			errorMessage = "現在のパスワードが正しくありません。";
-		}
-		if (!newPass.equals(checkPass)) {
-			errorMessage = "新しいパスワードと確認用パスワードが違います。";
+		UserError userError = UserValidation.updateUserPassValidation(currPass, newPass, checkPass, userId);
+		if (userError != null) {
+			request.setAttribute("userError", userError);
+			request.getRequestDispatcher("/jsp/user/user_pass_update.jsp").forward(request, response);
+			return;
 		}
 		
-		if (errorMessage == null) {
-			UserDao.updateUserPass(userId, newPass);
-			user = UserDao.findByUserId(userId);
-			session.setAttribute("user", user);
-			request.getRequestDispatcher("/jsp/user/user_info.jsp").forward(request, response);
-			
-		} else {
-			request.setAttribute("errorMessage", errorMessage);
-			request.getRequestDispatcher("/jsp/user/user_pass_update.jsp").forward(request, response);
-		}
+		UserDao.updateUserPass(userId, newPass);
+		user = UserDao.findByUserId(userId);
+		session.setAttribute("user", user);
+		request.getRequestDispatcher("/jsp/user/user_info.jsp").forward(request, response);
 	}
 
 }

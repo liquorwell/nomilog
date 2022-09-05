@@ -11,6 +11,8 @@ import javax.servlet.http.HttpSession;
 
 import bean.User;
 import dao.UserDao;
+import validation.UserError;
+import validation.UserValidation;
 
 /**
  * Servlet implementation class SignUpServlet
@@ -44,9 +46,9 @@ public class SignUpServlet extends HttpServlet {
 		String userPass = request.getParameter("user_pass");
 		String checkPass = request.getParameter("check_pass");
 		
-		if (!userPass.equals(checkPass)) {
-			String errorMessage = "パスワードと確認用パスワードが異なります。";
-			request.setAttribute("errorMessage", errorMessage);
+		UserError userError = UserValidation.signUpValidation(userName, userPass, checkPass);		
+		if (userError != null) {
+			request.setAttribute("userError", userError);
 			request.getRequestDispatcher("jsp/user/signup.jsp").forward(request, response);
 			return;
 		}

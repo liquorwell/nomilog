@@ -61,7 +61,7 @@
 		<c:forEach var="sakelog" items="${sakelogList}">
 			<tr>
 				<td>${sakelog.sakelogName}</td>
-				<td>${sakelog.category.categoryName}</td>
+				<td>${sakelog.category.categoryName == null? "-":sakelog.category.categoryName}</td>
 				<td>${sakelog.rating}</td>
 				<td>${sakelog.sakelogComment}</td>
 				<td>

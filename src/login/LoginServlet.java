@@ -16,6 +16,8 @@ import bean.User;
 import dao.CategoryDao;
 import dao.SakelogDao;
 import dao.UserDao;
+import validation.UserError;
+import validation.UserValidation;
 
 /**
  * Servlet implementation class LoginServlet
@@ -45,11 +47,16 @@ public class LoginServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		HttpSession session = request.getSession(false);
-		session.removeAttribute("user");
-		
 		String userName = request.getParameter("user_name");
 		String userPass = request.getParameter("user_pass");
+		
+		UserError userError = UserValidation.loginValidation(userName, userPass);
+		if (userError != null) {
+			request.setAttribute("userError", userError);
+			request.getRequestDispatcher("/jsp/login.jsp").forward(request,response);
+		}
+		
+		HttpSession session = request.getSession();
 		User user = UserDao.findByNamePass(userName, userPass);
 		session.setAttribute("user", user);
 		

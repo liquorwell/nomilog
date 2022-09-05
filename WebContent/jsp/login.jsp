@@ -14,15 +14,19 @@
 		<div class="contents">
 			<p>ログイン画面とログインフォーム</p>
 			
+			${userError.userExistErrorMessage}
+			
 			<form id="loginform" method="post" action="<%=request.getContextPath()%>/login">
 				<ul>
 					<li>
-						<label for="name">ユーザー名：</label>
+						<label for="name">ユーザー名*</label>
 						<input type="text" id="name" name="user_name">
+						${userError.userNameErrorMessage}
 					</li>
 					<li>
-						<label for="pass">パスワード：</label>
+						<label for="pass">パスワード*</label>
 						<input type="password" id="pass" name="user_pass">
+						${userError.userPassErrorMessage}
 					</li>
 					<li>
 						<button type="submit">ログイン</button>

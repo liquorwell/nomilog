@@ -11,6 +11,8 @@ import javax.servlet.http.HttpSession;
 
 import bean.User;
 import dao.UserDao;
+import validation.UserError;
+import validation.UserValidation;
 
 /**
  * Servlet implementation class DeleteUserServlet
@@ -37,16 +39,16 @@ public class DeleteUserServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		User user = (User)session.getAttribute("user");
 		int userId = user.getUserId();
-		String checkPass = user.getUserPass();
 		
-		if(userPass.equals(checkPass)) {
-			UserDao.delete(userId);
-			response.sendRedirect("/nomilog");
-		} else {
-			String errorMessage = "パスワードが違います。";
-			request.setAttribute("errorMessage", errorMessage);
+		UserError userError = UserValidation.deleteUserValidation(userPass, userId);
+		if (userError != null) {
+			request.setAttribute("userError", userError);
 			request.getRequestDispatcher("/jsp/user/user_delete_check.jsp").forward(request, response);
+			return;
 		}
+		
+		UserDao.delete(userId);
+		response.sendRedirect("/nomilog");
 		
 	}
 

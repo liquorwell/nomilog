@@ -11,6 +11,8 @@ import javax.servlet.http.HttpSession;
 
 import bean.User;
 import dao.UserDao;
+import validation.UserError;
+import validation.UserValidation;
 
 /**
  * Servlet implementation class UpdateUserNameServlet
@@ -43,7 +45,15 @@ public class UpdateUserNameServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		User user = (User)session.getAttribute("user");
 		int userId = user.getUserId();
+		
 		String userName = request.getParameter("user_name");
+		UserError userError = UserValidation.updateUserNameValidation(userName, userId);
+		if (userError != null) {
+			request.setAttribute("userError", userError);
+			request.getRequestDispatcher("jsp/user/user_name_update.jsp").forward(request, response);
+			return;
+		}
+		
 		UserDao.updateUserName(userId, userName);
 		
 		user = UserDao.findByUserId(userId);
