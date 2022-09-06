@@ -53,6 +53,7 @@ public class LoginServlet extends HttpServlet {
 		UserError userError = UserValidation.loginValidation(userName, userPass);
 		if (userError != null) {
 			request.setAttribute("userError", userError);
+			request.setAttribute("userName", userName);
 			request.getRequestDispatcher("/jsp/login.jsp").forward(request,response);
 		}
 		

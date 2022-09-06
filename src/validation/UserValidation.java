@@ -1,5 +1,8 @@
 package validation;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import bean.User;
 import dao.UserDao;
 
@@ -20,6 +23,9 @@ public class UserValidation {
 			"パスワードは" + USER_PASS_MIN_LENGTH + "文字以上" + USER_PASS_MAX_LENGTH + "文字以内で入力してください。";
 	private static final String NOT_CORRECT_USER_PASS = "パスワードが違います。";
 	private static final String NOT_CORRECT_CHECK_PASS = "パスワードと確認用パスワードが異なります。"; 
+	
+	private static final String USER_PASS_PATTERN = "^[a-zA-Z0-9 -/:-@\\[-\\`\\{-\\~]+$";
+	private static final String NOT_MATCH_REGEX_PASS = "パスワードは半角英数記号で入力してください。";
 	
 	private static final String USER_DONT_EXIST = "ユーザーが存在しません。";
 	
@@ -58,9 +64,11 @@ public class UserValidation {
 			userError.setUserPassErrorMessage(FILL_USER_PASS);
 		} else if (isNotCorrectLength(userPass, USER_PASS_MIN_LENGTH, USER_PASS_MAX_LENGTH)) {
 			userError.setUserPassErrorMessage(NOT_CORRECT_USER_PASS_LENGTH);
+		} else if (isNotMatchRegex(userPass, USER_PASS_PATTERN)) {
+			userError.setUserPassErrorMessage(NOT_MATCH_REGEX_PASS);
 		} else if (isNotCorrectCheckPass(userPass, checkPass)) {
 			userError.setUserPassErrorMessage(NOT_CORRECT_CHECK_PASS);
-		}
+		} 
 		
 		if (userError.isAllFieldNull()) {
 			userError = null;
@@ -101,6 +109,8 @@ public class UserValidation {
 			userError.setUserNewPassErrorMessage(FILL_USER_PASS);
 		} else if (isNotCorrectLength(newPass, USER_PASS_MIN_LENGTH, USER_PASS_MAX_LENGTH)) {
 			userError.setUserNewPassErrorMessage(NOT_CORRECT_USER_PASS_LENGTH);
+		} else if (isNotMatchRegex(newPass, USER_PASS_PATTERN)) {
+			userError.setUserPassErrorMessage(NOT_MATCH_REGEX_PASS);
 		} else if (isNotCorrectCheckPass(newPass, checkPass)) {
 			userError.setUserNewPassErrorMessage(NOT_CORRECT_USER_PASS);
 		}
@@ -175,6 +185,16 @@ public class UserValidation {
 		} else {
 			return false;
 		}
+	}
+	
+	private static boolean isNotMatchRegex(String value, String strPattern) {
+		Pattern pattern = Pattern.compile(strPattern); 
+        Matcher matcher = pattern.matcher(value);
+        if (!matcher.find()) {
+            return true;
+        } else {
+            return false;
+        } 
 	}
 	
 }

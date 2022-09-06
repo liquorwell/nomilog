@@ -19,7 +19,7 @@
 				<ul>
 					<li>
 						<label for="name">ユーザー名：</label>
-						<input type="text" id="name" name="user_name">
+						<input type="text" id="name" name="user_name" value="${userName}">
 						${userError.userNameErrorMessage}
 					</li>
 					<li>

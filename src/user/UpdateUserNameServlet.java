@@ -50,6 +50,7 @@ public class UpdateUserNameServlet extends HttpServlet {
 		UserError userError = UserValidation.updateUserNameValidation(userName, userId);
 		if (userError != null) {
 			request.setAttribute("userError", userError);
+			request.setAttribute("userName", userName);
 			request.getRequestDispatcher("jsp/user/user_name_update.jsp").forward(request, response);
 			return;
 		}

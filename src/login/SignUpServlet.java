@@ -49,6 +49,7 @@ public class SignUpServlet extends HttpServlet {
 		UserError userError = UserValidation.signUpValidation(userName, userPass, checkPass);		
 		if (userError != null) {
 			request.setAttribute("userError", userError);
+			request.setAttribute("userName", userName);
 			request.getRequestDispatcher("jsp/user/signup.jsp").forward(request, response);
 			return;
 		}
