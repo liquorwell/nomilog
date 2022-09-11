@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 import bean.User;
 import dao.UserDao;
 
-public class UserValidation {
+public class UserValidation extends Validation {
 
 	private static final int USER_NAME_MIN_LENGTH = 1;
 	private static final int USER_NAME_MAX_LENGTH = 20;
@@ -137,29 +137,12 @@ public class UserValidation {
 	}
 	
 	
-	
-	private static boolean isEmpty(String value) {
-		return (value == "");
-	}
-	
-	private static boolean isNotCorrectLength(String value, int min, int max) {
-		if (value.length() < min || value.length() > max) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-	
 	private static boolean isNotUniqueUserName(String userName) {
 		User user = UserDao.findByUserName(userName);
-		if (user != null) {
-			return true;
-		} else {
-			return false;
-		}
+		return user != null;
 	}
 	private static boolean isNotUniqueUserName(String userName, int userId) {
-		User user = UserDao.findByUserName(userName);	
+		User user = UserDao.findByUserName(userName);
 		if (user != null) {
 			if (user.getUserId() == userId) {
 				return false;
@@ -172,29 +155,17 @@ public class UserValidation {
 	
 	private static boolean isNotUserExist(String userName, String userPass) {
 		User user = UserDao.findByNamePass(userName, userPass);
-		if (user == null) {
-			return true;
-		} else {
-			return false;
-		}
+		return user == null;
 	}
 	
 	private static boolean isNotCorrectCheckPass(String userPass, String checkPass) {
-		if (!userPass.equals(checkPass)) {
-			return true;
-		} else {
-			return false;
-		}
+		return !userPass.equals(checkPass);
 	}
 	
 	private static boolean isNotMatchRegex(String value, String strPattern) {
 		Pattern pattern = Pattern.compile(strPattern); 
         Matcher matcher = pattern.matcher(value);
-        if (!matcher.find()) {
-            return true;
-        } else {
-            return false;
-        } 
+        return !matcher.find(); 
 	}
 	
 }

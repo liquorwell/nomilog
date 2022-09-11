@@ -14,6 +14,8 @@ import javax.servlet.http.HttpSession;
 import bean.Sakelog;
 import bean.User;
 import dao.SakelogDao;
+import validation.SakelogError;
+import validation.SakelogValidation;
 
 /**
  * Servlet implementation class FilterSakelogServlet
@@ -50,7 +52,11 @@ public class FilterSakelogServlet extends HttpServlet {
 		int userId = user.getUserId();
 		
 		List<Sakelog> sakelogList =  new ArrayList<Sakelog>();
-		switch (filterType) {
+		if (filterType == null) {
+			sakelogList = SakelogDao.findByUserIdInsDateDesc(userId);
+		} else {
+			SakelogError sakelogError = new SakelogError();
+			switch (filterType) {
 			case "name":
 				String sakelogName = request.getParameter("sakelog_name");
 				sakelogList = SakelogDao.findBySakelogName(userId, sakelogName);
@@ -58,21 +64,40 @@ public class FilterSakelogServlet extends HttpServlet {
 				break;
 			case "category":
 				String categoryId = request.getParameter("category_id");
-				sakelogList = SakelogDao.findByCategoryId(userId, categoryId);
+				sakelogError = SakelogValidation.filterValueValidation(categoryId);
+				if (sakelogError.isAllFieldNull()) {
+					sakelogList = SakelogDao.findByCategoryId(userId, categoryId);
+				} else {
+					sakelogList = SakelogDao.findByUserIdInsDateDesc(userId);
+				}
 				request.setAttribute("categoryFilterValue", categoryId);
 				break;
 			case "rating":
 				String rating = request.getParameter("rating");
-				sakelogList = SakelogDao.findByRating(userId, rating);
+				sakelogError = SakelogValidation.filterValueValidation(rating);
+				if (sakelogError.isAllFieldNull()) {
+					sakelogList = SakelogDao.findByRating(userId, rating);
+				} else {
+					sakelogList = SakelogDao.findByUserIdInsDateDesc(userId);
+				}
 				request.setAttribute("ratingFilterValue", rating);
 				break;
 			case "ins_date":
 				String insDateOld = request.getParameter("ins_date_old");
 				String insDateNew = request.getParameter("ins_date_new");
-				sakelogList = SakelogDao.findByInsDate(userId, insDateOld, insDateNew);
+				sakelogError = SakelogValidation.filterInsDateValidation(insDateOld, insDateNew);
+				if (sakelogError.isAllFieldNull()) {
+					sakelogList = SakelogDao.findByInsDate(userId, insDateOld, insDateNew);
+				} else {
+					sakelogList = SakelogDao.findByUserIdInsDateDesc(userId);
+				}
 				request.setAttribute("insDateOldFilterValue", insDateOld);
 				request.setAttribute("insDateNewFilterValue", insDateNew);
+				break;
+			}
+			request.setAttribute("sakelogError", sakelogError);
 		}
+		
 		request.setAttribute("sakelogList", sakelogList);
 		
 		request.setAttribute("filterType", filterType);

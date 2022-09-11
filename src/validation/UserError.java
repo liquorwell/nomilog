@@ -33,19 +33,12 @@ public class UserError {
 	}
 	
 	public boolean isAllFieldNull() {
-		if (this.getUserNameErrorMessage() == null && this.getUserPassErrorMessage() == null && this.getUserNewPassErrorMessage() == null && this.getUserExistErrorMessage() == null) {
-			return true;
-		} else {
-			return false;
-		}
+		return (this.getUserNameErrorMessage() == null && this.getUserPassErrorMessage() == null && 
+				this.getUserNewPassErrorMessage() == null && this.getUserExistErrorMessage() == null);
 	}
 	
 	public boolean isNameAndPassErrorNull() {
-		if (this.getUserNameErrorMessage() == null && this.getUserPassErrorMessage() == null) {
-			return true;
-		} else {
-			return false;
-		}
+		return (this.getUserNameErrorMessage() == null && this.getUserPassErrorMessage() == null);
 	}
 	
 }
