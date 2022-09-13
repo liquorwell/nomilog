@@ -15,6 +15,8 @@ import bean.Sakememo;
 import bean.User;
 import dao.CategoryDao;
 import dao.SakememoDao;
+import validation.SakememoError;
+import validation.SakememoValidation;
 
 /**
  * Servlet implementation class InsertSakememoServlet
@@ -56,6 +58,15 @@ public class InsertSakememoServlet extends HttpServlet {
 		sakememo.setCategory(category);
 		sakememo.setSakememoComment(sakememoComment);
 		sakememo.setUser(user);
+		
+		SakememoError sakememoError = SakememoValidation.insertValidation(sakememoName, categoryId, sakememoComment);
+		if (sakememoError != null) {
+			request.setAttribute("sakememo", sakememo);
+			request.setAttribute("sakememoError", sakememoError);
+			request.getRequestDispatcher("jsp/sakememo/sakememo_insert.jsp").forward(request, response);
+			return;
+		}
+		
 		SakememoDao.insert(sakememo);
 		
 		List<Sakememo> sakememoList = SakememoDao.findByUserIdInsDateDesc(user.getUserId());

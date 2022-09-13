@@ -19,6 +19,7 @@
 					<li>
 						<label for="name">酒ログ名：</label>
 						<input type="text" id="name" name="sakelog_name" value="${sakememo.sakememoName}">
+						${sakelogError.sakelogNameErrorMessage}
 					</li>
 					<li>
 						<label for="category">カテゴリ：</label>
@@ -36,10 +37,12 @@
 							<input type="radio" id="r${i}" name="rating" value="${i}">
 							<label for="r${i}">${i}</label>
 						</c:forEach>
+						${sakelogError.ratingErrorMessage}
 					</li>
 					<li>
 						<label for="coment">コメント：</label>
 						<textarea id="comment" name="sakelog_comment">${sakememo.sakememoComment}</textarea>
+						${sakelogError.sakelogCommentErrorMessage}
 					</li>
 					<li>
 						<input type="hidden" name="sakememo_id" value="${sakememo.sakememoId}">

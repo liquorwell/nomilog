@@ -163,8 +163,14 @@ public class SakememoDao {
 			Connection con = DBManager.getConnection();
 			PreparedStatement ps = con.prepareStatement(FIND + BY_INS_DATE + ORDER_INS_DATE + DESC)
 		){
-			LocalDate insDateOld = LocalDate.parse(strInsDateOld, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-			LocalDate insDateNew = LocalDate.parse(strInsDateNew, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+			LocalDate insDateOld = LocalDate.of(1800, 1, 1);
+			if (strInsDateOld != "") {
+				insDateOld = LocalDate.parse(strInsDateOld, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+			}
+			LocalDate insDateNew = LocalDate.of(9999, 12, 30);
+			if (strInsDateNew != "") {
+				insDateNew = LocalDate.parse(strInsDateNew, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+			}
 			java.sql.Date sqlInsDateOld = java.sql.Date.valueOf(insDateOld);
 			java.sql.Date sqlInsDateNew = java.sql.Date.valueOf(insDateNew.plusDays(1));
 			ps.setInt(1, userId);

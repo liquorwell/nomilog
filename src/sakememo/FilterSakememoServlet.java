@@ -14,6 +14,8 @@ import javax.servlet.http.HttpSession;
 import bean.Sakememo;
 import bean.User;
 import dao.SakememoDao;
+import validation.SakememoError;
+import validation.SakememoValidation;
 
 /**
  * Servlet implementation class FilterSakememoServlet
@@ -50,6 +52,7 @@ public class FilterSakememoServlet extends HttpServlet {
 		int userId = user.getUserId();
 		
 		List<Sakememo> sakememoList =  new ArrayList<Sakememo>();
+		SakememoError sakememoError = new SakememoError();
 		switch (filterType) {
 			case "name":
 				String sakememoName = request.getParameter("sakememo_name");
@@ -58,16 +61,28 @@ public class FilterSakememoServlet extends HttpServlet {
 				break;
 			case "category":
 				String categoryId = request.getParameter("category_id");
-				sakememoList = SakememoDao.findByCategoryId(userId, categoryId);
+				sakememoError = SakememoValidation.filterValueValidation(categoryId);
+				if (sakememoError.isAllFieldNull()) {
+					sakememoList = SakememoDao.findByCategoryId(userId, categoryId);
+				} else {
+					sakememoList = SakememoDao.findByUserIdInsDateDesc(userId);
+				}
 				request.setAttribute("categoryFilterValue", categoryId);
 				break;
 			case "ins_date":
 				String insDateOld = request.getParameter("ins_date_old");
 				String insDateNew = request.getParameter("ins_date_new");
-				sakememoList = SakememoDao.findByInsDate(userId, insDateOld, insDateNew);
+				sakememoError = SakememoValidation.filterInsDateValidation(insDateOld, insDateNew);
+				if (sakememoError.isAllFieldNull()) {
+					sakememoList = SakememoDao.findByInsDate(userId, insDateOld, insDateNew);
+				} else {
+					sakememoList = SakememoDao.findByUserIdInsDateDesc(userId);
+				}
 				request.setAttribute("insDateOldFilterValue", insDateOld);
 				request.setAttribute("insDateNewFilterValue", insDateNew);
 		}
+		request.setAttribute("sakememoError", sakememoError);
+		
 		request.setAttribute("sakememoList", sakememoList);
 		
 		request.setAttribute("filterType", filterType);

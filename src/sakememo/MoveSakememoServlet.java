@@ -12,10 +12,13 @@ import javax.servlet.http.HttpSession;
 
 import bean.Category;
 import bean.Sakelog;
+import bean.Sakememo;
 import bean.User;
 import dao.CategoryDao;
 import dao.SakelogDao;
 import dao.SakememoDao;
+import validation.SakelogError;
+import validation.SakelogValidation;
 
 /**
  * Servlet implementation class MoveSakememoServlet
@@ -61,6 +64,19 @@ public class MoveSakememoServlet extends HttpServlet {
 		sakelog.setRating(rating);
 		sakelog.setSakelogComment(sakelogComment);
 		sakelog.setUser(user);
+		
+		SakelogError sakelogError = SakelogValidation.insertValidation(sakelogName, categoryId, rating, sakelogComment);
+		if (sakelogError != null) {
+			Sakememo sakememo = new Sakememo();
+			sakememo.setSakememoName(sakelogName);
+			sakememo.setCategory(category);
+			sakememo.setSakememoComment(sakelogComment);
+			request.setAttribute("sakememo", sakememo);
+			request.setAttribute("sakelogError", sakelogError);
+			request.getRequestDispatcher("jsp/sakememo/sakememo_move.jsp").forward(request, response);
+			return;
+		}
+		
 		SakelogDao.insert(sakelog);
 		
 		SakememoDao.move(sakememoId);

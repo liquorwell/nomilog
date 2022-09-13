@@ -12,9 +12,9 @@
 
 	<p>酒メモ画面</p>
 	<p>日付絞り込み</p>
-	
+	<p>${sakememoError.filterErrorMessage}</p>
 		<form method="post" action="<%=request.getContextPath()%>/sakememo_filter">
-		<input type="radio" id="name" name="filter_type" value="name" ${filterType.equals('name')? "checked":""}>
+		<input type="radio" id="name" name="filter_type" value="name" ${filterType == null || filterType.equals('name')? "checked":""}>
 			<label for="name">酒メモ名：</label>
 			<input type="text" name="sakememo_name" value="${nameFilterValue}">
 		<input type="radio" id="category" name="filter_type" value="category" ${filterType.equals('category')? "checked":""}>
@@ -27,7 +27,7 @@
 			</select>
 		<input type="radio" id="ins_date" name="filter_type" value="ins_date" ${filterType.equals('ins_date')? "checked":""}>
 			<label for="ins_date">登録日：</label>
-			<input type="date" name="ins_date_old" value="${insDateOldFilterValue}"> ～ <input type="date" name="ins_date_new" value="${insDateNewFilterValue}"> 
+			<input type="date" name="ins_date_old" value="${insDateOldFilterValue}">（古） ～ <input type="date" name="ins_date_new" value="${insDateNewFilterValue}">（新）
 		<button type="submit">絞り込み</button>
 		<a href="<%=request.getContextPath()%>/sakememo">絞り込み解除</a>
 	</form>
