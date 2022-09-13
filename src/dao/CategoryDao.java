@@ -57,6 +57,9 @@ public class CategoryDao {
 		return category;
 	}
 	public static Category findByCategoryId(String strCategoryId) {
+		if (strCategoryId == null) {
+			return null;
+		}
 		int categoryId = Integer.parseInt(strCategoryId);
 		Category category = findByCategoryId(categoryId);
 		return category;

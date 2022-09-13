@@ -14,6 +14,8 @@ import bean.Sakelog;
 import bean.User;
 import dao.CategoryDao;
 import dao.SakelogDao;
+import validation.SakelogError;
+import validation.SakelogValidation;
 
 /**
  * Servlet implementation class InsertSakelogServlet
@@ -57,6 +59,15 @@ public class InsertSakelogServlet extends HttpServlet {
 		sakelog.setRating(rating);
 		sakelog.setSakelogComment(sakelogComment);
 		sakelog.setUser(user);
+		
+		SakelogError sakelogError = SakelogValidation.insertValidation(sakelogName, categoryId, rating, sakelogComment);
+		if (sakelogError != null) {
+			request.setAttribute("sakelog", sakelog);
+			request.setAttribute("sakelogError", sakelogError);
+			request.getRequestDispatcher("jsp/sakelog/sakelog_insert.jsp").forward(request, response);
+			return;
+		}
+		
 		SakelogDao.insert(sakelog);
 		
 		request.getRequestDispatcher("jsp/sakelog/sakelog_info.jsp").forward(request, response);

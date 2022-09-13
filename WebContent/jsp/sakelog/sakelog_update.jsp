@@ -19,6 +19,7 @@
 					<li>
 						<label for="name">酒ログ名：</label>
 						<input type="text" id="name" name="sakelog_name" value="${sakelog.sakelogName}">
+						${sakelogError.sakelogNameErrorMessage}
 					</li>
 					<li>
 						<label for="category">カテゴリ：</label>
@@ -40,6 +41,7 @@
 					<li>
 						<label for="coment">コメント：</label>
 						<textarea id="comment" name="sakelog_comment">${sakelog.sakelogComment}</textarea>
+						${sakelogError.sakelogCommentErrorMessage}
 					</li>
 					<li>
 						<input type="hidden" name="sakelog_id" value="${sakelog.sakelogId}">

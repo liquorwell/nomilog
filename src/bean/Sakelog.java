@@ -32,7 +32,11 @@ public class Sakelog {
 		this.rating = rating;
 	}
 	public void setRating(String rating) {
-		this.rating = Integer.parseInt(rating);
+		if (rating == null) {
+			this.rating = 0;
+		} else {
+			this.rating = Integer.parseInt(rating);
+		}
 	}
 	public String getSakelogComment() {
 		return sakelogComment;

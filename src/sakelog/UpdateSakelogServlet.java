@@ -15,6 +15,8 @@ import bean.Sakelog;
 import bean.User;
 import dao.CategoryDao;
 import dao.SakelogDao;
+import validation.SakelogError;
+import validation.SakelogValidation;
 
 /**
  * Servlet implementation class UpdateSakelogServlet
@@ -57,6 +59,15 @@ public class UpdateSakelogServlet extends HttpServlet {
 		sakelog.setCategory(category);
 		sakelog.setRating(rating);
 		sakelog.setSakelogComment(sakelogComment);
+		
+		SakelogError sakelogError = SakelogValidation.updateValidation(sakelogName, sakelogComment);
+		if (sakelogError != null) {
+			request.setAttribute("sakelog", sakelog);
+			request.setAttribute("sakelogError", sakelogError);
+			request.getRequestDispatcher("jsp/sakelog/sakelog_update.jsp").forward(request, response);
+			return;
+		}
+		
 		SakelogDao.update(sakelog);
 		
 		HttpSession session = request.getSession();
