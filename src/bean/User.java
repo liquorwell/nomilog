@@ -9,6 +9,16 @@ public class User {
 	private int revision;
 	
 	
+	public User() {
+		
+	}
+	
+	public User(String userName, String userPass) {
+		this.setUserName(userName);
+		this.setUserPass(userPass);
+	}
+	
+	
 	public int getUserId() {
 		return userId;
 	}

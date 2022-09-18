@@ -15,10 +15,7 @@
 			
 			<form id="category_insert" method="post" action="<%=request.getContextPath()%>/category_insert">
 				<ul>
-					<li>
-						<label for="name">カテゴリ名：</label>
-						<input type="text" id="name" name="category_name">
-					</li>
+					<%@include file="/jsp/category/category_form.jsp" %>
 					<li>
 						<button type="submit">登録</button>
 						<a href="<%=request.getContextPath()%>/category">キャンセル</a>

@@ -15,21 +15,21 @@
 			<p>ユーザー登録フォーム</p>
 			<p>${userError.userExistErrorMessage}</p>
 			
-			<form id="signup_form" method="post" action="<%=request.getContextPath()%>/signup">
+			<form id="signup_form" method="post" action="<%=request.getContextPath()%>/signup_sakelog">
 				<ul>
 					<li>
 						<label for="name">ユーザー名：</label>
-						<input type="text" id="name" name="user_name" value="${userName}">
+						<input type="text" id="name" name="user_name" value="${userName}" required maxlength="20">
 						${userError.userNameErrorMessage}
 					</li>
 					<li>
 						<label for="pass">パスワード：</label>
-						<input type="password" id="pass" name="user_pass">
+						<input type="password" id="pass" name="user_pass" required minlength="8" maxlength="20">
 						${userError.userPassErrorMessage}
 					</li>
 					<li>
 						<label for="checkpass">パスワード（確認用）：</label>
-						<input type="password" id="checkpass" name="check_pass">
+						<input type="password" id="checkpass" name="check_pass" required>
 					</li>
 					<li>
 						<button type="submit">ユーザー登録</button>

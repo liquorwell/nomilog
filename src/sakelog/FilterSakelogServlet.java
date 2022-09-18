@@ -29,22 +29,19 @@ public class FilterSakelogServlet extends HttpServlet {
      */
     public FilterSakelogServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		response.sendRedirect(request.getContextPath() + "/sakelog");
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		String filterType = request.getParameter("filter_type");
 		
 		HttpSession session = request.getSession();
@@ -99,7 +96,6 @@ public class FilterSakelogServlet extends HttpServlet {
 		}
 		
 		request.setAttribute("sakelogList", sakelogList);
-		
 		request.setAttribute("filterType", filterType);
 		
 		request.getRequestDispatcher("/jsp/sakelog/sakelog_info.jsp").forward(request, response);

@@ -16,26 +16,7 @@
 			
 			<form id="sakememo_update" method="post" action="<%=request.getContextPath()%>/sakememo_update">
 				<ul>
-					<li>
-						<label for="name">酒メモ名：</label>
-						<input type="text" id="name" name="sakememo_name" value="${sakememo.sakememoName}">
-						${sakememoError.sakememoNameErrorMessage}
-					</li>
-					<li>
-						<label for="category">カテゴリ：</label>
-						<select id="category" name="category_id">
-						  <c:forEach var="category" items="${categoryList}">
-						  	<option value="${category.categoryId}" ${category.categoryId == sakememo.category.categoryId? "selected":""}>
-						  		${category.categoryName}
-						  	</option>
-						  </c:forEach>
-						</select>
-					</li>
-					<li>
-						<label for="coment">コメント：</label>
-						<textarea id="comment" name="sakememo_comment">${sakememo.sakememoComment}</textarea>
-						${sakememoError.sakememoCommentErrorMessage}
-					</li>
+					<%@include file="/jsp/sakememo/sakememo_form.jsp" %>
 					<li>
 						<input type="hidden" name="sakememo_id" value="${sakememo.sakememoId}">
 					</li>

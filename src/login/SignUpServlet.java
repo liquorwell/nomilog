@@ -17,7 +17,7 @@ import validation.UserValidation;
 /**
  * Servlet implementation class SignUpServlet
  */
-@WebServlet("/signup")
+@WebServlet("/signup_sakelog")
 public class SignUpServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -26,22 +26,19 @@ public class SignUpServlet extends HttpServlet {
      */
     public SignUpServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		response.sendRedirect(request.getContextPath() + "/signup");
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		String userName = request.getParameter("user_name");
 		String userPass = request.getParameter("user_pass");
 		String checkPass = request.getParameter("check_pass");
@@ -54,17 +51,14 @@ public class SignUpServlet extends HttpServlet {
 			return;
 		}
 		
-		User user = new User();
-		user.setUserName(userName);
-		user.setUserPass(userPass);
+		User user = new User(userName, userPass);
 		UserDao.insert(user);
 		
-		HttpSession session = request.getSession(false);
-		session.removeAttribute("user");
+		HttpSession session = request.getSession();
 		user = UserDao.findByNamePass(userName, userPass);
 		session.setAttribute("user", user);
 		
-		request.getRequestDispatcher("/jsp/sakelog/sakelog_info.jsp").forward(request, response);
+		response.sendRedirect(request.getContextPath() + "/sakelog");
 	}
 
 }

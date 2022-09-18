@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class TransitionToSignUpServlet
  */
-@WebServlet("/transignup")
+@WebServlet("/signup")
 public class TransitionToSignUpServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -20,14 +20,12 @@ public class TransitionToSignUpServlet extends HttpServlet {
      */
     public TransitionToSignUpServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		request.getRequestDispatcher("jsp/user/signup.jsp").forward(request, response);
 	}
 
@@ -35,7 +33,6 @@ public class TransitionToSignUpServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

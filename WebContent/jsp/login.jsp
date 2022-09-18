@@ -16,16 +16,16 @@
 			
 			${userError.userExistErrorMessage}
 			
-			<form id="loginform" method="post" action="<%=request.getContextPath()%>/login">
+			<form id="loginform" method="post" action="<%=request.getContextPath()%>/login_sakelog">
 				<ul>
 					<li>
 						<label for="name">ユーザー名*</label>
-						<input type="text" id="name" name="user_name" value="${userName}">
+						<input type="text" id="name" name="user_name" value="${userName}" required maxlength="20">
 						${userError.userNameErrorMessage}
 					</li>
 					<li>
 						<label for="pass">パスワード*</label>
-						<input type="password" id="pass" name="user_pass">
+						<input type="password" id="pass" name="user_pass" required maxlength="20">
 						${userError.userPassErrorMessage}
 					</li>
 					<li>

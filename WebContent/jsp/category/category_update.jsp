@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,10 +15,7 @@
 			
 			<form id="category_update" method="post" action="<%=request.getContextPath()%>/category_update">
 				<ul>
-					<li>
-						<label for="name">カテゴリ名：</label>
-						<input type="text" id="name" name="category_name" value="${category.categoryName}">
-					</li>
+					<%@include file="/jsp/category/category_form.jsp" %>
 					<li>
 						<input type="hidden" name="category_id" value="${category.categoryId}">
 					</li>

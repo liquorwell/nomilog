@@ -23,27 +23,24 @@ public class TransitionToSakememoUpdateServlet extends HttpServlet {
      */
     public TransitionToSakememoUpdateServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		String sakememoId = request.getParameter("sakememo_id");
-		Sakememo sakememo = SakememoDao.findBySakememoId(sakememoId);
-		request.setAttribute("sakememo", sakememo);
-		
-		request.getRequestDispatcher("jsp/sakememo/sakememo_update.jsp").forward(request, response);
+		response.sendRedirect(request.getContextPath() + "/sakememo");
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		String sakememoId = request.getParameter("sakememo_id");
+		Sakememo sakememo = SakememoDao.findBySakememoId(sakememoId);
+		request.setAttribute("sakememo", sakememo);
+		
+		request.getRequestDispatcher("jsp/sakememo/sakememo_update.jsp").forward(request, response);
 	}
 
 }

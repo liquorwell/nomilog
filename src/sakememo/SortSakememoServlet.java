@@ -27,22 +27,19 @@ public class SortSakememoServlet extends HttpServlet {
      */
     public SortSakememoServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		response.sendRedirect(request.getContextPath() + "/sakememo");
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		String sortType = request.getParameter("sort_type");
 		
 		HttpSession session = request.getSession();
@@ -62,7 +59,6 @@ public class SortSakememoServlet extends HttpServlet {
 				break;
 		}
 		request.setAttribute("sakememoList", sakememoList);
-		
 		request.setAttribute("sortType", sortType);
 		
 		request.getRequestDispatcher("/jsp/sakememo/sakememo_info.jsp").forward(request, response);

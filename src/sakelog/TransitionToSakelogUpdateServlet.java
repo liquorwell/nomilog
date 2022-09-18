@@ -23,27 +23,24 @@ public class TransitionToSakelogUpdateServlet extends HttpServlet {
      */
     public TransitionToSakelogUpdateServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		String sakelogId = request.getParameter("sakelog_id");
-		Sakelog sakelog = SakelogDao.findBySakelogId(sakelogId);
-		request.setAttribute("sakelog", sakelog);
-		
-		request.getRequestDispatcher("jsp/sakelog/sakelog_update.jsp").forward(request, response);
+		response.sendRedirect(request.getContextPath() + "/sakelog");
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		String sakelogId = request.getParameter("sakelog_id");
+		Sakelog sakelog = SakelogDao.findBySakelogId(sakelogId);
+		request.setAttribute("sakelog", sakelog);
+		
+		request.getRequestDispatcher("jsp/sakelog/sakelog_update.jsp").forward(request, response);
 	}
 
 }

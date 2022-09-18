@@ -10,15 +10,13 @@ public class SakememoValidation extends Validation {
 	private static final int SAKEMEMO_COMMENT_MIN_LENGTH = 1;
 	private static final int SAKEMEMO_COMMENT_MAX_LENGTH = 100;
 	
-	private static String FILL_SAKEMEMO_NAME = "酒メモ名を入力してください。";
-	private static final String NOT_CORRECT_SAKEMEMO_NAME_LENGTH = 
-			"酒メモ名は" + SAKEMEMO_NAME_MIN_LENGTH + "文字以上" + SAKEMEMO_NAME_MAX_LENGTH + "文字以内で入力してください。";
-	private static String CHOICE_CATEGORY = "カテゴリを選択してください。";
-	private static String FILL_SAKEMEMO_COMMENT = "コメントを入力してください。";
-	private static final String NOT_CORRECT_SAKEMEMO_COMMENT_LENGTH = 
-			"コメントは" + SAKEMEMO_COMMENT_MIN_LENGTH + "文字以上" + SAKEMEMO_COMMENT_MAX_LENGTH + "文字以内で入力してください。";
-	private static String FILL_FILTER_VALUE = "絞り込み条件を入力してください。";
-	private static String ORDER_INS_DATE = "登録日は古い順に入力してください。";
+	private static final String FILL_SAKEMEMO_NAME = "酒メモ名を入力してください。";
+	private static final String NOT_CORRECT_SAKEMEMO_NAME_LENGTH = "酒メモ名は" + SAKEMEMO_NAME_MAX_LENGTH + "文字以内で入力してください。";
+	private static final String CHOICE_CATEGORY = "カテゴリを選択してください。";
+	private static final String FILL_SAKEMEMO_COMMENT = "コメントを入力してください。";
+	private static final String NOT_CORRECT_SAKEMEMO_COMMENT_LENGTH = "コメントは" + SAKEMEMO_COMMENT_MAX_LENGTH + "文字以内で入力してください。";
+	private static final String FILL_FILTER_VALUE = "絞り込み条件を入力してください。";
+	private static final String ORDER_INS_DATE = "登録日は古い順に入力してください。";
 
 	
 	public static SakememoError insertValidation(String sakememoName, String categoryId, String sakememoComment) {

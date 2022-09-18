@@ -17,7 +17,7 @@
 				<ul>
 					<li>
 						<label for="name">ユーザー名：</label>
-						<input type="text" id="name" name="user_name" value="${userName == null? user.userName:userName}">
+						<input type="text" id="name" name="user_name" value="${userName == null? user.userName:userName}" required maxlength="20">
 						${userError.userNameErrorMessage}
 					</li>
 					<li>

@@ -1,11 +1,5 @@
-sakelog
-sakememo
-category
-　名　20文字以内　空欄禁止
-　コメント　100文字以内　空欄禁止
-　値の保持
-
-html側でのバリデーション
 rivision管理
-デフォルトでのカテゴリ設定
 userbeanの不要項目の削除 
+デフォルトでのカテゴリ設定
+アクセス制限
+bootstrap

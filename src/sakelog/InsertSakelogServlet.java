@@ -29,14 +29,12 @@ public class InsertSakelogServlet extends HttpServlet {
      */
     public InsertSakelogServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		response.sendRedirect(request.getContextPath() + "/sakelog");
 	}
 
@@ -44,7 +42,6 @@ public class InsertSakelogServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		String sakelogName = request.getParameter("sakelog_name");
 		String categoryId = request.getParameter("category_id");
 		Category category = CategoryDao.findByCategoryId(categoryId);
@@ -53,12 +50,7 @@ public class InsertSakelogServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		User user = (User)session.getAttribute("user");
 		
-		Sakelog sakelog = new Sakelog();
-		sakelog.setSakelogName(sakelogName);
-		sakelog.setCategory(category);
-		sakelog.setRating(rating);
-		sakelog.setSakelogComment(sakelogComment);
-		sakelog.setUser(user);
+		Sakelog sakelog = new Sakelog(null, sakelogName, rating, sakelogComment, category, user);
 		
 		SakelogError sakelogError = SakelogValidation.insertValidation(sakelogName, categoryId, rating, sakelogComment);
 		if (sakelogError != null) {
@@ -70,7 +62,7 @@ public class InsertSakelogServlet extends HttpServlet {
 		
 		SakelogDao.insert(sakelog);
 		
-		request.getRequestDispatcher("jsp/sakelog/sakelog_info.jsp").forward(request, response);
+		response.sendRedirect(request.getContextPath() + "/sakelog");
 	}
 
 }

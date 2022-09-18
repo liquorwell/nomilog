@@ -19,7 +19,7 @@
 				<ul>
 					<li>
 						<label for="pass">パスワードを入力：</label>
-						<input type="password" id="pass" name="user_pass">
+						<input type="password" id="pass" name="user_pass" required>
 						<p>${userError.userPassErrorMessage}</p>
 					</li>
 					<li>

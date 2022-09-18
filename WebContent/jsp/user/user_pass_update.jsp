@@ -17,17 +17,17 @@
 				<ul>
 					<li>
 						<label for="curr">現在のパスワード：</label>
-						<input type="password" id="curr" name="curr_pass">
+						<input type="password" id="curr" name="curr_pass" required>
 						${userError.userPassErrorMessage}
 					</li>
 					<li>
 						<label for="new">新しいパスワード：</label>
-						<input type="password" id="new" name="new_pass">
+						<input type="password" id="new" name="new_pass" required minlength="8" maxlength="20">
 						${userError.userNewPassErrorMessage}
 					</li>
 					<li>
 						<label for="check">新しいパスワード(確認)：</label>
-						<input type="password" id="check" name="check_pass">
+						<input type="password" id="check" name="check_pass" required>
 					</li>
 					<li>
 						<button type="submit">変更</button>

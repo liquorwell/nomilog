@@ -12,6 +12,7 @@
 
 	<p>酒ログ画面</p>
 	<p>表示形式の変更</p>
+	
 	<p>${sakelogError.filterErrorMessage}</p>
 	<form method="post" action="<%=request.getContextPath()%>/sakelog_filter">
 		<input type="radio" id="name" name="filter_type" value="name" ${filterType == null || filterType.equals('name')? "checked":""}>
@@ -40,6 +41,7 @@
 		<a href="<%=request.getContextPath()%>/sakelog">絞り込み解除</a>
 	</form>
 	
+	
 	<form method="post" action="<%=request.getContextPath()%>/sakelog_sort">
 		<select id="sort" name="sort_type">
 			<option value="ins_date_desc" ${sortType.equals('ins_date_desc') || sortType == null? "selected":""}>登録日の新しい順</option>
@@ -50,6 +52,7 @@
 		</select>
 		<button type="submit">並び替え</button>
 	</form>
+	
 	
 	<table>
 		<tr>
@@ -65,13 +68,13 @@
 				<td>${sakelog.rating}</td>
 				<td>${sakelog.sakelogComment}</td>
 				<td>
-					<form method="get" action="<%=request.getContextPath()%>/sakelog_edit">
+					<form method="post" action="<%=request.getContextPath()%>/sakelog_edit">
 						<input type="hidden" name="sakelog_id" value="${sakelog.sakelogId}">
 						<button type="submit">編集</button>
 					</form>
 				</td>
 				<td>
-					<form method="get" action="<%=request.getContextPath()%>/sakelog_delete">
+					<form method="post" action="<%=request.getContextPath()%>/sakelog_delete">
 						<input type="hidden" name="sakelog_id" value="${sakelog.sakelogId}">
 						<button type="submit">削除</button>
 					</form>

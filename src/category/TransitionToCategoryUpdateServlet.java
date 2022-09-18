@@ -23,18 +23,12 @@ public class TransitionToCategoryUpdateServlet extends HttpServlet {
      */
     public TransitionToCategoryUpdateServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		String categoryId = request.getParameter("category_id");
-		Category category = CategoryDao.findByCategoryId(categoryId);
-		request.setAttribute("category", category);
-		
 		request.getRequestDispatcher("jsp/category/category_update.jsp").forward(request, response);
 	}
 
@@ -42,8 +36,11 @@ public class TransitionToCategoryUpdateServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		String categoryId = request.getParameter("category_id");
+		Category category = CategoryDao.findByCategoryId(categoryId);
+		
+		request.setAttribute("category", category);
+		request.getRequestDispatcher("jsp/category/category_update.jsp").forward(request, response);
 	}
 
 }

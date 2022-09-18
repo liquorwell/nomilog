@@ -11,10 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import bean.Category;
-import bean.Sakelog;
 import bean.User;
 import dao.CategoryDao;
-import dao.SakelogDao;
 import dao.UserDao;
 import validation.UserError;
 import validation.UserValidation;
@@ -22,7 +20,7 @@ import validation.UserValidation;
 /**
  * Servlet implementation class LoginServlet
  */
-@WebServlet("/login")
+@WebServlet("/login_sakelog")
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -38,8 +36,7 @@ public class LoginServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		response.sendRedirect(request.getContextPath() + "/login");
 	}
 
 	/**
@@ -64,10 +61,7 @@ public class LoginServlet extends HttpServlet {
 		List<Category> categoryList = CategoryDao.findByUserId(user.getUserId());
 		session.setAttribute("categoryList", categoryList);
 		
-		List<Sakelog> sakelogList = SakelogDao.findByUserIdInsDateDesc(user.getUserId());
-		request.setAttribute("sakelogList", sakelogList);
-		
-		request.getRequestDispatcher("/jsp/sakelog/sakelog_info.jsp").forward(request, response);
+		response.sendRedirect(request.getContextPath() + "/sakelog");
 	}
 
 }

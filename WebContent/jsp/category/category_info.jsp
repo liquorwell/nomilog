@@ -21,13 +21,13 @@
 			<tr>
 				<td>${category.categoryName}</td>
 				<td>
-					<form method="get" action="<%=request.getContextPath()%>/category_edit">
+					<form method="post" action="<%=request.getContextPath()%>/category_edit">
 						<input type="hidden" name="category_id" value="${category.categoryId}">
 						<button type="submit">編集</button>
 					</form>
 				</td>
 				<td>
-					<form method="get" action="<%=request.getContextPath()%>/category_delete">
+					<form method="post" action="<%=request.getContextPath()%>/category_delete">
 						<input type="hidden" name="category_id" value="${category.categoryId}">
 						<button type="submit">削除</button>
 					</form>

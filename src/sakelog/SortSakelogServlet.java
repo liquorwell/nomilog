@@ -27,22 +27,19 @@ public class SortSakelogServlet extends HttpServlet {
      */
     public SortSakelogServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		response.sendRedirect(request.getContextPath() + "/sakelog");
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		String sortType = request.getParameter("sort_type");
 		
 		HttpSession session = request.getSession();
@@ -67,8 +64,8 @@ public class SortSakelogServlet extends HttpServlet {
 				sakelogList = SakelogDao.findByUserIdCategoryIdAsc(userId);
 				break;
 		}
-		request.setAttribute("sakelogList", sakelogList);
 		
+		request.setAttribute("sakelogList", sakelogList);
 		request.setAttribute("sortType", sortType);
 		
 		request.getRequestDispatcher("/jsp/sakelog/sakelog_info.jsp").forward(request, response);

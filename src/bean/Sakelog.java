@@ -10,6 +10,27 @@ public class Sakelog {
 	private User user;
 	
 	
+	public Sakelog() {
+		
+	}
+	
+	public Sakelog(String sakelogId, String sakelogName, String rating, String sakelogComment, Category category, User user) {
+		this.setSakelogId(sakelogId);
+		this.setSakelogName(sakelogName);
+		this.setRating(rating);
+		this.setSakelogComment(sakelogComment);
+		this.setCategory(category);
+		this.setUser(user);
+	}
+	
+	public Sakelog(Sakememo sakememo) {
+		this.setSakelogName(sakememo.getSakememoName());
+		this.setSakelogComment(sakememo.getSakememoComment());
+		this.setCategory(sakememo.getCategory());
+		this.setUser(sakememo.getUser());
+	}
+	
+	
 	public int getSakelogId() {
 		return sakelogId;
 	}
@@ -17,7 +38,11 @@ public class Sakelog {
 		this.sakelogId = sakelogId;
 	}
 	public void setSakelogId(String sakelogId) {
-		this.sakelogId = Integer.parseInt(sakelogId);
+		if (sakelogId == null) {
+			this.sakelogId = 0;
+		} else {
+			this.sakelogId = Integer.parseInt(sakelogId);
+		}
 	}
 	public String getSakelogName() {
 		return sakelogName;
