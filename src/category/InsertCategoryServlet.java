@@ -44,9 +44,7 @@ public class InsertCategoryServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		User user = (User)session.getAttribute("user");
 		
-		Category category = new Category();
-		category.setCategoryName(categoryName);
-		category.setUser(user);
+		Category category = new Category(null, categoryName, user);
 		
 		CategoryError categoryError = CategoryValidation.categoryNameValidation(categoryName);
 		if (categoryError != null) {

@@ -34,7 +34,7 @@
 					<option value="${i}" ${ratingFilterValue == i? "selected":""}>${i}</option>
 				</c:forEach>
 			</select>
-		<input type="radio" id="ins_date" name="filter_type" value="ins_date" ${filterType.equals('ins_date')? "checked":""}>
+		<input type="radio" id="ins_date" name="filter_type" value="ins_date" ${filterType.equals('ins_date')? "checked":""} >
 			<label for="ins_date">登録日：</label>
 			<input type="date" name="ins_date_old" value="${insDateOldFilterValue}">（古） ～ <input type="date" name="ins_date_new" value="${insDateNewFilterValue}"> （新）
 		<button type="submit">絞り込み</button>

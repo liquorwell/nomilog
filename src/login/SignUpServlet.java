@@ -1,6 +1,7 @@
 package login;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,7 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import bean.Category;
 import bean.User;
+import dao.CategoryDao;
 import dao.UserDao;
 import validation.UserError;
 import validation.UserValidation;
@@ -58,7 +61,18 @@ public class SignUpServlet extends HttpServlet {
 		user = UserDao.findByNamePass(userName, userPass);
 		session.setAttribute("user", user);
 		
+		insertPresetCategory(user);
+		List<Category> categoryList = CategoryDao.findByUserId(user.getUserId());
+		session.setAttribute("categoryList", categoryList);
+		
 		response.sendRedirect(request.getContextPath() + "/sakelog");
+	}
+	
+	
+	private static void insertPresetCategory(User user) {
+		CategoryDao.insert(new Category(null, "ビール", user));
+		CategoryDao.insert(new Category(null, "日本酒", user));
+		CategoryDao.insert(new Category(null, "その他", user));
 	}
 
 }

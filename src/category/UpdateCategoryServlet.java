@@ -41,9 +41,7 @@ public class UpdateCategoryServlet extends HttpServlet {
 		String categoryId = request.getParameter("category_id");
 		String categoryName = request.getParameter("category_name");
 		
-		Category category = new Category();
-		category.setCategoryId(categoryId);
-		category.setCategoryName(categoryName);
+		Category category = new Category(categoryId, categoryName, null);
 		
 		CategoryError categoryError = CategoryValidation.categoryNameValidation(categoryName);
 		if (categoryError != null) {

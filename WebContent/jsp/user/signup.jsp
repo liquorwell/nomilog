@@ -19,7 +19,7 @@
 				<ul>
 					<li>
 						<label for="name">ユーザー名：</label>
-						<input type="text" id="name" name="user_name" value="${userName}" required maxlength="20">
+						<input type="text" id="name" name="user_name" value="${userName}" required maxlength="20" autocomplete="off">
 						${userError.userNameErrorMessage}
 					</li>
 					<li>
