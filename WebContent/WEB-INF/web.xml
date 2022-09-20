@@ -4,4 +4,24 @@
   <welcome-file-list>
     <welcome-file>index.jsp</welcome-file>
   </welcome-file-list>
+  
+  <filter>
+    <filter-name>LoginFilter</filter-name>
+    <filter-class>filter.LoginFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>LoginFilter</filter-name>
+    <url-pattern>/category</url-pattern>
+    <url-pattern>/category_create</url-pattern>
+    <url-pattern>/logout</url-pattern>
+    <url-pattern>/sakelog</url-pattern>
+    <url-pattern>/sakelog_create</url-pattern>
+    <url-pattern>/sakememo</url-pattern>
+    <url-pattern>/sakememo_create</url-pattern>
+    <url-pattern>/user_delete</url-pattern>
+    <url-pattern>/user_delete_check</url-pattern>
+    <url-pattern>/user_name_edit</url-pattern>
+    <url-pattern>/user_pass_edit</url-pattern>
+  </filter-mapping>
+  
 </web-app>

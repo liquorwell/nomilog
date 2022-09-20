@@ -29,7 +29,7 @@ public class TransitionToCategoryUpdateServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("jsp/category/category_update.jsp").forward(request, response);
+		response.sendRedirect(request.getContextPath() + "/category");
 	}
 
 	/**
