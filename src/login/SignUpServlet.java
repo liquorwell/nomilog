@@ -54,7 +54,7 @@ public class SignUpServlet extends HttpServlet {
 			return;
 		}
 		
-		User user = new User(userName, userPass);
+		User user = new User(null, userName, userPass);
 		UserDao.insert(user);
 		
 		HttpSession session = request.getSession();

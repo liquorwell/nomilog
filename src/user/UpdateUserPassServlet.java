@@ -26,22 +26,19 @@ public class UpdateUserPassServlet extends HttpServlet {
      */
     public UpdateUserPassServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		response.sendRedirect(request.getContextPath() + "/user");
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		HttpSession session = request.getSession();
 		User user = (User)session.getAttribute("user");
 		int userId = user.getUserId();
@@ -58,9 +55,11 @@ public class UpdateUserPassServlet extends HttpServlet {
 		}
 		
 		UserDao.updateUserPass(userId, newPass);
+		
 		user = UserDao.findByUserId(userId);
 		session.setAttribute("user", user);
-		request.getRequestDispatcher("/jsp/user/user_info.jsp").forward(request, response);
+		
+		response.sendRedirect(request.getContextPath() + "/user");
 	}
 
 }

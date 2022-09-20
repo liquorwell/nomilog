@@ -26,14 +26,12 @@ public class DeleteUserServlet extends HttpServlet {
      */
     public DeleteUserServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		String userPass = request.getParameter("user_pass");		
 		
 		HttpSession session = request.getSession();
@@ -48,15 +46,14 @@ public class DeleteUserServlet extends HttpServlet {
 		}
 		
 		UserDao.delete(userId);
-		response.sendRedirect("/nomilog");
 		
+		response.sendRedirect(request.getContextPath());
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 
