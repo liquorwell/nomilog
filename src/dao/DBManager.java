@@ -19,9 +19,9 @@ public class DBManager {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			Connection con;
 			con = DriverManager.getConnection(
-			  "jdbc:oracle:thin:@localhost:1521:XE",
-			  "sssuser",
-			  "systemsss"
+			  "",
+			  "",
+			  ""
 			);
 			return con;
 		} catch (Exception e) {
