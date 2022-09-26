@@ -15,7 +15,8 @@ import bean.User;
 import dao.CategoryDao;
 
 /**
- * Servlet implementation class TransitionToCategoryServlet
+ * Servlet implementation class TransitionToCategoryServlet <br>
+ * カテゴリ画面遷移処理
  */
 @WebServlet("/category")
 public class TransitionToCategoryServlet extends HttpServlet {
@@ -30,13 +31,16 @@ public class TransitionToCategoryServlet extends HttpServlet {
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see CategoryDao#findByUserId(int userId)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		//ログイン中のユーザーのカテゴリを全件取得し、セッションに格納
 		HttpSession session = request.getSession();
 		User user = (User)session.getAttribute("user");
 		List<Category> categoryList = CategoryDao.findByUserId(user.getUserId());
 		session.setAttribute("categoryList", categoryList);
 		
+		//カテゴリ画面にフォワード
 		request.getRequestDispatcher("jsp/category/category_info.jsp").forward(request, response);
 	}
 

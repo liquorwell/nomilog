@@ -11,7 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import dao.CategoryDao;
 
 /**
- * Servlet implementation class DeleteCategoryServlet
+ * Servlet implementation class DeleteCategoryServlet <br>
+ * カテゴリ削除処理
  */
 @WebServlet("/category_delete")
 public class DeleteCategoryServlet extends HttpServlet {
@@ -33,11 +34,14 @@ public class DeleteCategoryServlet extends HttpServlet {
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see CategoryDao#delete(String strCategoryId)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		//カテゴリを削除
 		String categoryId = request.getParameter("category_id");
 		CategoryDao.delete(categoryId);
 		
+		//カテゴリ画面にリダイレクト
 		response.sendRedirect(request.getContextPath() + "/category");
 	}
 

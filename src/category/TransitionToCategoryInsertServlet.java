@@ -9,7 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class TransitionToCategoryInsertServlet
+ * Servlet implementation class TransitionToCategoryInsertServlet <br>
+ * カテゴリ登録画面遷移処理
  */
 @WebServlet("/category_create")
 public class TransitionToCategoryInsertServlet extends HttpServlet {
@@ -26,6 +27,7 @@ public class TransitionToCategoryInsertServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		//カテゴリ登録画面にフォワード
 		request.getRequestDispatcher("jsp/category/category_insert.jsp").forward(request, response);
 	}
 

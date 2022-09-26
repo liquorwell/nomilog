@@ -10,7 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * Servlet implementation class LogoutServlet
+ * Servlet implementation class LogoutServlet <br>
+ * ログアウト処理
  */
 @WebServlet("/logout")
 public class LogoutServlet extends HttpServlet {
@@ -27,9 +28,11 @@ public class LogoutServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		//セッションに格納されたユーザーを削除
 		HttpSession session = request.getSession(false);
 		session.removeAttribute("user");
 		
+		//ログイン画面にリダイレクト
 		response.sendRedirect(request.getContextPath() + "/login");
 	}
 

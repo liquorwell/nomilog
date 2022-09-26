@@ -18,7 +18,8 @@ import validation.UserError;
 import validation.UserValidation;
 
 /**
- * Servlet implementation class SignUpServlet
+ * Servlet implementation class SignUpServlet <br>
+ * サインアップ処理
  */
 @WebServlet("/signup_sakelog")
 public class SignUpServlet extends HttpServlet {
@@ -40,13 +41,20 @@ public class SignUpServlet extends HttpServlet {
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see UserValidation.validateSignUpValue(String userName, String userPass, String checkPass)
+	 * @see UserDao#insert(User user)
+	 * @see CategoryDao#findByUserId(int userId)
+	 * @see CategoryDao#insert(Category category)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		//フォームからユーザー名、パスワード、確認用パスワードを受け取る
 		String userName = request.getParameter("user_name");
 		String userPass = request.getParameter("user_pass");
 		String checkPass = request.getParameter("check_pass");
 		
-		UserError userError = UserValidation.signUpValidation(userName, userPass, checkPass);		
+		//バリデーション
+		//不備がある場合、入力情報とエラー情報をリクエストに格納してサインアップ画面に戻る
+		UserError userError = UserValidation.validateSignUpValue(userName, userPass, checkPass);		
 		if (userError != null) {
 			request.setAttribute("userError", userError);
 			request.setAttribute("userName", userName);
@@ -54,21 +62,27 @@ public class SignUpServlet extends HttpServlet {
 			return;
 		}
 		
+		//ユーザーbeanに格納し、ユーザーテーブルに登録
 		User user = new User(null, userName, userPass);
 		UserDao.insert(user);
 		
+		//登録したユーザーをテーブルから取り出しなおしてセッションに格納
+		//※ユーザーIDを入手するため、わざわざテーブルから取り出して上書きしている
 		HttpSession session = request.getSession();
 		user = UserDao.findByNamePass(userName, userPass);
 		session.setAttribute("user", user);
 		
+		//プリセットのカテゴリをカテゴリテーブルに登録し、セッションに格納
 		insertPresetCategory(user);
 		List<Category> categoryList = CategoryDao.findByUserId(user.getUserId());
 		session.setAttribute("categoryList", categoryList);
 		
+		//酒ログ画面にリダイレクト
 		response.sendRedirect(request.getContextPath() + "/sakelog");
 	}
 	
-	
+	//プリセットのカテゴリを登録
+	//最初にカテゴリ登録がされていないと、酒ログ登録前にカテゴリ登録を行う必要があり、使用感が悪いため
 	private static void insertPresetCategory(User user) {
 		CategoryDao.insert(new Category(null, "ビール", user));
 		CategoryDao.insert(new Category(null, "日本酒", user));

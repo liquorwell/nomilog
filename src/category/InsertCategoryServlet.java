@@ -16,7 +16,8 @@ import validation.CategoryError;
 import validation.CategoryValidation;
 
 /**
- * Servlet implementation class InsertCategoryServlet
+ * Servlet implementation class InsertCategoryServlet <br>
+ * カテゴリ登録処理
  */
 @WebServlet("/category_insert")
 public class InsertCategoryServlet extends HttpServlet {
@@ -38,15 +39,19 @@ public class InsertCategoryServlet extends HttpServlet {
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see validation.CategoryValidation#validateCategoryName(String categoryName)
+	 * @see dao.CategoryDao#insert(category)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		//フォームから受け取ったカテゴリ名とログイン中のユーザーを取り出し、カテゴリbeanを生成
 		String categoryName = request.getParameter("category_name");
 		HttpSession session = request.getSession();
 		User user = (User)session.getAttribute("user");
-		
 		Category category = new Category(null, categoryName, user);
 		
-		CategoryError categoryError = CategoryValidation.categoryNameValidation(categoryName);
+		//バリデーション処理
+		//不備がある場合、入力情報とエラー情報をリクエストに格納してカテゴリ登録画面に戻る
+		CategoryError categoryError = CategoryValidation.validateCategoryName(categoryName);
 		if (categoryError != null) {
 			request.setAttribute("categoryError", categoryError);
 			request.setAttribute("category", category);
@@ -54,9 +59,11 @@ public class InsertCategoryServlet extends HttpServlet {
 			return;
 		}
 		
+		//カテゴリテーブルに登録
 		CategoryDao.insert(category);
 		
+		//カテゴリ画面にリダイレクト
 		response.sendRedirect(request.getContextPath() + "/category");
 	}
-
+	
 }

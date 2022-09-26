@@ -9,7 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class TransitionToSignUpServlet
+ * Servlet implementation class TransitionToSignUpServlet <br>
+ * サインアップ画面遷移処理
  */
 @WebServlet("/signup")
 public class TransitionToSignUpServlet extends HttpServlet {

@@ -9,7 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class TransitionToSakelogInsertServlet
+ * Servlet implementation class TransitionToSakelogInsertServlet <br>
+ * 酒ログ登録画面遷移処理
  */
 @WebServlet("/sakelog_create")
 public class TransitionToSakelogInsertServlet extends HttpServlet {

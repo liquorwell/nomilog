@@ -15,7 +15,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * Servlet Filter implementation class LoginFilter
+ * Servlet Filter implementation class LoginFilter <br>
+ * ログインセッション管理用フィルター
+ * @see WebContent/WEB-INF/web.xml
  */
 @WebFilter("/LoginFilter")
 public class LoginFilter extends HttpFilter implements Filter {
@@ -40,8 +42,10 @@ public class LoginFilter extends HttpFilter implements Filter {
 		HttpServletRequest req = (HttpServletRequest)request;
 		HttpServletResponse res = (HttpServletResponse)response;
 		HttpSession session = req.getSession();
+		
+		//セッションにユーザーが格納されていない場合、ログイン画面にリダイレクト
 		if(session.getAttribute("user") == null) {
-			res.sendRedirect(req.getContextPath());
+			res.sendRedirect(req.getContextPath() + "/login");
 		} else {
 			chain.doFilter(request, response);
 		}

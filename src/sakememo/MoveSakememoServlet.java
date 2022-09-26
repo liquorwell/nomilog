@@ -19,7 +19,8 @@ import validation.SakelogError;
 import validation.SakelogValidation;
 
 /**
- * Servlet implementation class MoveSakememoServlet
+ * Servlet implementation class MoveSakememoServlet <br>
+ * 酒メモ→酒ログ移動処理
  */
 @WebServlet("/sakememo_move")
 public class MoveSakememoServlet extends HttpServlet {
@@ -41,10 +42,16 @@ public class MoveSakememoServlet extends HttpServlet {
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see CategoryDao#findByCategoryId(String strCategoryId)
+	 * @see SakelogValidation#validateInsertValue(String sakelogName, String categoryId, String rating, String sakelogComment)
+	 * @see SakelogDao#insert(Sakelog sakelog)
+	 * @see SakememoDao#move(String strSakememoId)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		//移動前の酒メモIDを取得
 		String sakememoId = request.getParameter("sakememo_id");
 		
+		//フォームから受け取った値とログイン中のユーザーから、酒ログbeanを作成
 		String sakelogName = request.getParameter("sakelog_name");
 		String categoryId = request.getParameter("category_id");
 		Category category = CategoryDao.findByCategoryId(categoryId);
@@ -52,10 +59,11 @@ public class MoveSakememoServlet extends HttpServlet {
 		String sakelogComment = request.getParameter("sakelog_comment");
 		HttpSession session = request.getSession();
 		User user = (User)session.getAttribute("user");
-		
 		Sakelog sakelog = new Sakelog(null, sakelogName, rating, sakelogComment, category, user);
 		
-		SakelogError sakelogError = SakelogValidation.insertValidation(sakelogName, categoryId, rating, sakelogComment);
+		//バリデーション
+		//不備がある場合、入力情報とエラー情報をリクエストに格納して登録画面に戻る
+		SakelogError sakelogError = SakelogValidation.validateInsertValue(sakelogName, categoryId, rating, sakelogComment);
 		if (sakelogError != null) {
 			request.setAttribute("sakelog", sakelog);
 			request.setAttribute("sakememoId", sakememoId);
@@ -64,9 +72,12 @@ public class MoveSakememoServlet extends HttpServlet {
 			return;
 		}
 		
+		//酒ログテーブルに登録
+		//酒メモテーブルで移動処理
 		SakelogDao.insert(sakelog);
 		SakememoDao.move(sakememoId);
-
+		
+		//酒ログ画面にリダイレクト
 		response.sendRedirect(request.getContextPath() + "/sakelog");
 	}
 

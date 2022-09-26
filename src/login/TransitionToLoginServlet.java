@@ -9,7 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class TransitionToLoginServlet
+ * Servlet implementation class TransitionToLoginServlet <br>
+ * ログイン画面遷移処理
  */
 @WebServlet("/login")
 public class TransitionToLoginServlet extends HttpServlet {

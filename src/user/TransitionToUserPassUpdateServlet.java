@@ -9,7 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class TransitionToUserPassUpdateServlet
+ * Servlet implementation class TransitionToUserPassUpdateServlet <br>
+ * パスワード編集画面遷移処理
  */
 @WebServlet("/user_pass_edit")
 public class TransitionToUserPassUpdateServlet extends HttpServlet {

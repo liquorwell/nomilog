@@ -9,7 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class TransitionToUserNameUpdateServlet
+ * Servlet implementation class TransitionToUserNameUpdateServlet <br>
+ * ユーザー名編集画面遷移処理
  */
 @WebServlet("/user_name_edit")
 public class TransitionToUserNameUpdateServlet extends HttpServlet {

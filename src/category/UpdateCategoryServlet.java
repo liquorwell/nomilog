@@ -14,7 +14,8 @@ import validation.CategoryError;
 import validation.CategoryValidation;
 
 /**
- * Servlet implementation class UpdateCategoryServlet
+ * Servlet implementation class UpdateCategoryServlet <br>
+ * カテゴリ編集処理
  */
 @WebServlet("/category_update")
 public class UpdateCategoryServlet extends HttpServlet {
@@ -36,14 +37,18 @@ public class UpdateCategoryServlet extends HttpServlet {
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see CategoryValidation#validateCategoryName(String categoryName)
+	 * @see CategoryDao#update(category)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		//フォームから受け取った値を取り出し、カテゴリbeanを生成
 		String categoryId = request.getParameter("category_id");
 		String categoryName = request.getParameter("category_name");
-		
 		Category category = new Category(categoryId, categoryName, null);
 		
-		CategoryError categoryError = CategoryValidation.categoryNameValidation(categoryName);
+		//バリデーション
+		//不備がある場合、入力情報とエラー情報をリクエストに格納して編集画面に戻る
+		CategoryError categoryError = CategoryValidation.validateCategoryName(categoryName);
 		if (categoryError != null) {
 			request.setAttribute("categoryError", categoryError);
 			request.setAttribute("category", category);
@@ -51,8 +56,10 @@ public class UpdateCategoryServlet extends HttpServlet {
 			return;
 		}
 		
+		//カテゴリテーブルを更新
 		CategoryDao.update(category);
 		
+		//カテゴリ画面にリダイレクト
 		response.sendRedirect(request.getContextPath() + "/category");
 	}
 

@@ -16,7 +16,8 @@ import bean.User;
 import dao.SakememoDao;
 
 /**
- * Servlet implementation class SortSakememoServlet
+ * Servlet implementation class SortSakememoServlet <br>
+ * 酒メモ並べ替え処理
  */
 @WebServlet("/sakememo_sort")
 public class SortSakememoServlet extends HttpServlet {
@@ -38,15 +39,19 @@ public class SortSakememoServlet extends HttpServlet {
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see SakememoDao.findByUserId
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String sortType = request.getParameter("sort_type");
-		
+		//検索用にユーザーIDを入手
 		HttpSession session = request.getSession();
 		User user = (User)session.getAttribute("user");
 		int userId = user.getUserId();
 		
+		//検索結果格納用
 		List<Sakememo> sakememoList =  new ArrayList<Sakememo>();
+		
+		//並べ替え種別ごとに検索処理
+		String sortType = request.getParameter("sort_type");
 		switch (sortType) {
 			case "ins_date_desc":
 				sakememoList = SakememoDao.findByUserIdInsDateDesc(userId);
@@ -58,9 +63,13 @@ public class SortSakememoServlet extends HttpServlet {
 				sakememoList = SakememoDao.findByUserIdCategoryIdAsc(userId);
 				break;
 		}
+		
+		//結果と並べ替え種別をリクエストに格納
+		//並べ替え種別を格納するのは、フォームの値保持のため
 		request.setAttribute("sakememoList", sakememoList);
 		request.setAttribute("sortType", sortType);
 		
+		//酒メモ画面にフォワード
 		request.getRequestDispatcher("/jsp/sakememo/sakememo_info.jsp").forward(request, response);
 	}
 }

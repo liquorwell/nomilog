@@ -9,7 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class TransitionToUserInfoServlet
+ * Servlet implementation class TransitionToUserInfoServlet <br>
+ * ユーザー画面遷移処理
  */
 @WebServlet("/user")
 public class TransitionToUserInfoServlet extends HttpServlet {

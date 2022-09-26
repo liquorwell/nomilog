@@ -18,7 +18,8 @@ import validation.SakememoError;
 import validation.SakememoValidation;
 
 /**
- * Servlet implementation class InsertSakememoServlet
+ * Servlet implementation class InsertSakememoServlet <br>
+ * 酒メモ登録処理
  */
 @WebServlet("/sakememo_insert")
 public class InsertSakememoServlet extends HttpServlet {
@@ -40,18 +41,23 @@ public class InsertSakememoServlet extends HttpServlet {
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see CategoryDao#findByCategoryId(String strCategoryId)
+	 * @see SakememoValidation#validateInsertValue(String sakememoName, String categoryId, String sakememoComment)
+	 * @see SakememoDao#insert(Sakememo sakememo)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		//フォームから受け取った値とログイン中のユーザーから、酒ログbeanを作成
 		String sakememoName = request.getParameter("sakememo_name");
 		String categoryId = request.getParameter("category_id");
 		Category category = CategoryDao.findByCategoryId(categoryId);
 		String sakememoComment = request.getParameter("sakememo_comment");
 		HttpSession session = request.getSession();
 		User user = (User)session.getAttribute("user");
-		
 		Sakememo sakememo = new Sakememo(null, sakememoName, sakememoComment, null, category, user);
 		
-		SakememoError sakememoError = SakememoValidation.insertValidation(sakememoName, categoryId, sakememoComment);
+		//バリデーション
+		//不備がある場合、入力情報とエラー情報をリクエストに格納して登録画面に戻る
+		SakememoError sakememoError = SakememoValidation.validateInsertValue(sakememoName, categoryId, sakememoComment);
 		if (sakememoError != null) {
 			request.setAttribute("sakememo", sakememo);
 			request.setAttribute("sakememoError", sakememoError);
@@ -59,8 +65,10 @@ public class InsertSakememoServlet extends HttpServlet {
 			return;
 		}
 		
+		//酒メモテーブルに登録
 		SakememoDao.insert(sakememo);
 		
+		//酒メモ画面にリダイレクト
 		response.sendRedirect(request.getContextPath() + "/sakememo");
 	}
 

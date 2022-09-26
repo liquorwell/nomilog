@@ -5,8 +5,15 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+/**
+ * データベース操作用クラス
+ */
 public class DBManager {
 
+	/**
+	 * データベースと接続するメソッド
+	 * @return Connection
+	 */
 	public static Connection getConnection() {			
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
@@ -23,6 +30,10 @@ public class DBManager {
 	}
 	
 		
+	/**
+	 * データベースとの接続を閉じるメソッド
+	 * @param con
+	 */
 	public static void close(Connection con) {
 		if (con != null) {
 			try {
@@ -33,6 +44,11 @@ public class DBManager {
 		}
 	}
 
+	/**
+	 * データベースとの接続とPreparedStatementを閉じるメソッド
+	 * @param ps
+	 * @param con
+	 */
 	public static void close(PreparedStatement ps, Connection con) {
 		if (ps != null) {
 			try {

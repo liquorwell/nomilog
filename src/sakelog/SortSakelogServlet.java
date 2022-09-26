@@ -16,7 +16,8 @@ import bean.User;
 import dao.SakelogDao;
 
 /**
- * Servlet implementation class SortSakelogServlet
+ * Servlet implementation class SortSakelogServlet <br>
+ * 酒ログ並べ替え処理
  */
 @WebServlet("/sakelog_sort")
 public class SortSakelogServlet extends HttpServlet {
@@ -38,15 +39,19 @@ public class SortSakelogServlet extends HttpServlet {
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see SakelogDao#findByUserId
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String sortType = request.getParameter("sort_type");
-		
+		//検索用にユーザーIDを入手
 		HttpSession session = request.getSession();
 		User user = (User)session.getAttribute("user");
 		int userId = user.getUserId();
 		
+		//検索結果格納用
 		List<Sakelog> sakelogList =  new ArrayList<Sakelog>();
+		
+		//並べ替え種別ごとに検索処理
+		String sortType = request.getParameter("sort_type");
 		switch (sortType) {
 			case "ins_date_desc":
 				sakelogList = SakelogDao.findByUserIdInsDateDesc(userId);
@@ -65,9 +70,12 @@ public class SortSakelogServlet extends HttpServlet {
 				break;
 		}
 		
+		//結果と並べ替え種別をリクエストに格納
+		//並べ替え種別を格納するのは、フォームの値保持のため
 		request.setAttribute("sakelogList", sakelogList);
 		request.setAttribute("sortType", sortType);
 		
+		//酒ログ画面にフォワード
 		request.getRequestDispatcher("/jsp/sakelog/sakelog_info.jsp").forward(request, response);
 	}
 

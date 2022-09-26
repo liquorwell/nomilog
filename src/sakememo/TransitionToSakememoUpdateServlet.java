@@ -12,7 +12,8 @@ import bean.Sakememo;
 import dao.SakememoDao;
 
 /**
- * Servlet implementation class TransitionToSakememoUpdateServlet
+ * Servlet implementation class TransitionToSakememoUpdateServlet <br>
+ * 酒ログ編集画面遷移処理
  */
 @WebServlet("/sakememo_edit")
 public class TransitionToSakememoUpdateServlet extends HttpServlet {
@@ -34,12 +35,15 @@ public class TransitionToSakememoUpdateServlet extends HttpServlet {
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see SakememoDao#findBySakememoId(String strSakememoId)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		//酒メモIDから酒メモを検索し、結果をリクエストに格納
 		String sakememoId = request.getParameter("sakememo_id");
 		Sakememo sakememo = SakememoDao.findBySakememoId(sakememoId);
 		request.setAttribute("sakememo", sakememo);
 		
+		//酒メモ編集画面にフォワード
 		request.getRequestDispatcher("jsp/sakememo/sakememo_update.jsp").forward(request, response);
 	}
 

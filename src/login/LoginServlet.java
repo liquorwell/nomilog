@@ -18,7 +18,8 @@ import validation.UserError;
 import validation.UserValidation;
 
 /**
- * Servlet implementation class LoginServlet
+ * Servlet implementation class LoginServlet <br>
+ * ログイン処理
  */
 @WebServlet("/login_sakelog")
 public class LoginServlet extends HttpServlet {
@@ -40,25 +41,34 @@ public class LoginServlet extends HttpServlet {
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see UserValidation#validateLoginValue(String userName, String userPass)
+	 * @see UserDao#findByNamePass(String userName, String userPass)
+	 * @see CategoryDao#findByUserId(int userId)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		//ログインフォームからユーザー名とパスワードを受け取る
 		String userName = request.getParameter("user_name");
 		String userPass = request.getParameter("user_pass");
 		
-		UserError userError = UserValidation.loginValidation(userName, userPass);
+		//バリデーション
+		//不備がある場合、入力情報とエラー情報をリクエストに格納してログイン画面に戻る
+		UserError userError = UserValidation.validateLoginValue(userName, userPass);
 		if (userError != null) {
 			request.setAttribute("userError", userError);
 			request.setAttribute("userName", userName);
 			request.getRequestDispatcher("/jsp/login.jsp").forward(request,response);
 		}
 		
+		//ユーザーを検索し、結果をセッションに格納
 		HttpSession session = request.getSession();
 		User user = UserDao.findByNamePass(userName, userPass);
 		session.setAttribute("user", user);
 		
+		//ユーザーの持つカテゴリをセッションに格納
 		List<Category> categoryList = CategoryDao.findByUserId(user.getUserId());
 		session.setAttribute("categoryList", categoryList);
 		
+		//酒ログ画面にリダイレクト
 		response.sendRedirect(request.getContextPath() + "/sakelog");
 	}
 

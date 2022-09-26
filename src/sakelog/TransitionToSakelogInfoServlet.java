@@ -15,7 +15,8 @@ import bean.User;
 import dao.SakelogDao;
 
 /**
- * Servlet implementation class TransitionToSakelogInfoServlet
+ * Servlet implementation class TransitionToSakelogInfoServlet <br>
+ * 酒ログ画面遷移処理
  */
 @WebServlet("/sakelog")
 public class TransitionToSakelogInfoServlet extends HttpServlet {
@@ -30,14 +31,16 @@ public class TransitionToSakelogInfoServlet extends HttpServlet {
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see SakelogDao#findByUserIdInsDateDesc(int userId)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		//ログインしているユーザーから酒ログを検索し、結果をリクエストに格納
 		HttpSession session = request.getSession();
 		User user = (User)session.getAttribute("user");
-		
 		List<Sakelog> sakelogList = SakelogDao.findByUserIdInsDateDesc(user.getUserId());
 		request.setAttribute("sakelogList", sakelogList);
 		
+		//酒ログ画面にフォワード
 		request.getRequestDispatcher("/jsp/sakelog/sakelog_info.jsp").forward(request, response);
 		
 	}

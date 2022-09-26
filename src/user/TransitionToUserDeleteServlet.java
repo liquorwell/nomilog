@@ -9,7 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class TransitionToUserDeleteServlet
+ * Servlet implementation class TransitionToUserDeleteServlet <br>
+ * ユーザー削除画面遷移処理
  */
 @WebServlet("/user_delete_check")
 public class TransitionToUserDeleteServlet extends HttpServlet {

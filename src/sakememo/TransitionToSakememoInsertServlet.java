@@ -9,7 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class TransitionToSakememoInsertServlet
+ * Servlet implementation class TransitionToSakememoInsertServlet <br>
+ * 酒メモ登録画面遷移処理
  */
 @WebServlet("/sakememo_create")
 public class TransitionToSakememoInsertServlet extends HttpServlet {
