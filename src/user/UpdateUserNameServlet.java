@@ -54,7 +54,7 @@ public class UpdateUserNameServlet extends HttpServlet {
 		//バリデーション
 		//不備がある場合、エラー情報とユーザー名をリクエストに格納して編集画面に戻る
 		UserError userError = UserValidation.validateUpdateUserNameValue(userName, userId);
-		if (userError != null) {
+		if (!userError.isAllFieldNull()) {
 			request.setAttribute("userError", userError);
 			request.setAttribute("userName", userName);
 			request.getRequestDispatcher("jsp/user/user_name_update.jsp").forward(request, response);

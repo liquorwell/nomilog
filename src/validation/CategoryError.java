@@ -17,4 +17,12 @@ public class CategoryError {
 		this.categoryNameErrorMessage = categoryNameErrorMessage;
 	}
 	
+	
+	/**
+	 * すべてのフィールドがnullかどうかを判定するメソッド
+	 * @return すべてのフィールドがnullの場合はtrue, そうでない場合はfalse
+	 */
+	public boolean isAllFieldNull() {
+		return (this.getCategoryNameErrorMessage() == null);
+	}
 }

@@ -55,7 +55,7 @@ public class UpdateSakememoServlet extends HttpServlet {
 		//バリデーション
 		//不備がある場合、入力情報とエラー情報をリクエストに格納して登録画面に戻る
 		SakememoError sakememoError = SakememoValidation.validateUpdateValue(sakememoName, sakememoComment);
-		if (sakememoError != null) {
+		if (!sakememoError.isAllFieldNull()) {
 			request.setAttribute("sakememo", sakememo);
 			request.setAttribute("sakememoError", sakememoError);
 			request.getRequestDispatcher("jsp/sakememo/sakememo_insert.jsp").forward(request, response);

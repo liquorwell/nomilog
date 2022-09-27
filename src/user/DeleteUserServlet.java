@@ -46,7 +46,7 @@ public class DeleteUserServlet extends HttpServlet {
 		//バリデーション
 		//不備がある場合、エラー情報をリクエストに格納して削除画面に戻る
 		UserError userError = UserValidation.validateDeleteUserValue(userPass, userId);
-		if (userError != null) {
+		if (!userError.isAllFieldNull()) {
 			request.setAttribute("userError", userError);
 			request.getRequestDispatcher("/jsp/user/user_delete_check.jsp").forward(request, response);
 			return;

@@ -49,7 +49,7 @@ public class UpdateCategoryServlet extends HttpServlet {
 		//バリデーション
 		//不備がある場合、入力情報とエラー情報をリクエストに格納して編集画面に戻る
 		CategoryError categoryError = CategoryValidation.validateCategoryName(categoryName);
-		if (categoryError != null) {
+		if (!categoryError.isAllFieldNull()) {
 			request.setAttribute("categoryError", categoryError);
 			request.setAttribute("category", category);
 			request.getRequestDispatcher("jsp/category/category_update.jsp").forward(request, response);

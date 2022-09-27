@@ -53,7 +53,7 @@ public class LoginServlet extends HttpServlet {
 		//バリデーション
 		//不備がある場合、入力情報とエラー情報をリクエストに格納してログイン画面に戻る
 		UserError userError = UserValidation.validateLoginValue(userName, userPass);
-		if (userError != null) {
+		if (!userError.isAllFieldNull()) {
 			request.setAttribute("userError", userError);
 			request.setAttribute("userName", userName);
 			request.getRequestDispatcher("/jsp/login.jsp").forward(request,response);

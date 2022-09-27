@@ -52,7 +52,7 @@ public class InsertCategoryServlet extends HttpServlet {
 		//バリデーション処理
 		//不備がある場合、入力情報とエラー情報をリクエストに格納してカテゴリ登録画面に戻る
 		CategoryError categoryError = CategoryValidation.validateCategoryName(categoryName);
-		if (categoryError != null) {
+		if (!categoryError.isAllFieldNull()) {
 			request.setAttribute("categoryError", categoryError);
 			request.setAttribute("category", category);
 			request.getRequestDispatcher("jsp/category/category_insert.jsp").forward(request, response);

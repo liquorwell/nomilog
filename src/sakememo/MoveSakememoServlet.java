@@ -64,7 +64,7 @@ public class MoveSakememoServlet extends HttpServlet {
 		//バリデーション
 		//不備がある場合、入力情報とエラー情報をリクエストに格納して登録画面に戻る
 		SakelogError sakelogError = SakelogValidation.validateInsertValue(sakelogName, categoryId, rating, sakelogComment);
-		if (sakelogError != null) {
+		if (!sakelogError.isAllFieldNull()) {
 			request.setAttribute("sakelog", sakelog);
 			request.setAttribute("sakememoId", sakememoId);
 			request.setAttribute("sakelogError", sakelogError);

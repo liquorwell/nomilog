@@ -56,7 +56,7 @@ public class UpdateUserPassServlet extends HttpServlet {
 		//バリデーション
 		//不備がある場合、エラー情報をリクエストに格納して登録画面に戻る
 		UserError userError = UserValidation.validateUpdateUserPassValue(currPass, newPass, checkPass, userId);
-		if (userError != null) {
+		if (!userError.isAllFieldNull()) {
 			request.setAttribute("userError", userError);
 			request.getRequestDispatcher("/jsp/user/user_pass_update.jsp").forward(request, response);
 			return;

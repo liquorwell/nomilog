@@ -93,7 +93,7 @@ public class FilterSakememoServlet extends HttpServlet {
 	//エラーがない場合はカテゴリIDから検索し、エラーがある場合は全件検索
 	private List<Sakememo> findByCategoryIdDependingOnError(int userId, String categoryId, SakememoError sakememoError){
 		List<Sakememo> sakememoList = new ArrayList<Sakememo>();
-		if (sakememoError == null) {
+		if (sakememoError.isAllFieldNull()) {
 			sakememoList = SakememoDao.findByCategoryId(userId, categoryId);
 		} else {
 			sakememoList = SakememoDao.findByUserIdInsDateDesc(userId);
@@ -104,7 +104,7 @@ public class FilterSakememoServlet extends HttpServlet {
 	//エラーがない場合は登録日から検索し、エラーがある場合は全件検索
 	private List<Sakememo> findByInsDateDependingOnError(int userId, String insDateOld, String insDateNew, SakememoError sakememoError){
 		List<Sakememo> sakememoList = new ArrayList<Sakememo>();
-		if (sakememoError == null) {
+		if (sakememoError.isAllFieldNull()) {
 			sakememoList = SakememoDao.findByInsDate(userId, insDateOld, insDateNew);
 		} else {
 			sakememoList = SakememoDao.findByUserIdInsDateDesc(userId);

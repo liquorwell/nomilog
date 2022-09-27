@@ -55,7 +55,7 @@ public class SignUpServlet extends HttpServlet {
 		//バリデーション
 		//不備がある場合、入力情報とエラー情報をリクエストに格納してサインアップ画面に戻る
 		UserError userError = UserValidation.validateSignUpValue(userName, userPass, checkPass);		
-		if (userError != null) {
+		if (!userError.isAllFieldNull()) {
 			request.setAttribute("userError", userError);
 			request.setAttribute("userName", userName);
 			request.getRequestDispatcher("jsp/user/signup.jsp").forward(request, response);

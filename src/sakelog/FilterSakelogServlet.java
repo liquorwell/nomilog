@@ -101,7 +101,7 @@ public class FilterSakelogServlet extends HttpServlet {
 	//エラーがない場合はカテゴリIDから検索し、エラーがある場合は全件検索
 	private List<Sakelog> findByCategoryIdDependingOnError(int userId, String categoryId, SakelogError sakelogError){
 		List<Sakelog> sakelogList = new ArrayList<Sakelog>();
-		if (sakelogError == null) {
+		if (sakelogError.isAllFieldNull()) {
 			sakelogList = SakelogDao.findByCategoryId(userId, categoryId);
 		} else {
 			sakelogList = SakelogDao.findByUserIdInsDateDesc(userId);
@@ -112,7 +112,7 @@ public class FilterSakelogServlet extends HttpServlet {
 	//エラーがない場合は評価から検索し、エラーがある場合は全件検索
 	private List<Sakelog> findByRatingDependingOnError(int userId, String rating, SakelogError sakelogError){
 		List<Sakelog> sakelogList = new ArrayList<Sakelog>();
-		if (sakelogError == null) {
+		if (sakelogError.isAllFieldNull()) {
 			sakelogList = SakelogDao.findByRating(userId, rating);
 		} else {
 			sakelogList = SakelogDao.findByUserIdInsDateDesc(userId);
@@ -123,7 +123,7 @@ public class FilterSakelogServlet extends HttpServlet {
 	//エラーがない場合は登録日から検索し、エラーがある場合は全件検索
 	private List<Sakelog> findByInsDateDependingOnError(int userId, String insDateOld, String insDateNew, SakelogError sakelogError){
 		List<Sakelog> sakelogList = new ArrayList<Sakelog>();
-		if (sakelogError == null) {
+		if (sakelogError.isAllFieldNull()) {
 			sakelogList = SakelogDao.findByInsDate(userId, insDateOld, insDateNew);
 		} else {
 			sakelogList = SakelogDao.findByUserIdInsDateDesc(userId);

@@ -53,4 +53,13 @@ public class SakememoError {
 		this.filterErrorMessage = filterErrorMessage;
 	}
 	
+	
+	/**
+	 * すべてのフィールドがnullかどうかを判定するメソッド
+	 * @return すべてのフィールドがnullの場合はtrue, そうでない場合はfalse
+	 */
+	public boolean isAllFieldNull() {
+		return (this.getSakememoNameErrorMessage() == null && this.getCategoryErrorMessage() == null && 
+				this.getSakememoCommentErrorMessage() == null && this.getFilterErrorMessage() == null);
+	}
 }

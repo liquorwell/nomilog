@@ -65,4 +65,14 @@ public class SakelogError {
 		this.filterErrorMessage = filterErrorMessage;
 	}
 	
+	
+	/**
+	 * すべてのフィールドがnullかどうかを判定するメソッド
+	 * @return すべてのフィールドがnullの場合はtrue, そうでない場合はfalse
+	 */
+	public boolean isAllFieldNull() {
+		return (this.getSakelogNameErrorMessage() == null && this.getCategoryErrorMessage() == null && 
+				this.getRatingErrorMessage() == null && this.getSakelogCommentErrorMessage() == null && this.getFilterErrorMessage() == null);
+	}
+	
 }

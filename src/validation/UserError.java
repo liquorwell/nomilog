@@ -54,9 +54,19 @@ public class UserError {
 	}
 	
 	
+	
+	/**
+	 * すべてのフィールドがnullかどうかを判定するメソッド
+	 * @return すべてのフィールドがnullの場合はtrue, そうでない場合はfalse
+	 */
+	public boolean isAllFieldNull() {
+		return (this.getUserNameErrorMessage() == null && this.getUserPassErrorMessage() == null && 
+				this.getUserNewPassErrorMessage() == null && this.getUserExistErrorMessage() == null);
+	}
+	
 	/**
 	 * ユーザー名とパスワードのフィールドがnullかどうかを判定するメソッド
-	 * @return すべてのフィールドがnullの場合はtrue, そうでない場合はfalse
+	 * @return フィールドがnullの場合はtrue, そうでない場合はfalse
 	 */
 	public boolean isNameAndPassErrorNull() {
 		return (this.getUserNameErrorMessage() == null && this.getUserPassErrorMessage() == null);
