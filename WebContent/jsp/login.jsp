@@ -3,40 +3,41 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
-<title>ログイン - のみログ</title>
-</head>
-<body>
-
-	
-	<main>
-		<div class="contents">
-			<p>ログイン画面とログインフォーム</p>
-			
-			${userError.userExistErrorMessage}
-			
-			<form id="loginform" method="post" action="<%=request.getContextPath()%>/login_sakelog">
-				<ul>
-					<li>
-						<label for="name">ユーザー名*</label>
-						<input type="text" id="name" name="user_name" value="${userName}" required maxlength="20">
-						${userError.userNameErrorMessage}
-					</li>
-					<li>
-						<label for="pass">パスワード*</label>
-						<input type="password" id="pass" name="user_pass" required maxlength="20">
-						${userError.userPassErrorMessage}
-					</li>
-					<li>
-						<button type="submit">ログイン</button>
-					</li>
-				</ul>
-			</form>
-			
-		</div>
-	</main>
-	
-	<%@include file="/jsp/common/footer.jsp"%>
-</body>
+ 	<jsp:include page="/jsp/common/head.jsp">
+ 		<jsp:param name="title" value="ログイン" />
+ 	</jsp:include>
+ 	
+ 	<body>
+ 		<%@include file="/jsp/common/header_before_login.jsp" %>
+ 		
+ 		<main>
+			<div class="contents">
+				<p>ログイン画面とログインフォーム</p>
+				
+				${userError.userExistErrorMessage}
+				
+				<form id="loginform" method="post" action="<%=request.getContextPath()%>/login_sakelog">
+					<ul>
+						<li>
+							<label for="name">ユーザー名*</label>
+							<input type="text" id="name" name="user_name" value="${userName}" required maxlength="20">
+							${userError.userNameErrorMessage}
+						</li>
+						<li>
+							<label for="pass">パスワード*</label>
+							<input type="password" id="pass" name="user_pass" required maxlength="20">
+							${userError.userPassErrorMessage}
+						</li>
+						<li>
+							<button type="submit">ログイン</button>
+						</li>
+					</ul>
+				</form>
+				
+			</div>
+		</main>
+		
+		<%@include file="/jsp/common/footer.jsp"%>
+		<%@include file="/jsp/common/js.jsp"%>
+	</body>
 </html>

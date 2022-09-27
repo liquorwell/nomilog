@@ -3,10 +3,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
-<title>ユーザー削除 - のみログ</title>
-</head>
+ 	<jsp:include page="/jsp/common/head.jsp">
+ 		<jsp:param name="title" value="ユーザー削除" />
+ 	</jsp:include>
+ 	
 	<body>
 		<%@include file="/jsp/common/header.jsp" %>
 		
@@ -31,5 +31,6 @@
 		</main>
 		
 		<%@include file="/jsp/common/footer.jsp" %>
+		<%@include file="/jsp/common/js.jsp"%>
 	</body>
 </html>
