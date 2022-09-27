@@ -19,9 +19,15 @@ public class DBManager {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			Connection con;
 			con = DriverManager.getConnection(
+<<<<<<< HEAD
 			  DBManagerValue.DB_URI,  //uri
 			  DBManagerValue.DB_USER,  //ユーザー名
 			  DBManagerValue.DB_PASS  //パス
+=======
+			  "",
+			  "",
+			  ""
+>>>>>>> 6cabb1ee6b56f6464145236583c2a28cf9350be5
 			);
 			return con;
 		} catch (Exception e) {
