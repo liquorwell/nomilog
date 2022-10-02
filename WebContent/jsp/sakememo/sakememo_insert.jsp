@@ -11,18 +11,18 @@
 		<%@include file="/jsp/common/header.jsp" %>
 		
 		<main>
-			<div class="contents">
-				<p>酒メモの登録フォーム</p>
+			<div class="container mt-5">
+				<h1>酒メモ登録</h1>
 				
-				<form id="sakememo_insert" method="post" action="<%=request.getContextPath()%>/sakememo_insert">
-					<ul>
+				<div class="container">
+					<form id="sakememo_insert" method="post" action="<%=request.getContextPath()%>/sakememo_insert">
 						<%@include file="/jsp/sakememo/sakememo_form.jsp" %>
-						<li>
-							<button type="submit">登録</button>
-							<a href="<%=request.getContextPath()%>/sakememo">キャンセル</a>
-						</li>
-					</ul>
-				</form>
+						
+						<button class="btn btn-primary m-2" type="submit">登録</button>
+						<a class="btn btn-outline-secondary m-2" href="<%=request.getContextPath()%>/sakememo" role="button">キャンセル</a>
+					</form>
+				</div>
+
 			</div>
 		</main>
 		

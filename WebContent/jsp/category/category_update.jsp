@@ -10,21 +10,19 @@
 		<%@include file="/jsp/common/header.jsp" %>
 		
 		<main>
-			<div class="contents">
-				<p>カテゴリの編集フォーム</p>
+			<div class="container mt-5">
+				<h1>カテゴリ編集</h1>
 				
-				<form id="category_update" method="post" action="<%=request.getContextPath()%>/category_update">
-					<ul>
+				<div class="container">
+					<form id="category_update" method="post" action="<%=request.getContextPath()%>/category_update">
 						<%@include file="/jsp/category/category_form.jsp" %>
-						<li>
-							<input type="hidden" name="category_id" value="${category.categoryId}">
-						</li>
-						<li>
-							<button type="submit">更新</button>
-							<a href="<%=request.getContextPath()%>/category">キャンセル</a>
-						</li>
-					</ul>
-				</form>
+						<input type="hidden" name="category_id" value="${category.categoryId}">
+						
+						<button class="btn btn-primary m-2" type="submit">更新</button>
+						<a class="btn btn-outline-secondary m-2" href="<%=request.getContextPath()%>/category">キャンセル</a>
+					</form>
+				</div>
+				
 			</div>
 		</main>
 		

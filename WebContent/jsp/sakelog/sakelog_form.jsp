@@ -1,15 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
-<li>
-	<label for="name">酒ログ名：</label>
-	<input type="text" id="name" name="sakelog_name" value="${sakelog.sakelogName}" required maxlength="20" autocomplete="off">
-	${sakelogError.sakelogNameErrorMessage}
-</li>
+<div class="mb-3">
+	<label for="name" class="form-label">酒ログ名*</label>
+	<input type="text" class="form-control" id="name" area-describedby="nameHelp" name="sakelog_name" value="${sakelog.sakelogName}" required maxlength="20" autocomplete="off">
+	<div id="nameHelp" class="form-text">${sakelogError.sakelogNameErrorMessage}</div>
+</div>
 
-<li>
-	<label for="category">カテゴリ：</label>
-	<select id="category" name="category_id" required>
+<div class="mb-3">
+	<label for="category" class="form-label">カテゴリ*</label>
+	<select class="form-select" id="category" name="category_id" area-describedby="categoryHelp" required>
 	  <option value="" disabled ${sakelog.category.categoryId == null? "selected":""} hidden>選択</option>
 	  <c:forEach var="category" items="${categoryList}">
 	  	<option value="${category.categoryId}" ${category.categoryId == sakelog.category.categoryId? "selected":""}>
@@ -17,20 +17,22 @@
 	  	</option>
 	  </c:forEach>
 	</select>
-	${sakelogError.categoryErrorMessage}
-</li>
+	<div id="categoryHelp" class="form-text">${sakelogError.categoryErrorMessage}</div>
+</div>
 
-<li>
-	<p>評価：</p>
+<div class="mb-3">
+	<p class="form-label">評価*</p>
 	<c:forEach var="i" begin="1" end="5" step="1">
-		<input type="radio" id="r${i}" name="rating" value="${i}" <c:if test="${i == sakelog.rating}">checked</c:if> required>
-		<label for="r${i}">${i}</label>
+		<div class="form-check form-check-inline">
+			<input type="radio" class="form-check-input" id="r${i}" name="rating" value="${i}" <c:if test="${i == sakelog.rating}">checked</c:if> required>
+			<label class="form-check-label" for="r${i}">${i}</label>
+		</div>
 	</c:forEach>
-	${sakelogError.ratingErrorMessage}
-</li>
+	<div id="ratingHelp" class="form-text">${sakelogError.ratingErrorMessage}</div>
+</div>
 
-<li>
-	<label for="coment">コメント：</label>
-	<textarea id="comment" name="sakelog_comment" required maxlength="100">${sakelog.sakelogComment}</textarea>
-	${sakelogError.sakelogCommentErrorMessage}
-</li>
+<div class="mb-3">
+	<label for="comment" class="form-label">コメント*</label>
+	<textarea id="comment" class="form-control" area-describedby="commentHelp" name="sakelog_comment" required maxlength="100">${sakelog.sakelogComment}</textarea>
+	<div id="commentHelp" class="form-text">${sakelogError.sakelogCommentErrorMessage}</div>
+</div>

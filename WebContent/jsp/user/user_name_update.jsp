@@ -10,21 +10,23 @@
 		<%@include file="/jsp/common/header.jsp" %>
 		
 		<main>
-			<p>ユーザー名編集フォーム</p>
-			
-			<form id="user_name_update" method="post" action="<%=request.getContextPath()%>/user_name_update">
-				<ul>
-					<li>
-						<label for="name">ユーザー名：</label>
-						<input type="text" id="name" name="user_name" value="${userName == null? user.userName:userName}" required maxlength="20" autocomplete="off">
-						${userError.userNameErrorMessage}
-					</li>
-					<li>
-						<button type="submit">更新</button>
-						<a href="<%=request.getContextPath()%>/user">キャンセル</a>
-					</li>
-				</ul>
-			</form>
+			<div class="container mt-5">
+				<h1>ユーザー名編集</h1>
+				
+				<div class="container">
+					<form id="user_name_update" method="post" action="<%=request.getContextPath()%>/user_name_update">
+						<div class="mb-3">
+							<label for="name" class="form-label">ユーザー名*</label>
+							<input type="text" class="form-control" id="name" area-describedby="nameHelp" name="user_name" value="${userName == null? user.userName:userName}" required maxlength="20" autocomplete="off">
+							<div id="nameHelp" class="form-text">${userError.userNameErrorMessage}</div>
+						</div>
+						
+						<button class="btn btn-primary m-2" type="submit">更新</button>
+						<a class="btn btn-outline-secondary m-2" href="<%=request.getContextPath()%>/user" role="button">キャンセル</a>
+					</form>
+				</div>
+				
+			</div>
 		</main>
 		
 		<%@include file="/jsp/common/footer.jsp" %>

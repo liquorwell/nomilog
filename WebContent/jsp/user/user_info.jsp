@@ -11,11 +11,14 @@
 		<%@include file="/jsp/common/header.jsp" %>
 		
 		<main>
-			<p>ユーザー画面</p>
-			<p>${user.userName}</p>
-			<a href="<%=request.getContextPath()%>/user_name_edit">ユーザー名変更</a>
-			<a href="<%=request.getContextPath()%>/user_pass_edit">パスワード変更</a>
-			<a href="<%=request.getContextPath()%>/user_delete_check">ユーザー削除</a>
+			<div class="container mt-5">
+				<h1>${user.userName}</h1>
+				
+				<a class="btn btn-primary m-2" href="<%=request.getContextPath()%>/user_name_edit" role="button">ユーザー名変更</a>
+				<a class="btn btn-primary m-2" href="<%=request.getContextPath()%>/user_pass_edit" role="button">パスワード変更</a><br>
+				<a class="btn btn-outline-danger btn-sm m-2" href="<%=request.getContextPath()%>/user_delete_check" role="button">ユーザー削除</a>
+				
+			</div>
 		</main>
 		
 		<%@include file="/jsp/common/footer.jsp" %>

@@ -11,30 +11,34 @@
 		<%@include file="/jsp/common/header.jsp" %>
 		
 		<main>
-			<p>パスワード変更フォーム</p>
-			
-			<form id="user_pass_update" method="post" action="<%=request.getContextPath()%>/user_pass_update">
-				<ul>
-					<li>
-						<label for="curr">現在のパスワード：</label>
-						<input type="password" id="curr" name="curr_pass" required>
-						${userError.userPassErrorMessage}
-					</li>
-					<li>
-						<label for="new">新しいパスワード：</label>
-						<input type="password" id="new" name="new_pass" required minlength="8" maxlength="20">
-						${userError.userNewPassErrorMessage}
-					</li>
-					<li>
-						<label for="check">新しいパスワード(確認)：</label>
-						<input type="password" id="check" name="check_pass" required>
-					</li>
-					<li>
-						<button type="submit">変更</button>
-						<a href="<%=request.getContextPath()%>/user">キャンセル</a>
-					</li>
-				</ul>
-			</form>
+			<div class="container mt-5">
+				<h1>パスワード編集</h1>
+				
+				<div class="container">
+					<form id="user_pass_update" method="post" action="<%=request.getContextPath()%>/user_pass_update">
+						<div class="mb-3">
+							<label for="curr" class="form-label">現在のパスワード*</label>
+							<input type="password" class="form-control" id="curr" area-describedby="currHelp" name="curr_pass" required>
+							<div id="currHelp" class="form-text">${userError.userPassErrorMessage}</div>
+						</div>
+						
+						<div class="mb-3">
+							<label for="new" class="form-label">新しいパスワード*</label>
+							<input type="password" class="form-control" id="new" area-describedby="newHelp" name="new_pass" required minlength="8" maxlength="20">
+							<div id="newHelp" class="form-text">${userError.userNewPassErrorMessage}</div>
+						</div>
+							
+						<div class="mb-3">
+							<label for="check" class="form-label">新しいパスワード(確認)*</label>
+							<input type="password" class="form-control" id="check" name="check_pass" required>
+						</div>
+							
+						<button class="btn btn-primary m-2" type="submit">変更</button>
+						<a class="btn btn-outline-secondary m-2" href="<%=request.getContextPath()%>/user" role="button">キャンセル</a>
+					</form>
+				</div>
+				
+			</div>
 		</main>
 		
 		<%@include file="/jsp/common/footer.jsp" %>

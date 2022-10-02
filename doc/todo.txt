@@ -1,2 +1,0 @@
-やっぱerrorはnullにならんらしいから別途メソッドが必要
-bootstrap

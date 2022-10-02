@@ -11,28 +11,28 @@
  		<%@include file="/jsp/common/header_before_login.jsp" %>
  		
  		<main>
-			<div class="contents">
-				<p>ログイン画面とログインフォーム</p>
+			<div class="container mt-5">
+				<h1>ログイン</h1>
+				<p>${userError.userExistErrorMessage}</p>
 				
-				${userError.userExistErrorMessage}
-				
-				<form id="loginform" method="post" action="<%=request.getContextPath()%>/login_sakelog">
-					<ul>
-						<li>
-							<label for="name">ユーザー名*</label>
-							<input type="text" id="name" name="user_name" value="${userName}" required maxlength="20">
-							${userError.userNameErrorMessage}
-						</li>
-						<li>
-							<label for="pass">パスワード*</label>
-							<input type="password" id="pass" name="user_pass" required maxlength="20">
-							${userError.userPassErrorMessage}
-						</li>
-						<li>
-							<button type="submit">ログイン</button>
-						</li>
-					</ul>
-				</form>
+				<div class="container">
+					<form id="loginform" method="post" action="<%=request.getContextPath()%>/login_sakelog">
+						<div class="mb-3">
+							<label for="name" class="form-label">ユーザー名*</label>
+							<input type="text" class="form-control" id="name" area-describedby="nameHelp" name="user_name" value="${userName}" required maxlength="20" autocomplete="on">
+							<div id="nameHelp" class="form-text">${userError.userNameErrorMessage}</div>
+						</div>
+						
+						<div class="mb-3">
+							<label for="pass" class="form-label">パスワード*</label>
+							<input type="password" class="form-control" id="pass" area-decribedby="passHelp" name="user_pass" required maxlength="20">
+							<div id="passHelp" class="form-text">${userError.userPassErrorMessage}</div>
+						</div>
+						
+						<button class="btn btn-primary m-2" type="submit">ログイン</button>
+						<a class="btn btn-outline-secondary m-2" href="<%=request.getContextPath()%>" role="button">キャンセル</a>
+					</form>
+				</div>
 				
 			</div>
 		</main>

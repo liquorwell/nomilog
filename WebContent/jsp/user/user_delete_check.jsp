@@ -11,23 +11,25 @@
 		<%@include file="/jsp/common/header.jsp" %>
 		
 		<main>
-			<p>ユーザー削除</p>
-			<p>本当にユーザーを削除しますか？</p>
-			<p>ユーザーを削除すると、酒ログ・酒メモなどの情報もすべて削除されます。</p>
+			<div class="container mt-5">
+				<h1>ユーザー削除</h1>
+				<p>本当にユーザーを削除しますか？</p>
+				<p>ユーザーを削除すると、酒ログ・酒メモなどの情報もすべて削除されます。</p>
 			
-			<form id="user_delete" method="post" action="<%=request.getContextPath()%>/user_delete">
-				<ul>
-					<li>
-						<label for="pass">パスワードを入力：</label>
-						<input type="password" id="pass" name="user_pass" required>
-						<p>${userError.userPassErrorMessage}</p>
-					</li>
-					<li>
-						<button type="submit">削除</button>
-						<a href="<%=request.getContextPath()%>/user">キャンセル</a>
-					</li>
-				</ul>
-			</form>
+				<div class="container">
+					<form id="user_delete" method="post" action="<%=request.getContextPath()%>/user_delete">
+						<div class="mb-3">
+							<label for="pass" class="form-label">パスワード*</label>
+							<input type="password" class="form-control" id="pass" area-describedby="passHelp" name="user_pass" required>
+							<div id="passHelp" class="form-text">${userError.userPassErrorMessage}</div>
+						</div>
+						
+						<button class="btn btn-primary m-2" type="submit">削除</button>
+						<a class="btn btn-outline-secondary m-2" href="<%=request.getContextPath()%>/user" role="button">キャンセル</a>
+					</form>
+				</div>
+			
+			</div>
 		</main>
 		
 		<%@include file="/jsp/common/footer.jsp" %>

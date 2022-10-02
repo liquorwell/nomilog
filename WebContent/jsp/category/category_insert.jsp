@@ -10,18 +10,17 @@
 		<%@include file="/jsp/common/header.jsp" %>
 		
 		<main>
-			<div class="contents">
-				<p>カテゴリの登録フォーム</p>
+			<div class="container mt-5">
+				<h1>カテゴリ登録</h1>
 				
-				<form id="category_insert" method="post" action="<%=request.getContextPath()%>/category_insert">
-					<ul>
+				<div class="container">
+					<form id="category_insert" method="post" action="<%=request.getContextPath()%>/category_insert">
 						<%@include file="/jsp/category/category_form.jsp" %>
-						<li>
-							<button type="submit">登録</button>
-							<a href="<%=request.getContextPath()%>/category">キャンセル</a>
-						</li>
-					</ul>
-				</form>
+						
+						<button class="btn btn-primary m-2" type="submit">登録</button>
+						<a class="btn btn-outline-secondary m-2" href="<%=request.getContextPath()%>/category" role="button">キャンセル</a>
+					</form>
+				</div>
 			
 			</div>
 		</main>

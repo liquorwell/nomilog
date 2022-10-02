@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 
 <header>
-	<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 		<div class="container-fluid">
 			
 			<a class="navbar-brand" href="<%=request.getContextPath()%>">のみログ</a>

@@ -11,21 +11,19 @@
 		<%@include file="/jsp/common/header.jsp" %>
 		
 		<main>
-			<div class="contents">
-				<p>酒ログの編集フォーム</p>
+			<div class="container mt-5">
+				<h1>酒ログ編集</h1>
 				
-				<form id="sakelog_update" method="post" action="<%=request.getContextPath()%>/sakelog_update">
-					<ul>
+				<div class="container">
+					<form id="sakelog_update" method="post" action="<%=request.getContextPath()%>/sakelog_update">
 						<%@include file="/jsp/sakelog/sakelog_form.jsp" %>
-						<li>
-							<input type="hidden" name="sakelog_id" value="${sakelog.sakelogId}">
-						</li>
-						<li>
-							<button type="submit">更新</button>
-							<a href="<%=request.getContextPath()%>/sakelog">キャンセル</a>
-						</li>
-					</ul>
-				</form>
+						<input type="hidden" name="sakelog_id" value="${sakelog.sakelogId}">
+						
+						<button class="btn btn-primary m-2" type="submit">更新</button>
+						<a class="btn btn-outline-secondary m-2" href="<%=request.getContextPath()%>/sakelog" role="button">キャンセル</a>
+					</form>
+				</div>
+				
 			</div>
 		</main>
 		
